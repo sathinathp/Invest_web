@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamnicate Investments — Dealflow & Pitch Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        /* Extra styles specific to dashboard elements */
+        .admin-dashboard-wrap {
+            padding-bottom: 60px;
+        }
+        .empty-state {
+            grid-column: 1 / -1;
+            background-color: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 60px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .empty-state h3 {
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .empty-state p {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .btn-sm {
+            font-size: 0.8rem;
+            padding: 8px 16px;
+        }
+
+        /* Custom Mouse Cursor styling */
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+            .custom-cursor-dot {
+                width: 8px;
+                height: 8px;
+                background-color: var(--yc-orange);
+                border-radius: 50%;
+                position: fixed;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0;
+                transition: opacity 0.3s ease, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 0 8px rgba(255, 64, 0, 0.6);
+            }
+            .custom-cursor-ring {
+                width: 38px;
+                height: 38px;
+                border: 1.5px solid var(--yc-orange);
+                border-radius: 50%;
+                position: fixed;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 9998;
+                opacity: 0;
+                transition: opacity 0.3s ease, width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, border-color 0.3s ease;
+                box-shadow: 
+                    0 0 15px rgba(255, 64, 0, 0.25),
+                    inset 0 0 10px rgba(255, 64, 0, 0.1);
+            }
+            .custom-cursor-ring.hovered {
+                width: 56px;
+                height: 56px;
+                border-color: var(--yc-orange);
+                background-color: rgba(255, 64, 0, 0.1);
+                box-shadow: 
+                    0 0 25px rgba(255, 64, 0, 0.4),
+                    inset 0 0 15px rgba(255, 64, 0, 0.15);
+            }
+            .custom-cursor-dot.hovered {
+                transform: translate(-50%, -50%) scale(1.6);
+                background-color: var(--yc-orange);
+                box-shadow: 0 0 12px rgba(255, 64, 0, 0.8);
+            }
+            .custom-cursor-ring.active {
+                width: 26px;
+                height: 26px;
+                background-color: rgba(255, 64, 0, 0.25);
+                border-color: var(--yc-orange);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+    <div class="custom-cursor-ring" id="customCursorRing"></div>
+
+    <!-- Global Background Canvas for 3D Helix Animation -->
+    <canvas id="heroCanvas" class="hero-canvas"></canvas>
+ 
+    <!-- ===== HEADER / NAVBAR ===== -->
+    <header role="banner" style="top: 16px;">
+        <div class="container nav-inner">
+            <div class="nav-links-left">
+                <a href="/index.html#thesis">Thesis</a>
+                <a href="/index.html#portfolio">Portfolio</a>
+                <a href="/index.html#why-us">Why Us</a>
+            </div>
+            <a href="/index.html" class="logo-center">
+                <img src="/images/logo.png?v=3" alt="Lamnicate Investments Logo" class="logo-box-img">
+            </a>
+            <div class="nav-links-right">
+                <a href="/index.html" style="color: var(--yc-orange);">Founder Site</a>
+                <a href="/index.html#pitch" class="nav-apply-btn">Submit a Pitch</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== DASHBOARD BODY ===== -->
+    <main class="container admin-dashboard-wrap">
+        
+        <!-- Title & Subtitle -->
+        <div class="admin-title-row">
+            <div>
+                <span class="section-label" style="text-align: left; margin-bottom: 4px;">Internal Dealflow</span>
+                <h1 style="font-size: 2.2rem; font-weight: 500;">Pitch Review Dashboard</h1>
+            </div>
+            <div>
+                <button class="btn-pill-secondary btn-sm" id="refreshBtn">🔄 Refresh Dealflow</button>
+            </div>
+        </div>
+
+        <!-- Dealflow Stats Bar -->
+        <div class="admin-stats-bar">
+            <div class="admin-stat-card">
+                <h4>Total Pitches</h4>
+                <div class="val" id="statTotal">0</div>
+            </div>
+            <div class="admin-stat-card">
+                <h4>Reviewing</h4>
+                <div class="val" id="statReviewing" style="color: var(--color-review);">0</div>
+            </div>
+            <div class="admin-stat-card">
+                <h4>Funded</h4>
+                <div class="val" id="statFunded" style="color: var(--color-funded);">0</div>
+            </div>
+            <div class="admin-stat-card">
+                <h4>Avg Match Score</h4>
+                <div class="val" id="statScore">0%</div>
+            </div>
+        </div>
+
+        <!-- Main Workspace Grid -->
+        <div class="admin-main-grid" id="dashboardWorkspace" style="display: none;">
+            
+            <!-- Left Panel: Pitches List -->
+            <div class="pitches-list-col" id="pitchesList">
+                <!-- Pitches cards injected here -->
+            </div>
+
+            <!-- Right Panel: Pitch Detail View -->
+            <div class="pitch-detail-col" id="pitchDetail">
+                <div style="text-align: center; color: var(--text-muted); padding: 60px 0;">
+                    <h3>No Pitch Selected</h3>
+                    <p>Select a company from the left panel to review speech transcript, audio playback, metrics and add partner reviews.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Empty State (No pitches in DB) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <h3>No startup applications found</h3>
+            <p>Once founders submit audio pitches from the landing page, they will appear here in real-time.</p>
+            <a href="/index.html#pitch" class="btn-pill">Submit Sample Pitch</a>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer role="contentinfo" style="margin-top: 120px;">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo-wrap">
+                    <img src="/images/logo.png?v=3" alt="Lamnicate Investments Logo" class="footer-logo-img">
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:sanjay@lamnicate.vc">sanjay@lamnicate.vc</a>
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="/index.html">Back to Main Site</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Lamnicate Investments. Internal Use Only.</span>
+                <span>Response SLA: 48 hours.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JS DASHBOARD CONTROLLER ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            let allPitches = [];
+            let selectedPitchId = null;
+
+            // ---- CANVAS 3D HELIX BACKGROUND ANIMATION ----
+            const canvas = document.getElementById('heroCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let cssWidth = canvas.offsetWidth;
+                let cssHeight = canvas.offsetHeight;
+
+                function resizeCanvas() {
+                    const dpr = window.devicePixelRatio || 1;
+                    cssWidth = canvas.offsetWidth;
+                    cssHeight = canvas.offsetHeight;
+                    canvas.width = cssWidth * dpr;
+                    canvas.height = cssHeight * dpr;
+                    ctx.scale(dpr, dpr);
+                }
+                
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                // Initialize 3D Starfield particles (Constellation)
+                const stars = [];
+                const starCount = 80;
+                for (let i = 0; i < starCount; i++) {
+                    stars.push({
+                        x: (Math.random() - 0.5) * 1000,
+                        y: (Math.random() - 0.5) * 1000,
+                        z: (Math.random() - 0.5) * 800,
+                        size: Math.random() * 1.5 + 0.5
+                    });
+                }
+
+                // Track mouse globally for 3D parallax tilt
+                let bgMouseX = null;
+                let bgMouseY = null;
+                window.addEventListener('mousemove', (e) => {
+                    bgMouseX = e.clientX;
+                    bgMouseY = e.clientY;
+                });
+                window.addEventListener('mouseleave', () => {
+                    bgMouseX = null;
+                    bgMouseY = null;
+                });
+
+                // Scroll linkage for flight navigation
+                let targetScroll = 0;
+                let currentScroll = 0;
+                let autoFlight = 0;
+                window.addEventListener('scroll', () => {
+                    targetScroll = window.scrollY * 0.003 + autoFlight;
+                });
+
+                // 3D rotation helper (Euler yaw and pitch)
+                function rotatePoint(x, y, z, yaw, pitch) {
+                    const cosY = Math.cos(yaw);
+                    const sinY = Math.sin(yaw);
+                    let rx = x * cosY - z * sinY;
+                    let rz = x * sinY + z * cosY;
+
+                    const cosX = Math.cos(pitch);
+                    const sinX = Math.sin(pitch);
+                    let ry = y * cosX - rz * sinX;
+                    let finalZ = y * sinX + rz * cosX;
+
+                    return { x: rx, y: ry, z: finalZ };
+                }
+
+                // Main frame loop
+                function drawFrame() {
+                    ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+                    // Infinite automatic forward flight increment
+                    autoFlight += 0.0012;
+                    targetScroll = window.scrollY * 0.003 + autoFlight;
+
+                    // Smooth scroll interpolation
+                    currentScroll += (targetScroll - currentScroll) * 0.06;
+
+                    const centerX = cssWidth / 2;
+                    const centerY = cssHeight / 2;
+                    const fov = 400;
+
+                    // Camera rotation angles based on mouse
+                    const mouseYaw = bgMouseX !== null ? (bgMouseX - centerX) * 0.0008 : 0;
+                    const mousePitch = bgMouseY !== null ? (bgMouseY - centerY) * 0.0008 : 0;
+
+                    const yaw = Date.now() * 0.00025 + mouseYaw;
+                    const pitch = 0.55 + mousePitch;
+
+                    const renderList = [];
+
+                    // 1. Add 3D Starfield to render list
+                    stars.forEach(star => {
+                        const orbitAngle = Date.now() * 0.00005;
+                        const rx0 = star.x * Math.cos(orbitAngle) - star.z * Math.sin(orbitAngle);
+                        const rz0 = star.x * Math.sin(orbitAngle) + star.z * Math.cos(orbitAngle);
+                        
+                        const rotated = rotatePoint(rx0, star.y, rz0, yaw, pitch);
+                        renderList.push({
+                            type: 'star',
+                            zAvg: rotated.z,
+                            point: rotated,
+                            size: star.size
+                        });
+                    });
+
+                    // 2. Generate 3D Helix Staircase steps dynamically
+                    const baseIndex = Math.floor(currentScroll * 15);
+                    const startStep = baseIndex - 35;
+                    const endStep = baseIndex + 55;
+                    const radius = 175;
+                    const stepWidth = 50;
+
+                    for (let i = startStep; i <= endStep; i++) {
+                        const stepAngle = i * 0.14 - currentScroll * 2.2;
+                        const stepY = (i * 11) - (currentScroll * 170);
+
+                        const aStart = stepAngle;
+                        const aEnd = stepAngle + 0.13;
+                        const rInner = radius - stepWidth;
+                        const rOuter = radius;
+
+                        const c1 = { x: rInner * Math.cos(aStart), y: stepY,     z: rInner * Math.sin(aStart) };
+                        const c2 = { x: rInner * Math.cos(aEnd),   y: stepY + 5, z: rInner * Math.sin(aEnd)   };
+                        const c3 = { x: rOuter * Math.cos(aEnd),   y: stepY + 5, z: rOuter * Math.sin(aEnd)   };
+                        const c4 = { x: rOuter * Math.cos(aStart), y: stepY,     z: rOuter * Math.sin(aStart) };
+
+                        const rc1 = rotatePoint(c1.x, c1.y, c1.z, yaw, pitch);
+                        const rc2 = rotatePoint(c2.x, c2.y, c2.z, yaw, pitch);
+                        const rc3 = rotatePoint(c3.x, c3.y, c3.z, yaw, pitch);
+                        const rc4 = rotatePoint(c4.x, c4.y, c4.z, yaw, pitch);
+
+                        const zAvg = (rc1.z + rc2.z + rc3.z + rc4.z) / 4;
+
+                        // Fade steps at top/bottom of view
+                        const distFromCenter = Math.abs(stepY);
+                        const opacity = Math.max(0, Math.min(1, (300 - distFromCenter) / 120));
+
+                        if (opacity > 0) {
+                            renderList.push({
+                                type: 'step',
+                                zAvg: zAvg,
+                                points: [rc1, rc2, rc3, rc4],
+                                opacity: opacity,
+                                index: i
+                            });
+                        }
+                    }
+
+                    // 3. Add rolling glowing core sphere
+                    const sphereIndex = currentScroll * 15 + Math.sin(Date.now() * 0.0008) * 9;
+                    const sphereAngle = sphereIndex * 0.14 - currentScroll * 2.2 + 0.065;
+                    const sphereY = (sphereIndex * 11) - (currentScroll * 170) - 14;
+                    const sphereRadius = radius - stepWidth / 2;
+
+                    const spherePos = {
+                        x: sphereRadius * Math.cos(sphereAngle),
+                        y: sphereY,
+                        z: sphereRadius * Math.sin(sphereAngle)
+                    };
+
+                    const rotatedSphere = rotatePoint(spherePos.x, spherePos.y, spherePos.z, yaw, pitch);
+                    renderList.push({
+                        type: 'sphere',
+                        zAvg: rotatedSphere.z,
+                        point: rotatedSphere,
+                        size: 13
+                    });
+
+                    // 4. Sort render list by depth (Painter's Algorithm)
+                    renderList.sort((a, b) => b.zAvg - a.zAvg);
+
+                    // 5. Draw all sorted 3D elements
+                    renderList.forEach(item => {
+                        const scale = fov / (fov + item.zAvg);
+                        if (scale <= 0) return;
+
+                        if (item.type === 'star') {
+                            const sx = centerX + item.point.x * scale;
+                            const sy = centerY + item.point.y * scale;
+                            ctx.beginPath();
+                            ctx.arc(sx, sy, item.size * scale, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(255, 125, 26, ${0.45 * scale})`;
+                            ctx.fill();
+                        } 
+                        else if (item.type === 'step') {
+                            const sPoints = item.points.map(p => {
+                                const s = fov / (fov + p.z);
+                                return {
+                                    x: centerX + p.x * s,
+                                    y: centerY + p.y * s
+                                };
+                            });
+
+                            ctx.beginPath();
+                            ctx.moveTo(sPoints[0].x, sPoints[0].y);
+                            for (let k = 1; k < 4; k++) {
+                                ctx.lineTo(sPoints[k].x, sPoints[k].y);
+                            }
+                            ctx.closePath();
+
+                            const grad = ctx.createLinearGradient(sPoints[0].x, sPoints[0].y, sPoints[2].x, sPoints[2].y);
+                            const depthFade = Math.max(0.1, Math.min(1, (item.zAvg + 400) / 800));
+                            
+                            const distToSphere = Math.abs(item.index - sphereIndex);
+                            const sphereProximityGlow = Math.max(0, 1 - distToSphere / 6);
+
+                            const alpha1 = (0.28 + sphereProximityGlow * 0.45) * item.opacity * depthFade;
+                            const alpha2 = (0.05 + sphereProximityGlow * 0.20) * item.opacity * depthFade;
+
+                            grad.addColorStop(0, `rgba(255, 120, 26, ${alpha1})`);
+                            grad.addColorStop(1, `rgba(255, 93, 26, ${alpha2})`);
+
+                            ctx.fillStyle = grad;
+                            ctx.fill();
+
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${(0.15 + sphereProximityGlow * 0.2) * item.opacity * depthFade})`;
+                            ctx.lineWidth = 0.6 * scale;
+                            ctx.stroke();
+                        } 
+                        else if (item.type === 'sphere') {
+                            const sx = centerX + item.point.x * scale;
+                            const sy = centerY + item.point.y * scale;
+                            const sRadius = item.size * scale;
+
+                            const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, sRadius * 2.5);
+                            grad.addColorStop(0, '#ffffff');
+                            grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.95)');
+                            grad.addColorStop(0.5, 'rgba(255, 120, 26, 0.85)');
+                            grad.addColorStop(1, 'rgba(255, 93, 26, 0)');
+
+                            ctx.beginPath();
+                            ctx.arc(sx, sy, sRadius * 2.5, 0, Math.PI * 2);
+                            ctx.fillStyle = grad;
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.arc(sx, sy, sRadius * 0.4, 0, Math.PI * 2);
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fill();
+                        }
+                    });
+
+                    requestAnimationFrame(drawFrame);
+                }
+
+                // Start loop
+                requestAnimationFrame(drawFrame);
+            }
+
+            // DOM Elements
+            const refreshBtn = document.getElementById('refreshBtn');
+            const dashboardWorkspace = document.getElementById('dashboardWorkspace');
+            const emptyState = document.getElementById('emptyState');
+            const pitchesList = document.getElementById('pitchesList');
+            const pitchDetail = document.getElementById('pitchDetail');
+            
+            // Stat Displays
+            const statTotal = document.getElementById('statTotal');
+            const statReviewing = document.getElementById('statReviewing');
+            const statFunded = document.getElementById('statFunded');
+            const statScore = document.getElementById('statScore');
+
+            // Fetch all pitches from backend
+            async function fetchPitches() {
+                try {
+                    const response = await fetch('/api/pitches');
+                    if (!response.ok) throw new Error('Network response not ok');
+                    allPitches = await response.json();
+                    
+                    updateStats();
+                    renderList();
+                    
+                    if (allPitches.length > 0) {
+                        dashboardWorkspace.style.display = 'grid';
+                        emptyState.style.display = 'none';
+                        
+                        // Default to selecting first pitch if none selected
+                        if (!selectedPitchId || !allPitches.some(p => p.id === selectedPitchId)) {
+                            selectPitch(allPitches[0].id);
+                        } else {
+                            selectPitch(selectedPitchId);
+                        }
+                    } else {
+                        dashboardWorkspace.style.display = 'none';
+                        emptyState.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error fetching pitches:', error);
+                }
+            }
+
+            // Calculate and display statistics
+            function updateStats() {
+                statTotal.textContent = allPitches.length;
+                
+                const reviewing = allPitches.filter(p => p.status === 'Reviewing' || p.status === 'New').length;
+                statReviewing.textContent = reviewing;
+                
+                const funded = allPitches.filter(p => p.status === 'Funded').length;
+                statFunded.textContent = funded;
+
+                if (allPitches.length > 0) {
+                    const sumScores = allPitches.reduce((sum, p) => sum + (p.analysis ? p.analysis.overall : 0), 0);
+                    statScore.textContent = Math.round(sumScores / allPitches.length) + '%';
+                } else {
+                    statScore.textContent = '0%';
+                }
+            }
+
+            // Render list of pitch cards in left panel
+            function renderList() {
+                pitchesList.innerHTML = '';
+                
+                allPitches.forEach(pitch => {
+                    const card = document.createElement('div');
+                    card.className = `pitch-item-card ${pitch.id === selectedPitchId ? 'active' : ''}`;
+                    card.setAttribute('data-id', pitch.id);
+                    
+                    const score = pitch.analysis ? pitch.analysis.overall : '--';
+                    const matchedSec = pitch.matchedSector || pitch.sector;
+                    const dateStr = new Date(pitch.createdAt).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
+
+                    card.innerHTML = `
+                        <div class="pitch-item-header">
+                            <span class="pitch-item-title">${pitch.startupName}</span>
+                            <span class="status-pill ${pitch.status.toLowerCase()}">${pitch.status}</span>
+                        </div>
+                        <div class="pitch-item-meta">
+                            By ${pitch.founderName} • ${matchedSec}
+                        </div>
+                        <div class="pitch-item-score-row">
+                            <span>Score: <span class="pitch-score-badge">${score}%</span></span>
+                            <span>${dateStr}</span>
+                        </div>
+                    `;
+
+                    card.addEventListener('click', () => selectPitch(pitch.id));
+                    pitchesList.appendChild(card);
+                });
+            }
+
+            // Select a pitch to view detailed information
+            function selectPitch(id) {
+                selectedPitchId = id;
+                
+                // Update active state in list
+                document.querySelectorAll('.pitch-item-card').forEach(card => {
+                    card.classList.toggle('active', card.getAttribute('data-id') === id);
+                });
+
+                const pitch = allPitches.find(p => p.id === id);
+                if (!pitch) return;
+
+                renderDetail(pitch);
+            }
+
+            // Render detailed view in right panel
+            function renderDetail(pitch) {
+                const audioPlayerHtml = pitch.audioFile 
+                    ? `<div class="audio-player-box">
+                         <span style="font-size: 0.8rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:8px;">🔊 Pitch Audio Recording</span>
+                         <audio controls src="${pitch.audioFile}" style="width: 100%;"></audio>
+                       </div>`
+                    : '<p style="color:var(--text-muted); font-style:italic;">No voice pitch recording uploaded. Founder used standard submission.</p>';
+
+                pitchDetail.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <h3>${pitch.startupName}</h3>
+                            <p>${pitch.founderName} (${pitch.founderEmail})</p>
+                        </div>
+                        <span class="status-pill ${pitch.status.toLowerCase()}" style="font-size: 0.85rem; padding: 4px 12px; border-radius: 20px;">${pitch.status}</span>
+                    </div>
+
+                    <div class="detail-meta-grid">
+                        <div class="detail-meta-item">
+                            <strong>Sector Focus</strong>
+                            <span>${pitch.sector}</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <strong>Current Stage</strong>
+                            <span>${pitch.stage}</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <strong>Capital Raised</strong>
+                            <span>${pitch.raised || 'None'}</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <strong>Founder links</strong>
+                            <span>
+                                ${pitch.website ? `<a href="${pitch.website}" target="_blank" style="color:var(--yc-orange); margin-right:8px;">Website ↗</a>` : ''}
+                                ${pitch.linkedin ? `<a href="${pitch.linkedin}" target="_blank" style="color:var(--yc-orange);">LinkedIn ↗</a>` : ''}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>Lamnicate's AI Engine Analysis</h4>
+                        
+                        <div class="metrics-grid" style="margin-top: 15px; color: var(--text-primary);">
+                            <div class="metric-bar-wrap">
+                                <div class="metric-lbl">
+                                    <span>Obsession</span>
+                                    <span>${pitch.analysis.obsession}%</span>
+                                </div>
+                                <div class="metric-bar-bg">
+                                    <div class="metric-bar-fill" style="width: ${pitch.analysis.obsession}%; background-color: var(--yc-orange);"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-bar-wrap">
+                                <div class="metric-lbl">
+                                    <span>Speed / Execution</span>
+                                    <span>${pitch.analysis.speed}%</span>
+                                </div>
+                                <div class="metric-bar-bg">
+                                    <div class="metric-bar-fill" style="width: ${pitch.analysis.speed}%; background-color: var(--yc-orange);"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-bar-wrap">
+                                <div class="metric-lbl">
+                                    <span>Resilience</span>
+                                    <span>${pitch.analysis.resilience}%</span>
+                                </div>
+                                <div class="metric-bar-bg">
+                                    <div class="metric-bar-fill" style="width: ${pitch.analysis.resilience}%; background-color: var(--yc-orange);"></div>
+                                </div>
+                            </div>
+
+                            <div class="metric-bar-wrap">
+                                <div class="metric-lbl">
+                                    <span>Technical Moat</span>
+                                    <span>${pitch.analysis.techDepth}%</span>
+                                </div>
+                                <div class="metric-bar-bg">
+                                    <div class="metric-bar-fill" style="width: ${pitch.analysis.techDepth}%; background-color: var(--yc-orange);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sanjay-notes-box" style="margin-top: 15px; background-color: #f7f6f2; border-left-color: var(--text-primary);">
+                            <h5 style="color: var(--text-primary);">System Evaluation Note</h5>
+                            <p style="color: var(--text-secondary);">${pitch.sanjayFeedback}</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>Voice Pitch Speech Audio</h4>
+                        ${audioPlayerHtml}
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>Speech transcription</h4>
+                        <div style="background-color: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding:16px; font-family: var(--font-code); font-size: 0.85rem; max-height: 200px; overflow-y:auto; white-space: pre-wrap; line-height: 1.5; color: var(--text-secondary);">
+${pitch.speechText || 'No transcribed speech text.'}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>Problem Statement</h4>
+                        <p>${pitch.problem}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>Why Now?</h4>
+                        <p>${pitch.whyNow}</p>
+                    </div>
+
+                    <!-- Sanjay's Review Form -->
+                    <div class="admin-action-box">
+                        <h4 style="font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin-bottom: 12px;">Partner Evaluation Panel</h4>
+                        
+                        <label style="font-size: 0.75rem; font-weight:600; display:block; margin-bottom:6px; color:var(--text-secondary);">Application Status</label>
+                        <select class="status-select" id="detailStatusSelect">
+                            <option value="New" ${pitch.status === 'New' ? 'selected' : ''}>New Application</option>
+                            <option value="Reviewing" ${pitch.status === 'Reviewing' ? 'selected' : ''}>Under Review</option>
+                            <option value="Contacted" ${pitch.status === 'Contacted' ? 'selected' : ''}>Contacted Founder</option>
+                            <option value="Funded" ${pitch.status === 'Funded' ? 'selected' : ''}>Approved & Funded</option>
+                            <option value="Passed" ${pitch.status === 'Passed' ? 'selected' : ''}>Passed / Declined</option>
+                        </select>
+                        
+                        <label style="font-size: 0.75rem; font-weight:600; display:block; margin-bottom:6px; color:var(--text-secondary);">Partner's Private Review Notes</label>
+                        <textarea class="admin-notes-area" id="detailNotesArea" placeholder="Enter investment thesis comments, technical moat assessments, follow-up questions...">${pitch.sanjayNotes || ''}</textarea>
+                        
+                        <div style="display:flex; gap: 10px;">
+                            <button type="button" class="btn-pill" id="saveActionBtn" style="padding: 10px 20px; font-size: 0.85rem; flex: 1;">Save Evaluation</button>
+                            <button type="button" class="btn-pill-secondary" id="deletePitchBtn" style="padding: 10px 20px; font-size: 0.85rem; border-color: #fca5a5; color: #b91c1c;">Delete</button>
+                        </div>
+                    </div>
+                `;
+
+                // Hook up event listeners for evaluation panel
+                const saveActionBtn = document.getElementById('saveActionBtn');
+                const deletePitchBtn = document.getElementById('deletePitchBtn');
+                const statusSelect = document.getElementById('detailStatusSelect');
+                const notesArea = document.getElementById('detailNotesArea');
+
+                saveActionBtn.addEventListener('click', async () => {
+                    saveActionBtn.disabled = true;
+                    saveActionBtn.textContent = 'Saving...';
+                    
+                    try {
+                        const response = await fetch(`/api/pitches/${pitch.id}/status`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                status: statusSelect.value,
+                                sanjayNotes: notesArea.value
+                            })
+                        });
+
+                        if (!response.ok) throw new Error('Failed to update');
+                        
+                        // Refetch and update
+                        await fetchPitches();
+                        
+                    } catch (error) {
+                        alert('Error saving review data.');
+                        console.error(error);
+                    } finally {
+                        saveActionBtn.disabled = false;
+                        saveActionBtn.textContent = 'Save Evaluation';
+                    }
+                });
+
+                deletePitchBtn.addEventListener('click', async () => {
+                    if (!confirm(`Are you sure you want to delete the pitch from ${pitch.startupName}?`)) return;
+                    
+                    deletePitchBtn.disabled = true;
+                    deletePitchBtn.textContent = 'Deleting...';
+                    
+                    try {
+                        const response = await fetch(`/api/pitches/${pitch.id}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (!response.ok) throw new Error('Failed to delete');
+                        
+                        // Clear selected pitch, refetch
+                        selectedPitchId = null;
+                        await fetchPitches();
+                        
+                    } catch (error) {
+                        alert('Error deleting pitch.');
+                        console.error(error);
+                    }
+                });
+            }
+
+            // Refresh & Initial setup
+            refreshBtn.addEventListener('click', fetchPitches);
+            fetchPitches();
+
+            // ---- CUSTOM MOUSE CURSOR LOGIC ----
+            const dot = document.getElementById('customCursorDot');
+            const ring = document.getElementById('customCursorRing');
+
+            if (dot && ring) {
+                let mX = 0, mY = 0;
+                let rX = 0, rY = 0;
+                let firstMove = false;
+
+                window.addEventListener('mousemove', (e) => {
+                    mX = e.clientX;
+                    mY = e.clientY;
+
+                    if (!firstMove) {
+                        firstMove = true;
+                        dot.style.opacity = 1;
+                        ring.style.opacity = 1;
+                        rX = mX;
+                        rY = mY;
+                    }
+                });
+
+                window.addEventListener('mouseout', () => {
+                    dot.style.opacity = 0;
+                    ring.style.opacity = 0;
+                    firstMove = false;
+                });
+
+                function updateCursorPos() {
+                    if (firstMove) {
+                        rX += (mX - rX) * 0.16;
+                        rY += (mY - rY) * 0.16;
+
+                        dot.style.left = `${mX}px`;
+                        dot.style.top = `${mY}px`;
+
+                        ring.style.left = `${rX}px`;
+                        ring.style.top = `${rY}px`;
+                    }
+                    requestAnimationFrame(updateCursorPos);
+                }
+                updateCursorPos();
+
+                // Mouse hover events on interactive elements
+                document.addEventListener('mouseover', (e) => {
+                    const target = e.target;
+                    if (target && (
+                        target.tagName === 'A' || 
+                        target.tagName === 'BUTTON' || 
+                        target.tagName === 'INPUT' || 
+                        target.tagName === 'SELECT' || 
+                        target.tagName === 'TEXTAREA' || 
+                        target.closest('a') || 
+                        target.closest('button') || 
+                        target.closest('.pitch-item-card') || 
+                        target.closest('.btn-sm') || 
+                        target.closest('.partner-card') || 
+                        target.closest('.hero-scroll-btn') || 
+                        target.closest('.btn-sidebar-pitch') || 
+                        target.closest('.btn-sidebar-portal') || 
+                        target.closest('.btn-voice-control') ||
+                        target.getAttribute('role') === 'button'
+                    )) {
+                        ring.classList.add('hovered');
+                        dot.classList.add('hovered');
+                    }
+                });
+
+                document.addEventListener('mouseout', (e) => {
+                    const target = e.target;
+                    if (target && (
+                        target.tagName === 'A' || 
+                        target.tagName === 'BUTTON' || 
+                        target.tagName === 'INPUT' || 
+                        target.tagName === 'SELECT' || 
+                        target.tagName === 'TEXTAREA' || 
+                        target.closest('a') || 
+                        target.closest('button') || 
+                        target.closest('.pitch-item-card') || 
+                        target.closest('.btn-sm') || 
+                        target.closest('.partner-card') || 
+                        target.closest('.hero-scroll-btn') || 
+                        target.closest('.btn-sidebar-pitch') || 
+                        target.closest('.btn-sidebar-portal') || 
+                        target.closest('.btn-voice-control') ||
+                        target.getAttribute('role') === 'button'
+                    )) {
+                        ring.classList.remove('hovered');
+                        dot.classList.remove('hovered');
+                    }
+                });
+
+                window.addEventListener('mousedown', () => {
+                    ring.classList.add('active');
+                });
+
+                window.addEventListener('mouseup', () => {
+                    ring.classList.remove('active');
+                });
+            }
+
+        })();
+    </script>
+</body>
+</html>
