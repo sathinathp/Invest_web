@@ -175,7 +175,7 @@ app.post('/api/pitch', upload.single('pitchAudio'), (req, res) => {
         // Generate simulated transcription if audio uploaded but speechText is missing
         let finalSpeechText = speechText || '';
         if (audioFile && !finalSpeechText) {
-            finalSpeechText = `[Simulated Audio Pitch Transcription]: Hello, my name is ${founderName} from ${startupName}. We are building in the ${sector} sector. Our product solves the following problem: ${problem}. We believe now is the perfect time because: ${whyNow}. We hope to partner with Lamnicate Investments.`;
+            finalSpeechText = `[Simulated Audio Pitch Transcription]: Hello, my name is ${founderName} from ${startupName}. We are building in the ${sector} sector. Our product solves the following problem: ${problem}. We believe now is the perfect time because: ${whyNow}. We hope to partner with Lemniscate Investments.`;
         }
 
         const pitchData = {
