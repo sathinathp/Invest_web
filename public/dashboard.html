@@ -56,7 +56,7 @@
                 z-index: 9999;
                 opacity: 0;
                 transition: opacity 0.3s ease, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 0 8px rgba(255, 64, 0, 0.6);
+                box-shadow: 0 0 8px rgba(0, 255, 170, 0.6);
             }
             .custom-cursor-ring {
                 width: 38px;
@@ -70,27 +70,27 @@
                 opacity: 0;
                 transition: opacity 0.3s ease, width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, border-color 0.3s ease;
                 box-shadow: 
-                    0 0 15px rgba(255, 64, 0, 0.25),
-                    inset 0 0 10px rgba(255, 64, 0, 0.1);
+                    0 0 15px rgba(0, 255, 170, 0.25),
+                    inset 0 0 10px rgba(0, 255, 170, 0.1);
             }
             .custom-cursor-ring.hovered {
                 width: 56px;
                 height: 56px;
                 border-color: var(--yc-orange);
-                background-color: rgba(255, 64, 0, 0.1);
+                background-color: rgba(0, 255, 170, 0.1);
                 box-shadow: 
-                    0 0 25px rgba(255, 64, 0, 0.4),
-                    inset 0 0 15px rgba(255, 64, 0, 0.15);
+                    0 0 25px rgba(0, 255, 170, 0.4),
+                    inset 0 0 15px rgba(0, 255, 170, 0.15);
             }
             .custom-cursor-dot.hovered {
                 transform: translate(-50%, -50%) scale(1.6);
                 background-color: var(--yc-orange);
-                box-shadow: 0 0 12px rgba(255, 64, 0, 0.8);
+                box-shadow: 0 0 12px rgba(0, 255, 170, 0.8);
             }
             .custom-cursor-ring.active {
                 width: 26px;
                 height: 26px;
-                background-color: rgba(255, 64, 0, 0.25);
+                background-color: rgba(0, 255, 170, 0.25);
                 border-color: var(--yc-orange);
             }
         }
@@ -421,7 +421,7 @@
                             const alpha2 = (0.05 + sphereProximityGlow * 0.20) * item.opacity * depthFade;
 
                             grad.addColorStop(0, `rgba(255, 120, 26, ${alpha1})`);
-                            grad.addColorStop(1, `rgba(255, 93, 26, ${alpha2})`);
+                            grad.addColorStop(1, `rgba(0, 255, 170, ${alpha2})`);
 
                             ctx.fillStyle = grad;
                             ctx.fill();
@@ -439,7 +439,7 @@
                             grad.addColorStop(0, '#ffffff');
                             grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.95)');
                             grad.addColorStop(0.5, 'rgba(255, 120, 26, 0.85)');
-                            grad.addColorStop(1, 'rgba(255, 93, 26, 0)');
+                            grad.addColorStop(1, 'rgba(0, 255, 170, 0)');
 
                             ctx.beginPath();
                             ctx.arc(sx, sy, sRadius * 2.5, 0, Math.PI * 2);

@@ -1,7 +1,7 @@
 :root {
-    --yc-orange: #ff5d1a;
-    --yc-orange-hover: #ff7d45;
-    --yc-orange-light: rgba(255, 93, 26, 0.08);
+    --yc-orange: #00ffaa;
+    --yc-orange-hover: #33ffbb;
+    --yc-orange-light: rgba(0, 255, 170, 0.08);
     --bg-body: #060708;
     --bg-card: #0b0c0e;
     --text-primary: #f5f6f8;
@@ -249,7 +249,7 @@ header.nav-scrolled {
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-sm);
-    box-shadow: 0 2px 4px rgba(255, 64, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 255, 170, 0.15);
     transition: var(--transition);
 }
 .logo-box-img {
@@ -302,12 +302,12 @@ header.nav-scrolled {
     border-radius: 50px;
     font-weight: 600;
     font-size: 0.88rem !important;
-    box-shadow: 0 4px 12px rgba(255, 64, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 255, 170, 0.12);
 }
 .nav-apply-btn:hover {
     background-color: var(--yc-orange-hover) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(255, 64, 0, 0.22);
+    box-shadow: 0 6px 16px rgba(0, 255, 170, 0.22);
 }
 .mobile-toggle {
     display: none;
@@ -468,7 +468,7 @@ header.nav-scrolled {
     border-color: var(--yc-orange);
     background-color: var(--yc-orange-light);
     transform: scale(1.08) rotate(5deg);
-    box-shadow: 0 4px 12px rgba(255, 64, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 255, 170, 0.08);
 }
 .thesis-stat-icon-circle svg {
     width: 18px;
@@ -550,7 +550,7 @@ header.nav-scrolled {
     border-color: var(--yc-orange);
     background-color: var(--yc-orange-light);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 64, 0, 0.06);
+    box-shadow: 0 4px 12px rgba(0, 255, 170, 0.06);
 }
 .thesis-sector-pill svg {
     width: 14px;
@@ -585,7 +585,7 @@ header.nav-scrolled {
 .thesis-bottom-card:hover {
     border-color: var(--yc-orange);
     transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(255, 64, 0, 0.05);
+    box-shadow: 0 12px 30px rgba(0, 255, 170, 0.05);
 }
 .thesis-card-header {
     display: flex;
@@ -869,12 +869,12 @@ header.nav-scrolled {
 .service-card:hover {
     transform: translateY(-2px);
     border-color: var(--yc-orange);
-    box-shadow: 0 12px 36px rgba(255, 64, 0, 0.03);
+    box-shadow: 0 12px 36px rgba(0, 255, 170, 0.03);
 }
 
 .service-card.card-expanded {
     border-color: var(--yc-orange);
-    box-shadow: 0 12px 40px rgba(255, 64, 0, 0.05);
+    box-shadow: 0 12px 40px rgba(0, 255, 170, 0.05);
 }
 
 /* Service Icon & Header */
@@ -2112,7 +2112,7 @@ header.nav-scrolled {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    box-shadow: 0 4px 14px rgba(255, 64, 0, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 255, 170, 0.3);
     transition: var(--transition);
 }
 .record-btn:hover {
@@ -2257,7 +2257,7 @@ header.nav-scrolled {
     transition: width 1s ease-in-out;
 }
 .sanjay-notes-box {
-    background-color: rgba(255, 64, 0, 0.08);
+    background-color: rgba(0, 255, 170, 0.08);
     border-left: 3px solid var(--yc-orange);
     padding: 16px;
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
@@ -2507,7 +2507,7 @@ footer {
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .pitch-item-card.active {
-    background-color: rgba(255, 93, 26, 0.05);
+    background-color: rgba(0, 255, 170, 0.05);
 }
 .pitch-item-header {
     display: flex;
@@ -2547,7 +2547,7 @@ footer {
 .pitch-score-badge {
     background-color: rgba(255, 255, 255, 0.04);
     color: var(--yc-orange);
-    border: 1px solid rgba(255, 93, 26, 0.12);
+    border: 1px solid rgba(0, 255, 170, 0.12);
     padding: 1px 6px;
     border-radius: 4px;
     font-family: var(--font-code);
