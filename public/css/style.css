@@ -1,13 +1,13 @@
 :root {
-    --yc-orange: #00ffaa;
-    --yc-orange-hover: #33ffbb;
-    --yc-orange-light: rgba(0, 255, 170, 0.08);
-    --bg-body: #060708;
-    --bg-card: #0b0c0e;
-    --text-primary: #f5f6f8;
-    --text-secondary: #a0a5ad;
-    --text-muted: #60666d;
-    --border-color: #1c1e22;
+    --yc-orange: #B89765;
+    --yc-orange-hover: #9E7D4E;
+    --yc-orange-light: rgba(184, 151, 101, 0.08);
+    --bg-body: #f8fafc;
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-color: rgba(15, 23, 42, 0.08);
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
@@ -18,11 +18,11 @@
     --max-width: 1040px;
     
     /* Status colors */
-    --color-new: #3b82f6;
-    --color-review: #f59e0b;
-    --color-contacted: #8b5cf6;
-    --color-funded: #10b981;
-    --color-passed: #ef4444;
+    --color-new: #2563eb;
+    --color-review: #d97706;
+    --color-contacted: #7c3aed;
+    --color-funded: #059669;
+    --color-passed: #dc2626;
 }
 
 /* ===== BASE RESET & LAYOUT ===== */
@@ -253,7 +253,7 @@ header.nav-scrolled {
     transition: var(--transition);
 }
 .logo-box-img {
-    height: 36px;
+    height: 64px;
     width: auto;
     border-radius: var(--radius-sm);
     transition: var(--transition);
@@ -2458,13 +2458,14 @@ footer {
     margin-bottom: 30px;
 }
 .admin-stat-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 20px;
     text-align: center;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
 }
 .admin-stat-card h4 {
     font-size: 0.8rem;
@@ -2492,7 +2493,7 @@ footer {
     padding-right: 8px;
 }
 .pitch-item-card {
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
@@ -2503,11 +2504,11 @@ footer {
 }
 .pitch-item-card:hover, .pitch-item-card.active {
     border-color: var(--yc-orange);
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 .pitch-item-card.active {
-    background-color: rgba(0, 255, 170, 0.05);
+    background-color: rgba(184, 151, 101, 0.08);
 }
 .pitch-item-header {
     display: flex;
@@ -2527,11 +2528,11 @@ footer {
     border-radius: 12px;
     font-family: var(--font-code);
 }
-.status-pill.new { background-color: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
-.status-pill.reviewing { background-color: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
-.status-pill.contacted { background-color: rgba(139, 92, 246, 0.12); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.2); }
-.status-pill.funded { background-color: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
-.status-pill.passed { background-color: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+.status-pill.new { background-color: rgba(37, 99, 235, 0.08); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.15); }
+.status-pill.reviewing { background-color: rgba(217, 119, 6, 0.08); color: #d97706; border: 1px solid rgba(217, 119, 6, 0.15); }
+.status-pill.contacted { background-color: rgba(124, 58, 237, 0.08); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.15); }
+.status-pill.funded { background-color: rgba(5, 150, 105, 0.08); color: #059669; border: 1px solid rgba(5, 150, 105, 0.15); }
+.status-pill.passed { background-color: rgba(220, 38, 38, 0.08); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.15); }
 
 .pitch-item-meta {
     font-size: 0.8rem;
@@ -2556,7 +2557,7 @@ footer {
 
 /* Detail view col */
 .pitch-detail-col {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
@@ -2566,7 +2567,7 @@ footer {
     top: 110px;
     max-height: 800px;
     overflow-y: auto;
-}auto;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
 }
 .detail-header {
     border-bottom: 1px solid var(--border-color);
