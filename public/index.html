@@ -59,7 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 40px 80px;
+            padding: 112px 40px 80px;
             position: relative;
             z-index: 5;
             overflow: hidden;
@@ -803,7 +803,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 68px;
+            margin-top: 112px;
         }
 
         .slide {
@@ -1797,8 +1797,18 @@
             color: var(--text-primary);
             font-family: var(--font-body);
             user-select: none;
-            position: relative;
-            margin-top: 68px;
+            position: fixed;
+            top: 68px;
+            left: 0;
+            z-index: 1000;
+            will-change: transform;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .market-ticker-bar.ticker-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .market-ticker-bar-inner {
@@ -4118,10 +4128,13 @@
                     track.scrollBy({ left: 200, behavior: 'smooth' });
                 };
             }
-            // Scroll shadow on header
+            // Scroll shadow on header + hide ticker on scroll
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('siteHeader');
+                const ticker = document.getElementById('marketTickerBar');
+                const scrolled = window.scrollY > 80;
                 if (header) header.classList.toggle('scrolled', window.scrollY > 10);
+                if (ticker) ticker.classList.toggle('ticker-hidden', scrolled);
             });
 
             bindContactHandler();
