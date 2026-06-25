@@ -59,7 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 112px 40px 80px;
+            padding: 120px 40px 80px;
             position: relative;
             z-index: 5;
             overflow: hidden;
@@ -482,28 +482,42 @@
             position: relative;
         }
 
-        /* ===== TOP NAVIGATION HEADER ===== */
+        /* ===== TOP NAVIGATION HEADER (Two-row: nav + ticker) ===== */
         .site-header {
             position: fixed;
-            top: 42px;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            align-items: stretch;
             z-index: 1000;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+        }
+
+        /* Nav row */
+        .header-nav-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 0 40px;
-            transition: var(--transition);
+            height: 68px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .header-inner {
             width: 100%;
             max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -516,7 +530,7 @@
         }
 
         .header-logo-img {
-            height: 64px;
+            height: 52px;
             width: auto;
             transition: transform 0.3s ease;
         }
@@ -799,7 +813,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 112px;
+            margin-top: 120px;
         }
 
         .slide {
@@ -1781,61 +1795,66 @@
             backface-visibility: hidden;
         }
 
-        /* ===== MARKET TICKER BAR STYLES ===== */
+        /* ===== MARKET TICKER BAR STYLES (Light / In-Header) ===== */
         .market-ticker-bar {
             display: flex;
             align-items: center;
-            background-color: #070b14;
-            border-bottom: 1px solid rgba(184, 151, 101, 0.12);
-            padding: 7px 24px;
-            color: #ffffff;
-            font-family: var(--font-body);
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            z-index: 1001;
+            padding: 0 40px;
+            height: 44px;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-body);
             user-select: none;
-            height: 42px;
-            will-change: transform;
-            backface-visibility: hidden;
+            position: relative;
+        }
+
+        .market-ticker-bar-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
         }
 
         /* Dropdown style */
         .ticker-dropdown-container {
             position: relative;
-            padding-right: 16px;
-            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            padding-right: 20px;
+            border-right: 1px solid var(--border-color);
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
         }
 
         .ticker-dropdown-btn {
             background: none;
             border: none;
-            color: #e2e8f0;
+            color: var(--text-secondary);
             font-family: var(--font-body);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 5px 8px;
             border-radius: 6px;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .ticker-dropdown-btn:hover {
-            background-color: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
+            background-color: rgba(184, 151, 101, 0.06);
+            color: var(--text-primary);
         }
 
         .ticker-dropdown-btn .globe-icon {
-            color: #0ecb81;
+            color: var(--yc-orange);
         }
 
         .ticker-dropdown-btn .arrow-icon {
-            opacity: 0.7;
+            opacity: 0.5;
             transition: transform 0.2s ease;
         }
 
@@ -1845,43 +1864,43 @@
 
         .ticker-dropdown-menu {
             position: absolute;
-            top: calc(100% + 8px);
+            top: calc(100% + 6px);
             left: 0;
-            background-color: #121824;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background-color: rgba(255, 255, 255, 0.98);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.1);
             z-index: 100;
-            min-width: 150px;
+            min-width: 160px;
             display: none;
             overflow: hidden;
         }
 
         .ticker-dropdown-menu.show {
             display: block;
-            animation: fadeInDropdown 0.2s ease;
+            animation: fadeInDropdown 0.18s ease;
         }
 
         @keyframes fadeInDropdown {
-            from { opacity: 0; transform: translateY(-5px); }
+            from { opacity: 0; transform: translateY(-4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .ticker-dropdown-item {
             padding: 10px 16px;
-            font-size: 0.8rem;
-            color: #94a3b8;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
         .ticker-dropdown-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
+            background-color: rgba(184, 151, 101, 0.06);
+            color: var(--text-primary);
         }
 
         .ticker-dropdown-item.active {
-            color: #b89765;
+            color: var(--yc-orange);
             font-weight: 600;
             background-color: rgba(184, 151, 101, 0.08);
         }
@@ -1890,7 +1909,7 @@
         .ticker-track-container {
             flex-grow: 1;
             overflow: hidden;
-            margin: 0 16px;
+            margin: 0 12px;
             display: flex;
             align-items: center;
         }
@@ -1898,20 +1917,15 @@
         .ticker-track {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 4px;
             overflow-x: auto;
             scroll-behavior: smooth;
             width: 100%;
         }
 
         /* Hide scrollbars */
-        .ticker-track::-webkit-scrollbar {
-            display: none;
-        }
-        .ticker-track {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+        .ticker-track::-webkit-scrollbar { display: none; }
+        .ticker-track { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Ticker Item styling */
         .ticker-item {
@@ -1919,119 +1933,115 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            padding: 5px 14px;
+            border-radius: 7px;
+            transition: background-color 0.18s ease;
             flex-shrink: 0;
             border: 1px solid transparent;
         }
 
         .ticker-item:hover {
-            background-color: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(184, 151, 101, 0.06);
+            border-color: rgba(184, 151, 101, 0.15);
         }
 
         .ticker-item.active {
-            background-color: rgba(184, 151, 101, 0.1);
-            border-color: rgba(184, 151, 101, 0.3);
+            background-color: rgba(184, 151, 101, 0.08);
+            border-color: rgba(184, 151, 101, 0.2);
         }
 
         .ticker-item-meta {
             display: flex;
             flex-direction: column;
+            gap: 1px;
         }
 
         .ticker-item-name {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 500;
-            color: #94a3b8;
-            margin-bottom: 2px;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
         }
 
         .ticker-item.active .ticker-item-name {
-            color: #b89765;
+            color: var(--yc-orange);
             font-weight: 600;
         }
 
         .ticker-item-price {
             font-family: var(--font-code);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 700;
-            color: #f8fafc;
+            color: var(--text-primary);
             transition: color 0.15s ease;
+            letter-spacing: -0.01em;
         }
 
         .ticker-item-change {
             font-family: var(--font-code);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            margin-top: 1px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
+            letter-spacing: -0.01em;
         }
 
         .ticker-item-sparkline {
-            width: 50px;
-            height: 24px;
+            width: 44px;
+            height: 22px;
             flex-shrink: 0;
+            opacity: 0.85;
         }
 
         /* Price tick animation flash */
         @keyframes tick-up-flash {
-            0% { color: #0ecb81; }
-            100% { color: #f8fafc; }
+            0% { color: #16a34a; }
+            100% { color: var(--text-primary); }
         }
         @keyframes tick-down-flash {
-            0% { color: #f6465d; }
-            100% { color: #f8fafc; }
+            0% { color: #dc2626; }
+            100% { color: var(--text-primary); }
         }
 
-        .price-flash-up {
-            animation: tick-up-flash 0.8s ease-out;
-        }
+        .price-flash-up { animation: tick-up-flash 0.8s ease-out; }
+        .price-flash-down { animation: tick-down-flash 0.8s ease-out; }
 
-        .price-flash-down {
-            animation: tick-down-flash 0.8s ease-out;
-        }
-
-        /* Up/Down colors matching screenshot */
-        .color-up {
-            color: #0ecb81 !important;
-        }
-
-        .color-down {
-            color: #f6465d !important;
-        }
+        /* Up/Down colors — light theme versions */
+        .color-up  { color: #16a34a !important; }
+        .color-down { color: #dc2626 !important; }
 
         /* Nav Arrows styles */
         .ticker-nav-arrows {
             display: flex;
             align-items: center;
             gap: 4px;
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
-            padding-left: 16px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 14px;
+            margin-left: 8px;
             flex-shrink: 0;
         }
 
         .ticker-arrow-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
             cursor: pointer;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: all 0.2s ease;
         }
 
         .ticker-arrow-btn:hover {
-            background-color: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
+            background-color: var(--yc-orange-light);
+            border-color: rgba(184, 151, 101, 0.35);
+            color: var(--yc-orange);
         }
+
 
         /* ===== LIVE MARKET TERMINAL STYLES ===== */
         .markets-grid {
@@ -2441,78 +2451,85 @@
     </section>
 
 
-    <!-- ===== TOP MARKET TICKER BAR ===== -->
-    <div class="market-ticker-bar">
-        <div class="ticker-dropdown-container">
-            <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
-                <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-                <span id="tickerCategoryLabel">US Markets</span>
-                <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-            <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
-                <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
-                <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
-                <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
+    <!-- ===== UNIFIED HEADER (Nav row + Ticker row) ===== -->
+    <header class="site-header" id="siteHeader">
+
+        <!-- Row 1: Navigation -->
+        <div class="header-nav-row">
+            <div class="header-inner">
+                <a href="#" class="header-logo">
+                    <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
+                </a>
+
+                <nav class="header-nav">
+                    <ul class="deck-nav-list">
+                        <li>
+                            <a class="nav-item-link active" data-slide="0">
+                                <span class="nav-text">What is Lemniscate?</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item-link" data-slide="1">
+                                <span class="nav-text">Portfolio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item-link" data-slide="2">
+                                <span class="nav-text">Contact &amp; Pitch</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <a href="#slide2" onclick="document.getElementById('slide2').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
+                </div>
             </div>
         </div>
 
-        <div class="ticker-track-container">
-            <div class="ticker-track" id="tickerTrack">
-                <!-- Will be populated dynamically by JS -->
+        <!-- Row 2: Market Ticker -->
+        <div class="market-ticker-bar">
+            <div class="market-ticker-bar-inner">
+                <div class="ticker-dropdown-container">
+                    <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
+                        <svg class="globe-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span id="tickerCategoryLabel">US Markets</span>
+                        <svg class="arrow-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
+                        <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
+                        <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
+                        <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
+                    </div>
+                </div>
+
+                <div class="ticker-track-container">
+                    <div class="ticker-track" id="tickerTrack">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="ticker-nav-arrows">
+                    <button class="ticker-arrow-btn" id="tickerArrowPrev" title="Previous">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="ticker-arrow-btn" id="tickerArrowNext" title="Next">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="ticker-nav-arrows">
-            <button class="ticker-arrow-btn prev" id="tickerArrowPrev">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <button class="ticker-arrow-btn next" id="tickerArrowNext">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    <!-- ===== TOP NAVIGATION HEADER ===== -->
-    <header class="site-header">
-        <div class="header-inner">
-            <a href="#" class="header-logo">
-                <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
-            </a>
-
-            <nav class="header-nav">
-                <ul class="deck-nav-list">
-                    <li>
-                        <a class="nav-item-link active" data-slide="0">
-                            <span class="nav-text">What is Lemniscate?</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="1">
-                            <span class="nav-text">Portfolio</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="2">
-                            <span class="nav-text">Contact &amp; Pitch</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="header-actions">
-                <a href="#slide2" onclick="document.getElementById('slide2').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
-            </div>
-        </div>
     </header>
 
     <!-- ===== DECK DECK CONTAINER ===== -->
@@ -4113,6 +4130,12 @@
                     track.scrollBy({ left: 200, behavior: 'smooth' });
                 };
             }
+            // Scroll shadow on header
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('siteHeader');
+                if (header) header.classList.toggle('scrolled', window.scrollY > 10);
+            });
+
             bindContactHandler();
 
             // ---- CUSTOM MOUSE CURSOR LOGIC ----
