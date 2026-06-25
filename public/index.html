@@ -59,7 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 40px 80px;
+            padding: 112px 40px 80px;
             position: relative;
             z-index: 5;
             overflow: hidden;
@@ -482,36 +482,26 @@
             position: relative;
         }
 
-        /* ===== TOP NAVIGATION HEADER (Two-row: nav + ticker) ===== */
+        /* ===== TOP NAVIGATION HEADER ===== */
         .site-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            height: 68px;
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            z-index: 1000;
+            align-items: center;
+            z-index: 1001;
+            padding: 0 40px;
             transition: box-shadow 0.3s ease;
         }
 
         .site-header.scrolled {
             box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
-        }
-
-        /* Nav row */
-        .header-nav-row {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            height: 68px;
-            border-bottom: 1px solid var(--border-color);
         }
 
         .header-inner {
@@ -813,7 +803,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 120px;
+            margin-top: 112px;
         }
 
         .slide {
@@ -1795,18 +1785,25 @@
             backface-visibility: hidden;
         }
 
-        /* ===== MARKET TICKER BAR STYLES (Light / In-Header) ===== */
+        /* ===== MARKET TICKER BAR STYLES (fixed strip below nav) ===== */
         .market-ticker-bar {
             display: flex;
             align-items: center;
             width: 100%;
             padding: 0 40px;
             height: 44px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
             color: var(--text-primary);
             font-family: var(--font-body);
             user-select: none;
-            position: relative;
+            position: fixed;
+            top: 68px;
+            left: 0;
+            z-index: 1000;
+            will-change: transform;
         }
 
         .market-ticker-bar-inner {
@@ -2451,86 +2448,82 @@
     </section>
 
 
-    <!-- ===== UNIFIED HEADER (Nav row + Ticker row) ===== -->
+    <!-- ===== NAV HEADER (fixed, top:0) ===== -->
     <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="#" class="header-logo">
+                <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
+            </a>
 
-        <!-- Row 1: Navigation -->
-        <div class="header-nav-row">
-            <div class="header-inner">
-                <a href="#" class="header-logo">
-                    <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
-                </a>
+            <nav class="header-nav">
+                <ul class="deck-nav-list">
+                    <li>
+                        <a class="nav-item-link active" data-slide="0">
+                            <span class="nav-text">What is Lemniscate?</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item-link" data-slide="1">
+                            <span class="nav-text">Portfolio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item-link" data-slide="2">
+                            <span class="nav-text">Contact &amp; Pitch</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-                <nav class="header-nav">
-                    <ul class="deck-nav-list">
-                        <li>
-                            <a class="nav-item-link active" data-slide="0">
-                                <span class="nav-text">What is Lemniscate?</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-item-link" data-slide="1">
-                                <span class="nav-text">Portfolio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-item-link" data-slide="2">
-                                <span class="nav-text">Contact &amp; Pitch</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="header-actions">
-                    <a href="#slide2" onclick="document.getElementById('slide2').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
-                </div>
+            <div class="header-actions">
+                <a href="#slide2" onclick="document.getElementById('slide2').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
             </div>
         </div>
-
-        <!-- Row 2: Market Ticker -->
-        <div class="market-ticker-bar">
-            <div class="market-ticker-bar-inner">
-                <div class="ticker-dropdown-container">
-                    <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
-                        <svg class="globe-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                        <span id="tickerCategoryLabel">US Markets</span>
-                        <svg class="arrow-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
-                        <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
-                        <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
-                        <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
-                    </div>
-                </div>
-
-                <div class="ticker-track-container">
-                    <div class="ticker-track" id="tickerTrack">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-
-                <div class="ticker-nav-arrows">
-                    <button class="ticker-arrow-btn" id="tickerArrowPrev" title="Previous">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <button class="ticker-arrow-btn" id="tickerArrowNext" title="Next">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
     </header>
+
+    <!-- ===== MARKET TICKER BAR (fixed, top:68px — directly below nav) ===== -->
+    <div class="market-ticker-bar" id="marketTickerBar">
+        <div class="market-ticker-bar-inner">
+            <div class="ticker-dropdown-container">
+                <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
+                    <svg class="globe-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span id="tickerCategoryLabel">US Markets</span>
+                    <svg class="arrow-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
+                    <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
+                    <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
+                    <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
+                </div>
+            </div>
+
+            <div class="ticker-track-container">
+                <div class="ticker-track" id="tickerTrack">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="ticker-nav-arrows">
+                <button class="ticker-arrow-btn" id="tickerArrowPrev" title="Previous">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="ticker-arrow-btn" id="tickerArrowNext" title="Next">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ===== DECK DECK CONTAINER ===== -->
     <div class="deck-container">
