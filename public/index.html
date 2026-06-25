@@ -1781,6 +1781,254 @@
             backface-visibility: hidden;
         }
 
+        /* ===== MARKET TICKER BAR STYLES ===== */
+        .market-ticker-bar {
+            display: flex;
+            align-items: center;
+            background-color: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-family: var(--font-body);
+            position: relative;
+            user-select: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dropdown style */
+        .ticker-dropdown-container {
+            position: relative;
+            padding-right: 16px;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
+        .ticker-dropdown-btn {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .ticker-dropdown-btn:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+
+        .ticker-dropdown-btn .globe-icon {
+            color: #0ecb81;
+        }
+
+        .ticker-dropdown-btn .arrow-icon {
+            opacity: 0.7;
+            transition: transform 0.2s ease;
+        }
+
+        .ticker-dropdown-container.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        .ticker-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background-color: #121824;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 100;
+            min-width: 150px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .ticker-dropdown-menu.show {
+            display: block;
+            animation: fadeInDropdown 0.2s ease;
+        }
+
+        @keyframes fadeInDropdown {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ticker-dropdown-item {
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ticker-dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .ticker-dropdown-item.active {
+            color: #b89765;
+            font-weight: 600;
+            background-color: rgba(184, 151, 101, 0.08);
+        }
+
+        /* Track / Carousel styles */
+        .ticker-track-container {
+            flex-grow: 1;
+            overflow: hidden;
+            margin: 0 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-track {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            width: 100%;
+        }
+
+        /* Hide scrollbars */
+        .ticker-track::-webkit-scrollbar {
+            display: none;
+        }
+        .ticker-track {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Ticker Item styling */
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            border: 1px solid transparent;
+        }
+
+        .ticker-item:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .ticker-item.active {
+            background-color: rgba(184, 151, 101, 0.1);
+            border-color: rgba(184, 151, 101, 0.3);
+        }
+
+        .ticker-item-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticker-item-name {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-bottom: 2px;
+        }
+
+        .ticker-item.active .ticker-item-name {
+            color: #b89765;
+            font-weight: 600;
+        }
+
+        .ticker-item-price {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f8fafc;
+            transition: color 0.15s ease;
+        }
+
+        .ticker-item-change {
+            font-family: var(--font-code);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ticker-item-sparkline {
+            width: 50px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Price tick animation flash */
+        @keyframes tick-up-flash {
+            0% { color: #0ecb81; }
+            100% { color: #f8fafc; }
+        }
+        @keyframes tick-down-flash {
+            0% { color: #f6465d; }
+            100% { color: #f8fafc; }
+        }
+
+        .price-flash-up {
+            animation: tick-up-flash 0.8s ease-out;
+        }
+
+        .price-flash-down {
+            animation: tick-down-flash 0.8s ease-out;
+        }
+
+        /* Up/Down colors matching screenshot */
+        .color-up {
+            color: #0ecb81 !important;
+        }
+
+        .color-down {
+            color: #f6465d !important;
+        }
+
+        /* Nav Arrows styles */
+        .ticker-nav-arrows {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 16px;
+            flex-shrink: 0;
+        }
+
+        .ticker-arrow-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .ticker-arrow-btn:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+
         /* ===== LIVE MARKET TERMINAL STYLES ===== */
         .markets-grid {
             display: grid;
@@ -2188,8 +2436,6 @@
         </div>
     </section>
 
-    <!-- ===== DECK DECK CONTAINER ===== -->
-    <div class="deck-container">
 
     <!-- ===== TOP NAVIGATION HEADER ===== -->
     <header class="site-header">
@@ -2346,6 +2592,47 @@
                     <p class="slide-desc">
                         Monitor global market data, quants performance indices, and real-time execution flows.
                     </p>
+                </div>
+
+                <!-- NEW MARKET TICKER BAR -->
+                <div class="market-ticker-bar scroll-reveal delay-1">
+                    <div class="ticker-dropdown-container">
+                        <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
+                            <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                            <span id="tickerCategoryLabel">US Markets</span>
+                            <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
+                            <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
+                            <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
+                            <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
+                        </div>
+                    </div>
+
+                    <div class="ticker-track-container">
+                        <div class="ticker-track" id="tickerTrack">
+                            <!-- Will be populated dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <div class="ticker-nav-arrows">
+                        <button class="ticker-arrow-btn prev" id="tickerArrowPrev">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="ticker-arrow-btn next" id="tickerArrowNext">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="markets-grid scroll-reveal delay-1">
@@ -3088,160 +3375,395 @@
             // ==========================================
             // ===== LIVE MARKET TERMINAL CONTROLLER =====
             // ==========================================
-            const watchlistSymbols = [
-                {
-                    id: "NASDAQ",
-                    name: "NASDAQ 100",
-                    tvSymbol: "FOREXCOM:NAS100",
-                    description: "US Tech 100 Cash • Index Cfd",
-                    last: 29474.20,
-                    chg: -280.00,
-                    chgPct: -0.94,
-                    timezone: "America/New_York",
-                    openHour: 9, openMin: 30,
-                    closeHour: 16, closeMin: 0,
-                    currency: "USD",
-                    mcap: "$18.2T",
-                    vol: "$98.4B",
-                    high: 31434.10,
-                    low: 20690.30,
-                    pe: "28.45",
-                    news: [
-                        { time: "2 hours ago", source: "PCE Inflation", headline: "PCE Inflation Shakes Markets: Nasdaq Rally Collapses under rate pressure." },
-                        { time: "4 hours ago", source: "Tech Crunch", headline: "Big Tech earnings forecast signals margins squeeze as AI spending balloons." }
-                    ]
-                },
-                {
-                    id: "NIFTY",
-                    name: "NIFTY 50",
-                    tvSymbol: "NSE:NIFTY",
-                    description: "Nifty 50 Index • India",
-                    last: 24056.00,
-                    chg: 34.35,
-                    chgPct: 0.14,
-                    timezone: "Asia/Kolkata",
-                    openHour: 9, openMin: 15,
-                    closeHour: 15, closeMin: 30,
-                    currency: "INR",
-                    mcap: "$4.1T",
-                    vol: "$14.6B",
-                    high: 24150.00,
-                    low: 21280.00,
-                    pe: "22.60",
-                    news: [
-                        { time: "1 hour ago", source: "CNBC TV18", headline: "Nifty hovers above 24k as auto and metal stocks see late buying interest." },
-                        { time: "3 hours ago", source: "LiveMint", headline: "FII activity shifts back to green as retail inflows hit record monthly highs." }
-                    ]
-                },
-                {
-                    id: "BANKNIFTY",
-                    name: "NIFTY BANK",
-                    tvSymbol: "NSE:BANKNIFTY",
-                    description: "Nifty Bank Index • India",
-                    last: 58177.05,
-                    chg: 26.70,
-                    chgPct: 0.05,
-                    timezone: "Asia/Kolkata",
-                    openHour: 9, openMin: 15,
-                    closeHour: 15, closeMin: 30,
-                    currency: "INR",
-                    mcap: "$1.4T",
-                    vol: "$8.1B",
-                    high: 58800.00,
-                    low: 47200.00,
-                    pe: "15.80",
-                    news: [
-                        { time: "2 hours ago", source: "Economic Times", headline: "Private banks drag Bank Nifty while public sector banks extend gains." }
-                    ]
-                },
-                {
-                    id: "SENSEX",
-                    name: "SENSEX",
-                    tvSymbol: "BSE:SENSEX",
-                    description: "S&P BSE Sensex Index • India",
-                    last: 77100.47,
-                    chg: 109.25,
-                    chgPct: 0.14,
-                    timezone: "Asia/Kolkata",
-                    openHour: 9, openMin: 15,
-                    closeHour: 15, closeMin: 30,
-                    currency: "INR",
-                    mcap: "$4.7T",
-                    vol: "$18.3B",
-                    high: 77300.00,
-                    low: 69400.00,
-                    pe: "23.40",
-                    news: [
-                        { time: "1 hour ago", source: "Bloomberg Quint", headline: "Sensex registers marginal gains driven by index heavyweight IT stocks." }
-                    ]
-                },
-                {
-                    id: "CNXIT",
-                    name: "NIFTY IT",
-                    tvSymbol: "NSE:CNXIT",
-                    description: "Nifty IT Index • India",
-                    last: 27330.85,
-                    chg: -235.85,
-                    chgPct: -0.86,
-                    timezone: "Asia/Kolkata",
-                    openHour: 9, openMin: 15,
-                    closeHour: 15, closeMin: 30,
-                    currency: "INR",
-                    mcap: "$680B",
-                    vol: "$3.5B",
-                    high: 28400.00,
-                    low: 21500.00,
-                    pe: "25.20",
-                    news: [
-                        { time: "30 mins ago", source: "MoneyControl", headline: "IT index drops 0.8% amid concerns of slower enterprise tech spending." }
-                    ]
-                },
-                {
-                    id: "SPX",
-                    name: "S&P 500",
-                    tvSymbol: "FOREXCOM:SPX500",
-                    description: "S&P 500 Index • US",
-                    last: 7358.72,
-                    chg: 0.51,
-                    chgPct: 0.01,
-                    timezone: "America/New_York",
-                    openHour: 9, openMin: 30,
-                    closeHour: 16, closeMin: 0,
-                    currency: "USD",
-                    mcap: "$44.2T",
-                    vol: "$168.1B",
-                    high: 7420.00,
-                    low: 5180.00,
-                    pe: "26.10",
-                    news: [
-                        { time: "3 hours ago", source: "Reuters", headline: "S&P 500 holds steady near all-time highs as macro data meets expectations." }
-                    ]
-                },
-                {
-                    id: "RELIANCE",
-                    name: "RELIANCE",
-                    tvSymbol: "NSE:RELIANCE",
-                    description: "Reliance Industries Ltd. • Stock",
-                    last: 1318.10,
-                    chg: 4.50,
-                    chgPct: 0.34,
-                    timezone: "Asia/Kolkata",
-                    openHour: 9, openMin: 15,
-                    closeHour: 15, closeMin: 30,
-                    currency: "INR",
-                    mcap: "$215B",
-                    vol: "$1.4B",
-                    high: 1350.00,
-                    low: 950.00,
-                    pe: "28.10",
-                    news: [
-                        { time: "5 hours ago", source: "Business Standard", headline: "Reliance retail expansion gets boost with 50 new digital outlets." }
-                    ]
-                }
-            ];
+            const marketCategories = {
+                us: [
+                    {
+                        id: "SPX",
+                        name: "S&P 500",
+                        tvSymbol: "FOREXCOM:SPX500",
+                        description: "S&P 500 Index • US",
+                        last: 7353.24,
+                        chg: -4.98,
+                        chgPct: -0.07,
+                        timezone: "America/New_York",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$44.2T",
+                        vol: "$168.1B",
+                        high: 7420.00,
+                        low: 5180.00,
+                        pe: "26.10",
+                        news: [
+                            { time: "3 hours ago", source: "Reuters", headline: "S&P 500 holds steady near all-time highs as macro data meets expectations." }
+                        ]
+                    },
+                    {
+                        id: "DJI",
+                        name: "Dow 30",
+                        tvSymbol: "FOREXCOM:DJI",
+                        description: "Dow Jones Industrial Average • Index",
+                        last: 51963.98,
+                        chg: 115.08,
+                        chgPct: 0.22,
+                        timezone: "America/New_York",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$11.8T",
+                        vol: "$48.3B",
+                        high: 52400.00,
+                        low: 38200.00,
+                        pe: "21.40",
+                        news: [
+                            { time: "1 hour ago", source: "Wall Street Journal", headline: "Dow 30 ticks up as industrial giants rally on positive earnings projections." }
+                        ]
+                    },
+                    {
+                        id: "NASDAQ",
+                        name: "Nasdaq",
+                        tvSymbol: "FOREXCOM:NAS100",
+                        description: "US Tech 100 Cash • Index Cfd",
+                        last: 25327.36,
+                        chg: -149.28,
+                        chgPct: -0.59,
+                        timezone: "America/New_York",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$18.2T",
+                        vol: "$98.4B",
+                        high: 31434.10,
+                        low: 20690.30,
+                        pe: "28.45",
+                        news: [
+                            { time: "2 hours ago", source: "PCE Inflation", headline: "PCE Inflation Shakes Markets: Nasdaq Rally Collapses under rate pressure." }
+                        ]
+                    },
+                    {
+                        id: "RUT",
+                        name: "Russell 2000",
+                        tvSymbol: "FOREXCOM:RUT",
+                        description: "Russell 2000 Index • Small Cap US",
+                        last: 2994.02,
+                        chg: 7.39,
+                        chgPct: 0.25,
+                        timezone: "America/New_York",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$3.2T",
+                        vol: "$12.4B",
+                        high: 3150.00,
+                        low: 2200.00,
+                        pe: "19.80",
+                        news: [
+                            { time: "2 hours ago", source: "Bloomberg", headline: "Russell 2000 outperforms as small-cap equities draw value investors." }
+                        ]
+                    },
+                    {
+                        id: "VIX",
+                        name: "VIX",
+                        tvSymbol: "TVC:VIX",
+                        description: "CBOE Volatility Index • US",
+                        last: 18.99,
+                        chg: 0.36,
+                        chgPct: 1.93,
+                        timezone: "America/New_York",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "-",
+                        high: 32.50,
+                        low: 11.20,
+                        pe: "-",
+                        news: [
+                            { time: "1 hour ago", source: "MarketWatch", headline: "VIX rises above 18 as market uncertainty climbs ahead of Fed meeting." }
+                        ]
+                    },
+                    {
+                        id: "GOLD",
+                        name: "Gold",
+                        tvSymbol: "TVC:GOLD",
+                        description: "Gold / U.S. Dollar • Commodity",
+                        last: 4058.90,
+                        chg: 50.10,
+                        chgPct: 1.25,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$28.9B",
+                        high: 4120.00,
+                        low: 2280.00,
+                        pe: "-",
+                        news: [
+                            { time: "30 mins ago", source: "Kitco News", headline: "Gold rallies past 4k as global geopolitical tensions support safe haven buying." }
+                        ]
+                    },
+                    {
+                        id: "BTCUSD",
+                        name: "Bitcoin USD",
+                        tvSymbol: "BINANCE:BTCUSDT",
+                        description: "Bitcoin / U.S. Dollar • Crypto",
+                        last: 59217.03,
+                        chg: -643.55,
+                        chgPct: -1.08,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$1.16T",
+                        vol: "$32.4B",
+                        high: 73800.00,
+                        low: 38500.00,
+                        pe: "-",
+                        news: [
+                            { time: "2 hours ago", source: "Coindesk", headline: "Bitcoin consolidates below 60k as short-term holder capitulation peaks." }
+                        ]
+                    },
+                    {
+                        id: "CRUDE_OIL",
+                        name: "Crude Oil",
+                        tvSymbol: "TVC:USOIL",
+                        description: "Light Sweet Crude Oil • Commodity",
+                        last: 72.36,
+                        chg: 2.02,
+                        chgPct: 2.87,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$15.2B",
+                        high: 95.00,
+                        low: 65.00,
+                        pe: "-",
+                        news: [
+                            { time: "4 hours ago", source: "OPEC+", headline: "Crude oil gains 2% on production cuts extension and solid demand outlook." }
+                        ]
+                    }
+                ],
+                indian: [
+                    {
+                        id: "NIFTY",
+                        name: "NIFTY 50",
+                        tvSymbol: "NSE:NIFTY",
+                        description: "Nifty 50 Index • India",
+                        last: 24056.00,
+                        chg: 34.35,
+                        chgPct: 0.14,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 15,
+                        closeHour: 15, closeMin: 30,
+                        currency: "INR",
+                        mcap: "$4.1T",
+                        vol: "$14.6B",
+                        high: 24150.00,
+                        low: 21280.00,
+                        pe: "22.60",
+                        news: [
+                            { time: "1 hour ago", source: "CNBC TV18", headline: "Nifty hovers above 24k as auto and metal stocks see late buying interest." }
+                        ]
+                    },
+                    {
+                        id: "BANKNIFTY",
+                        name: "NIFTY BANK",
+                        tvSymbol: "NSE:BANKNIFTY",
+                        description: "Nifty Bank Index • India",
+                        last: 58177.05,
+                        chg: 26.70,
+                        chgPct: 0.05,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 15,
+                        closeHour: 15, closeMin: 30,
+                        currency: "INR",
+                        mcap: "$1.4T",
+                        vol: "$8.1B",
+                        high: 58800.00,
+                        low: 47200.00,
+                        pe: "15.80",
+                        news: [
+                            { time: "2 hours ago", source: "Economic Times", headline: "Private banks drag Bank Nifty while public sector banks extend gains." }
+                        ]
+                    },
+                    {
+                        id: "SENSEX",
+                        name: "SENSEX",
+                        tvSymbol: "BSE:SENSEX",
+                        description: "S&P BSE Sensex Index • India",
+                        last: 77100.47,
+                        chg: 109.25,
+                        chgPct: 0.14,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 15,
+                        closeHour: 15, closeMin: 30,
+                        currency: "INR",
+                        mcap: "$4.7T",
+                        vol: "$18.3B",
+                        high: 77300.00,
+                        low: 69400.00,
+                        pe: "23.40",
+                        news: [
+                            { time: "1 hour ago", source: "Bloomberg Quint", headline: "Sensex registers marginal gains driven by index heavyweight IT stocks." }
+                        ]
+                    },
+                    {
+                        id: "CNXIT",
+                        name: "NIFTY IT",
+                        tvSymbol: "NSE:CNXIT",
+                        description: "Nifty IT Index • India",
+                        last: 27330.85,
+                        chg: -235.85,
+                        chgPct: -0.86,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 15,
+                        closeHour: 15, closeMin: 30,
+                        currency: "INR",
+                        mcap: "$680B",
+                        vol: "$3.5B",
+                        high: 28400.00,
+                        low: 21500.00,
+                        pe: "25.20",
+                        news: [
+                            { time: "30 mins ago", source: "MoneyControl", headline: "IT index drops 0.8% amid concerns of slower enterprise tech spending." }
+                        ]
+                    },
+                    {
+                        id: "RELIANCE",
+                        name: "RELIANCE",
+                        tvSymbol: "NSE:RELIANCE",
+                        description: "Reliance Industries Ltd. • Stock",
+                        last: 1318.10,
+                        chg: 4.50,
+                        chgPct: 0.34,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 15,
+                        closeHour: 15, closeMin: 30,
+                        currency: "INR",
+                        mcap: "$215B",
+                        vol: "$1.4B",
+                        high: 1350.00,
+                        low: 950.00,
+                        pe: "28.10",
+                        news: [
+                            { time: "5 hours ago", source: "Business Standard", headline: "Reliance retail expansion gets boost with 50 new digital outlets." }
+                        ]
+                    }
+                ],
+                crypto: [
+                    {
+                        id: "BTC",
+                        name: "Bitcoin",
+                        tvSymbol: "BINANCE:BTCUSDT",
+                        description: "Bitcoin / TetherUS • Crypto",
+                        last: 59217.03,
+                        chg: -643.55,
+                        chgPct: -1.08,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$1.16T",
+                        vol: "$32.4B",
+                        high: 73800.00,
+                        low: 38500.00,
+                        pe: "-",
+                        news: [
+                            { time: "2 hours ago", source: "Coindesk", headline: "Bitcoin consolidates below 60k as short-term holder capitulation peaks." }
+                        ]
+                    },
+                    {
+                        id: "ETH",
+                        name: "Ethereum",
+                        tvSymbol: "BINANCE:ETHUSDT",
+                        description: "Ethereum / TetherUS • Crypto",
+                        last: 3425.60,
+                        chg: 12.45,
+                        chgPct: 0.36,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$412B",
+                        vol: "$16.8B",
+                        high: 4090.00,
+                        low: 2150.00,
+                        pe: "-",
+                        news: [
+                            { time: "1 hour ago", source: "Blockworks", headline: "Ethereum gas fees decline to multi-year lows as Layer 2 scaling expands." }
+                        ]
+                    },
+                    {
+                        id: "SOL",
+                        name: "Solana",
+                        tvSymbol: "BINANCE:SOLUSDT",
+                        description: "Solana / TetherUS • Crypto",
+                        last: 148.95,
+                        chg: 4.12,
+                        chgPct: 2.84,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$69.2B",
+                        vol: "$4.1B",
+                        high: 202.00,
+                        low: 78.00,
+                        pe: "-",
+                        news: [
+                            { time: "4 hours ago", source: "Decrypt", headline: "Solana active addresses hit record highs as decentralized exchange activity spikes." }
+                        ]
+                    },
+                    {
+                        id: "BNB",
+                        name: "BNB",
+                        tvSymbol: "BINANCE:BNBUSDT",
+                        description: "BNB / TetherUS • Crypto",
+                        last: 585.30,
+                        chg: -2.15,
+                        chgPct: -0.37,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "$86.4B",
+                        vol: "$1.8B",
+                        high: 710.00,
+                        low: 320.00,
+                        pe: "-",
+                        news: [
+                            { time: "5 hours ago", source: "Binance", headline: "Binance ecosystem expansion leads to increased BNB utility and volume." }
+                        ]
+                    }
+                ]
+            };
 
-            let selectedSymbolId = "NASDAQ";
+            let currentCategory = "us";
+            let watchlistSymbols = marketCategories[currentCategory];
+            let selectedSymbolId = "SPX";
             let tvWidget = null;
+
+            // Generate a random wavy line with a net trend matching chgPct
+            function generateSparklinePoints(chgPct) {
+                const points = [];
+                const numPoints = 12;
+                const startY = 12;
+                const endY = startY - (chgPct * 5); // positive change goes up (lower Y in SVG)
+                
+                points.push(`0,${startY}`);
+                for (let i = 1; i < numPoints - 1; i++) {
+                    const x = (i / (numPoints - 1)) * 50;
+                    const trend = startY + (endY - startY) * (i / (numPoints - 1));
+                    const noise = (Math.random() - 0.5) * 6;
+                    const y = Math.max(2, Math.min(22, trend + noise));
+                    points.push(`${x},${y}`);
+                }
+                points.push(`50,${Math.max(2, Math.min(22, endY))}`);
+                return points.join(' ');
+            }
 
             // Check if market is open based on its local timezone
             function checkMarketOpen(sym) {
@@ -3339,11 +3861,58 @@
                 });
             }
 
-            // Select active symbol in Watchlist
+            // Render horizontal ticker items
+            function renderTicker() {
+                const track = document.getElementById('tickerTrack');
+                if (!track) return;
+                track.innerHTML = '';
+                
+                watchlistSymbols.forEach(sym => {
+                    const isUp = sym.chg >= 0;
+                    const colorClass = isUp ? 'color-up' : 'color-down';
+                    
+                    const item = document.createElement('div');
+                    item.className = `ticker-item ${sym.id === selectedSymbolId ? 'active' : ''}`;
+                    item.id = `ticker-item-${sym.id}`;
+                    item.onclick = () => selectSymbol(sym.id);
+                    
+                    item.innerHTML = `
+                        <div class="ticker-item-meta">
+                            <span class="ticker-item-name">${sym.name}</span>
+                            <span class="ticker-item-price" id="ticker-price-${sym.id}">
+                                ${sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </span>
+                            <span class="ticker-item-change ${colorClass}" id="ticker-chg-${sym.id}">
+                                ${sym.chg >= 0 ? '+' : ''}${sym.chg.toFixed(2)} ${sym.chgPct >= 0 ? '+' : ''}${sym.chgPct.toFixed(2)}%
+                            </span>
+                        </div>
+                        <svg class="ticker-item-sparkline" viewBox="0 0 50 24">
+                            <polyline 
+                                fill="none" 
+                                stroke="${isUp ? '#0ecb81' : '#f6465d'}" 
+                                stroke-width="1.5" 
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                points="${generateSparklinePoints(sym.chgPct)}">
+                            </polyline>
+                        </svg>
+                    `;
+                    track.appendChild(item);
+                });
+            }
+
+            // Select active symbol in Watchlist & Ticker
             function selectSymbol(id) {
                 selectedSymbolId = id;
+                
+                // Highlight active in watchlist
                 document.querySelectorAll('.watchlist-row').forEach(row => {
                     row.classList.toggle('active', row.id === `row-${id}`);
+                });
+                
+                // Highlight active in ticker
+                document.querySelectorAll('.ticker-item').forEach(item => {
+                    item.classList.toggle('active', item.id === `ticker-item-${id}`);
                 });
                 
                 const sym = watchlistSymbols.find(s => s.id === id);
@@ -3352,6 +3921,29 @@
                     updateStatsPanel(sym);
                     loadTVChart(sym.tvSymbol);
                 }
+            }
+
+            // Switch market categories
+            function switchCategory(cat) {
+                currentCategory = cat;
+                watchlistSymbols = marketCategories[currentCategory];
+                
+                // Update dropdown label
+                const labels = { us: "US Markets", indian: "Indian Markets", crypto: "Crypto Markets" };
+                const labelEl = document.getElementById('tickerCategoryLabel');
+                if (labelEl) labelEl.textContent = labels[cat];
+                
+                // Update dropdown menu active states
+                document.querySelectorAll('.ticker-dropdown-item').forEach(item => {
+                    item.classList.toggle('active', item.dataset.category === cat);
+                });
+                
+                // Select first symbol of new category
+                selectedSymbolId = watchlistSymbols[0].id;
+                
+                renderWatchlist();
+                renderTicker();
+                selectSymbol(selectedSymbolId);
             }
 
             // Update stats grid card values
@@ -3448,10 +4040,28 @@
                                 
                                 priceCell.textContent = sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                                 changeCell.textContent = `${sym.chg >= 0 ? '+' : ''}${sym.chg.toFixed(2)} (${sym.chgPct >= 0 ? '+' : ''}${sym.chgPct.toFixed(2)}%)`;
+                            }
+                            
+                            // Update ticker item
+                            const tickerPrice = document.getElementById(`ticker-price-${sym.id}`);
+                            const tickerChg = document.getElementById(`ticker-chg-${sym.id}`);
+                            if (tickerPrice && tickerChg) {
+                                const flashClass = diff >= 0 ? 'price-flash-up' : 'price-flash-down';
+                                tickerPrice.classList.add(flashClass);
+                                setTimeout(() => tickerPrice.classList.remove(flashClass), 800);
                                 
-                                if (sym.id === selectedSymbolId) {
-                                    updateDetailPanel(sym);
+                                if (sym.chg >= 0) {
+                                    tickerChg.className = 'ticker-item-change color-up';
+                                } else {
+                                    tickerChg.className = 'ticker-item-change color-down';
                                 }
+                                
+                                tickerPrice.textContent = sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                tickerChg.textContent = `${sym.chg >= 0 ? '+' : ''}${sym.chg.toFixed(2)} ${sym.chgPct >= 0 ? '+' : ''}${sym.chgPct.toFixed(2)}%`;
+                            }
+                            
+                            if (sym.id === selectedSymbolId) {
+                                updateDetailPanel(sym);
                             }
                         }
                     });
@@ -3534,8 +4144,50 @@
             const wlBody = document.getElementById('watchlistBody');
             if (wlBody) {
                 renderWatchlist();
+                renderTicker();
                 selectSymbol(selectedSymbolId);
                 startPriceSimulation();
+
+                // Bind ticker category dropdown actions
+                const dropdownBtn = document.getElementById('tickerCategoryBtn');
+                const dropdownMenu = document.getElementById('tickerCategoryMenu');
+                const dropdownContainer = document.querySelector('.ticker-dropdown-container');
+                
+                if (dropdownBtn && dropdownMenu && dropdownContainer) {
+                    dropdownBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        dropdownContainer.classList.toggle('open');
+                        dropdownMenu.classList.toggle('show');
+                    };
+                    
+                    document.querySelectorAll('.ticker-dropdown-item').forEach(item => {
+                        item.onclick = (e) => {
+                            e.stopPropagation();
+                            const cat = item.dataset.category;
+                            switchCategory(cat);
+                            dropdownContainer.classList.remove('open');
+                            dropdownMenu.classList.remove('show');
+                        };
+                    });
+                    
+                    document.addEventListener('click', () => {
+                        dropdownContainer.classList.remove('open');
+                        dropdownMenu.classList.remove('show');
+                    });
+                }
+
+                // Bind ticker scroll arrow buttons
+                const track = document.getElementById('tickerTrack');
+                const prevBtn = document.getElementById('tickerArrowPrev');
+                const nextBtn = document.getElementById('tickerArrowNext');
+                if (track && prevBtn && nextBtn) {
+                    prevBtn.onclick = () => {
+                        track.scrollBy({ left: -200, behavior: 'smooth' });
+                    };
+                    nextBtn.onclick = () => {
+                        track.scrollBy({ left: 200, behavior: 'smooth' });
+                    };
+                }
             }
             bindContactHandler();
 
