@@ -59,7 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 40px;
+            padding: 112px 40px 80px;
             position: relative;
             z-index: 5;
             overflow: hidden;
@@ -485,11 +485,11 @@
         /* ===== TOP NAVIGATION HEADER ===== */
         .site-header {
             position: fixed;
-            top: 0;
+            top: 42px;
             left: 0;
             width: 100%;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.75);
+            height: 70px;
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
@@ -799,7 +799,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 80px;
+            margin-top: 112px;
         }
 
         .slide {
@@ -1785,16 +1785,20 @@
         .market-ticker-bar {
             display: flex;
             align-items: center;
-            background-color: #0b0f19;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 8px 16px;
-            margin-bottom: 20px;
+            background-color: #070b14;
+            border-bottom: 1px solid rgba(184, 151, 101, 0.12);
+            padding: 7px 24px;
             color: #ffffff;
             font-family: var(--font-body);
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
             user-select: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            height: 42px;
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         /* Dropdown style */
@@ -2437,6 +2441,47 @@
     </section>
 
 
+    <!-- ===== TOP MARKET TICKER BAR ===== -->
+    <div class="market-ticker-bar">
+        <div class="ticker-dropdown-container">
+            <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
+                <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span id="tickerCategoryLabel">US Markets</span>
+                <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
+                <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
+                <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
+                <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
+            </div>
+        </div>
+
+        <div class="ticker-track-container">
+            <div class="ticker-track" id="tickerTrack">
+                <!-- Will be populated dynamically by JS -->
+            </div>
+        </div>
+
+        <div class="ticker-nav-arrows">
+            <button class="ticker-arrow-btn prev" id="tickerArrowPrev">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="ticker-arrow-btn next" id="tickerArrowNext">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <!-- ===== TOP NAVIGATION HEADER ===== -->
     <header class="site-header">
         <div class="header-inner">
@@ -2453,16 +2498,11 @@
                     </li>
                     <li>
                         <a class="nav-item-link" data-slide="1">
-                            <span class="nav-text">Live Terminal</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="2">
                             <span class="nav-text">Portfolio</span>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-item-link" data-slide="3">
+                        <a class="nav-item-link" data-slide="2">
                             <span class="nav-text">Contact &amp; Pitch</span>
                         </a>
                     </li>
@@ -2470,8 +2510,7 @@
             </nav>
 
             <div class="header-actions">
-                <a href="#slide1" onclick="document.getElementById('slide1').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-portal">Live Terminal</a>
-                <a href="#slide3" onclick="document.getElementById('slide3').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
+                <a href="#slide2" onclick="document.getElementById('slide2').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
             </div>
         </div>
     </header>
@@ -2584,115 +2623,7 @@
                 </div>
             </section>
 
-            <!-- SLIDE 2: LIVE MARKET TERMINAL -->
-            <section class="slide" id="slide1" aria-label="Live Market Terminal">
-                <div class="slide-header scroll-reveal" style="margin-bottom: 25px;">
-                    <span class="slide-label">Execution</span>
-                    <h2 class="slide-title">Live Market <em>Terminal</em></h2>
-                    <p class="slide-desc">
-                        Monitor global market data, quants performance indices, and real-time execution flows.
-                    </p>
-                </div>
-
-                <!-- NEW MARKET TICKER BAR -->
-                <div class="market-ticker-bar scroll-reveal delay-1">
-                    <div class="ticker-dropdown-container">
-                        <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
-                            <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="2" y1="12" x2="22" y2="12"></line>
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                            </svg>
-                            <span id="tickerCategoryLabel">US Markets</span>
-                            <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
-                            <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
-                            <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
-                            <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
-                        </div>
-                    </div>
-
-                    <div class="ticker-track-container">
-                        <div class="ticker-track" id="tickerTrack">
-                            <!-- Will be populated dynamically by JS -->
-                        </div>
-                    </div>
-
-                    <div class="ticker-nav-arrows">
-                        <button class="ticker-arrow-btn prev" id="tickerArrowPrev">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                        <button class="ticker-arrow-btn next" id="tickerArrowNext">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="markets-grid scroll-reveal delay-1">
-                    <!-- Main Column (Chart + Stats) -->
-                    <div class="market-main-col">
-                        <!-- Chart Panel -->
-                        <div class="market-card-panel chart-panel">
-                            <div id="tv-advanced-chart" style="height: 100%; width: 100%;"></div>
-                        </div>
-
-                        <!-- Stats Row -->
-                        <div class="market-stats-row">
-                            <div class="market-stat-card">
-                                <span class="market-stat-label">Market Cap</span>
-                                <span class="market-stat-value" id="statMcap">-</span>
-                            </div>
-                            <div class="market-stat-card">
-                                <span class="market-stat-label">24h Volume</span>
-                                <span class="market-stat-value" id="statVol">-</span>
-                            </div>
-                            <div class="market-stat-card">
-                                <span class="market-stat-label">52w High</span>
-                                <span class="market-stat-value" id="statHigh">-</span>
-                            </div>
-                            <div class="market-stat-card">
-                                <span class="market-stat-label">52w Low</span>
-                                <span class="market-stat-value" id="statLow">-</span>
-                            </div>
-                            <div class="market-stat-card">
-                                <span class="market-stat-label">P/E Ratio</span>
-                                <span class="market-stat-value" id="statPe">-</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sidebar Column (Watchlist + Details) -->
-                    <div class="market-sidebar-col">
-                        <!-- Watchlist Panel -->
-                        <div class="market-card-panel watchlist-panel">
-                            <div class="watchlist-header">
-                                <h3>Watchlist</h3>
-                            </div>
-                            <div class="watchlist-table-wrap">
-                                <table class="watchlist-table">
-                                    <tbody id="watchlistBody">
-                                        <!-- Will be populated by JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Details Panel -->
-                        <div class="market-card-panel details-panel" id="marketDetailsPanel">
-                            <!-- Will be populated by JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SLIDE 3: PORTFOLIO COMPANIES -->
+            <!-- SLIDE 2: PORTFOLIO COMPANIES -->
             <section class="slide" id="slide2" aria-label="Portfolio">
                 <div class="slide-header scroll-reveal" style="margin-bottom: 30px;">
                     <span class="slide-label">Case Studies</span>
@@ -3941,9 +3872,7 @@
                 // Select first symbol of new category
                 selectedSymbolId = watchlistSymbols[0].id;
                 
-                renderWatchlist();
                 renderTicker();
-                selectSymbol(selectedSymbolId);
             }
 
             // Update stats grid card values
@@ -4140,54 +4069,49 @@
                 }
             }
 
-            // Initial startup
-            const wlBody = document.getElementById('watchlistBody');
-            if (wlBody) {
-                renderWatchlist();
-                renderTicker();
-                selectSymbol(selectedSymbolId);
-                startPriceSimulation();
+            // Initial startup — ticker is always present in the header
+            renderTicker();
+            startPriceSimulation();
 
-                // Bind ticker category dropdown actions
-                const dropdownBtn = document.getElementById('tickerCategoryBtn');
-                const dropdownMenu = document.getElementById('tickerCategoryMenu');
-                const dropdownContainer = document.querySelector('.ticker-dropdown-container');
+            // Bind ticker category dropdown actions
+            const dropdownBtn = document.getElementById('tickerCategoryBtn');
+            const dropdownMenu = document.getElementById('tickerCategoryMenu');
+            const dropdownContainer = document.querySelector('.ticker-dropdown-container');
+            
+            if (dropdownBtn && dropdownMenu && dropdownContainer) {
+                dropdownBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    dropdownContainer.classList.toggle('open');
+                    dropdownMenu.classList.toggle('show');
+                };
                 
-                if (dropdownBtn && dropdownMenu && dropdownContainer) {
-                    dropdownBtn.onclick = (e) => {
+                document.querySelectorAll('.ticker-dropdown-item').forEach(item => {
+                    item.onclick = (e) => {
                         e.stopPropagation();
-                        dropdownContainer.classList.toggle('open');
-                        dropdownMenu.classList.toggle('show');
-                    };
-                    
-                    document.querySelectorAll('.ticker-dropdown-item').forEach(item => {
-                        item.onclick = (e) => {
-                            e.stopPropagation();
-                            const cat = item.dataset.category;
-                            switchCategory(cat);
-                            dropdownContainer.classList.remove('open');
-                            dropdownMenu.classList.remove('show');
-                        };
-                    });
-                    
-                    document.addEventListener('click', () => {
+                        const cat = item.dataset.category;
+                        switchCategory(cat);
                         dropdownContainer.classList.remove('open');
                         dropdownMenu.classList.remove('show');
-                    });
-                }
+                    };
+                });
+                
+                document.addEventListener('click', () => {
+                    dropdownContainer.classList.remove('open');
+                    dropdownMenu.classList.remove('show');
+                });
+            }
 
-                // Bind ticker scroll arrow buttons
-                const track = document.getElementById('tickerTrack');
-                const prevBtn = document.getElementById('tickerArrowPrev');
-                const nextBtn = document.getElementById('tickerArrowNext');
-                if (track && prevBtn && nextBtn) {
-                    prevBtn.onclick = () => {
-                        track.scrollBy({ left: -200, behavior: 'smooth' });
-                    };
-                    nextBtn.onclick = () => {
-                        track.scrollBy({ left: 200, behavior: 'smooth' });
-                    };
-                }
+            // Bind ticker scroll arrow buttons
+            const track = document.getElementById('tickerTrack');
+            const prevBtn = document.getElementById('tickerArrowPrev');
+            const nextBtn = document.getElementById('tickerArrowNext');
+            if (track && prevBtn && nextBtn) {
+                prevBtn.onclick = () => {
+                    track.scrollBy({ left: -200, behavior: 'smooth' });
+                };
+                nextBtn.onclick = () => {
+                    track.scrollBy({ left: 200, behavior: 'smooth' });
+                };
             }
             bindContactHandler();
 
