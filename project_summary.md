@@ -67,5 +67,5 @@ e:\invest_web/
    npm start
    ```
 3. Open your browser:
-   - **Founders Portal**: [http://localhost:3000](http://localhost:3000)
-   - **Lamnicate Dashboard**: [http://localhost:3000/dashboard.html](http://localhost:3000/dashboard.html)
+   - **Founders Portal**: [http://localhost:3005](http://localhost:3005)
+   - **Lamnicate Dashboard**: [http://localhost:3005/dashboard.html](http://localhost:3005/dashboard.html)

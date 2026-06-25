@@ -3,3 +3,4 @@ node_modules/
 Thumbs.db
 public/uploads/pitch-*
 pitches.json
+contacts.json

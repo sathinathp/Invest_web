@@ -1468,6 +1468,18 @@
             line-height: 1.5;
         }
 
+        .office-card-link:hover .office-card {
+            transform: translateY(-2px);
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: rgba(184, 151, 101, 0.3) !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .office-card-link:hover .map-icon-badge {
+            background: #b89765 !important;
+            color: #fff !important;
+        }
+
         .contact-form-col {
             background-color: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(8px);
@@ -1648,6 +1660,20 @@
                 transform: none !important;
                 transition: none !important;
             }
+
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+            .watchlist-panel, .details-panel {
+                height: auto;
+                max-height: 380px;
+            }
+            .chart-panel {
+                height: 350px;
+            }
+            .market-stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         /* Dynamic Entrance Animations for Active Slides */
         .slide .slide-label {
@@ -1754,6 +1780,269 @@
             will-change: transform, opacity;
             backface-visibility: hidden;
         }
+
+        /* ===== LIVE MARKET TERMINAL STYLES ===== */
+        .markets-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .market-main-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .market-sidebar-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .market-card-panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .chart-panel {
+            height: 400px;
+            padding: 0 !important;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .watchlist-panel {
+            height: 230px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-panel {
+            height: 230px;
+            overflow-y: auto;
+        }
+
+        .market-stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            width: 100%;
+        }
+
+        .market-stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .market-stat-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .market-stat-value {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .watchlist-table-wrap {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .watchlist-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            table-layout: fixed;
+        }
+
+        .watchlist-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+            font-family: var(--font-body);
+            vertical-align: middle;
+        }
+
+        .watchlist-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .watchlist-table td:nth-child(1) {
+            width: 40%;
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        .watchlist-table td:nth-child(2) {
+            width: 30%;
+            text-align: right;
+            padding-right: 24px;
+        }
+
+        .watchlist-table td:nth-child(3) {
+            width: 30%;
+            text-align: right;
+            padding-right: 12px;
+        }
+
+        .watchlist-row {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .watchlist-row:hover {
+            background-color: rgba(184, 151, 101, 0.04);
+        }
+
+        .watchlist-row.active {
+            background-color: rgba(184, 151, 101, 0.08);
+        }
+
+        .symbol-cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .symbol-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .symbol-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .price-cell {
+            font-family: var(--font-code) !important;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .change-cell {
+            font-family: var(--font-code) !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .tick-up {
+            background-color: rgba(5, 150, 105, 0.12) !important;
+        }
+
+        .tick-down {
+            background-color: rgba(220, 38, 38, 0.12) !important;
+        }
+
+        .txt-up {
+            color: #059669 !important;
+        }
+
+        .txt-down {
+            color: #dc2626 !important;
+        }
+
+        .market-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .market-status-badge.open {
+            background-color: rgba(5, 150, 105, 0.08);
+            color: #059669;
+        }
+
+        .market-status-badge.closed {
+            background-color: rgba(100, 116, 139, 0.08);
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .market-status-badge.open .status-dot {
+            background-color: #059669;
+            box-shadow: 0 0 8px #059669;
+            animation: pulseGlow 1.8s infinite;
+        }
+
+        .market-status-badge.closed .status-dot {
+            background-color: var(--text-muted);
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .watchlist-table-wrap::-webkit-scrollbar,
+        .details-panel::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .watchlist-table-wrap::-webkit-scrollbar-track,
+        .details-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .watchlist-table-wrap::-webkit-scrollbar-thumb,
+        .details-panel::-webkit-scrollbar-thumb {
+            background: rgba(184, 151, 101, 0.15);
+            border-radius: 4px;
+        }
+
+        .watchlist-table-wrap::-webkit-scrollbar-thumb:hover,
+        .details-panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(184, 151, 101, 0.35);
+        }
+
+        .watchlist-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 16px 0;
         }
     </style>
 </head>
@@ -1918,31 +2207,16 @@
                     </li>
                     <li>
                         <a class="nav-item-link" data-slide="1">
-                            <span class="nav-text">Thesis &amp; Why Us</span>
+                            <span class="nav-text">Live Terminal</span>
                         </a>
                     </li>
                     <li>
                         <a class="nav-item-link" data-slide="2">
-                            <span class="nav-text">Why it's hard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="3">
-                            <span class="nav-text">The Lemniscate Way</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="4">
-                            <span class="nav-text">Our Services</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item-link" data-slide="5">
                             <span class="nav-text">Portfolio</span>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-item-link" data-slide="6">
+                        <a class="nav-item-link" data-slide="3">
                             <span class="nav-text">Contact &amp; Pitch</span>
                         </a>
                     </li>
@@ -1950,8 +2224,8 @@
             </nav>
 
             <div class="header-actions">
-                <a href="/dashboard.html" class="btn-header-portal">Dashboard</a>
-                <a href="#slide6" onclick="document.getElementById('slide6').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
+                <a href="#slide1" onclick="document.getElementById('slide1').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-portal">Live Terminal</a>
+                <a href="#slide3" onclick="document.getElementById('slide3').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
             </div>
         </div>
     </header>
@@ -2064,193 +2338,75 @@
                 </div>
             </section>
 
-            <!-- SLIDE 2: OUR WHY (WHAT FOUNDERS WANT) -->
-            <section class="slide" id="slide1" aria-label="Our Why">
-                <div class="slide-header scroll-reveal">
-                    <span class="slide-label">Our Why</span>
-                    <h2 class="slide-title">What founders <em>actually want</em></h2>
-                </div>
-
-                <div class="slide-body-grid">
-                    <div class="slide-card scroll-reveal delay-1">
-                        <span class="card-num">01 / TEAM</span>
-                        <h3 class="card-title">Dedicated Partnership</h3>
-                        <p class="card-desc">Someone who has built platforms themselves, co-invests personal wealth, and
-                            stands by you during difficult rebalancing cycles.</p>
-                    </div>
-                    <div class="slide-card scroll-reveal delay-2">
-                        <span class="card-num">02 / CAPITAL</span>
-                        <h3 class="card-title">Venture Firepower</h3>
-                        <p class="card-desc">Meaningful initial rounds coupled with backing from a dedicated collective
-                            of 50+ entrepreneurs and family offices.</p>
-                    </div>
-                    <div class="slide-card scroll-reveal delay-3">
-                        <span class="card-num">03 / DYNAMICS</span>
-                        <h3 class="card-title">Founder Alignment</h3>
-                        <p class="card-desc">No high-pressure portfolio math. No sharky contract clauses. Just clear,
-                            aligned incentives built around your long-term setup success.</p>
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- SLIDE 3: WHY IT'S HARD -->
-            <section class="slide" id="slide2" aria-label="Why it's hard">
-                <div class="slide-header scroll-reveal">
-                    <span class="slide-label">The Conflict</span>
-                    <h2 class="slide-title">Why this is <em>hard to find</em></h2>
-                </div>
-
-                <div class="slide-body-grid grid-2col">
-                    <div class="slide-card scroll-reveal delay-1">
-                        <span class="card-num">01 / PORTFOLIO PRESSURE</span>
-                        <h3 class="card-title">Most VCs manage large portfolios</h3>
-                        <p class="card-desc">Standard funds are designed to play a numbers game. If a setup doesn't hit
-                            hyper-growth velocity instantly, attention shifts, priorities change, and support fades
-                            away.</p>
-                    </div>
-                    <div class="slide-card scroll-reveal delay-2">
-                        <span class="card-num">02 / ANGEL LIMITS</span>
-                        <h3 class="card-title">Most Angels lack the ticket size</h3>
-                        <p class="card-desc">Individual angel investors have valuable operational backgrounds but lack
-                            the institutional capital runway, legal infrastructure, and co-investment capacity you need.
-                        </p>
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- SLIDE 4: THE LEMNISCATE WAY -->
-            <section class="slide" id="slide3" aria-label="The Lemniscate Way">
-                <div class="slide-header scroll-reveal">
-                    <span class="slide-label">The Solution</span>
-                    <h2 class="slide-title">So Lemniscate is <em>built differently</em></h2>
+            <!-- SLIDE 2: LIVE MARKET TERMINAL -->
+            <section class="slide" id="slide1" aria-label="Live Market Terminal">
+                <div class="slide-header scroll-reveal" style="margin-bottom: 25px;">
+                    <span class="slide-label">Execution</span>
+                    <h2 class="slide-title">Live Market <em>Terminal</em></h2>
                     <p class="slide-desc">
-                        We align our personal wealth and networks directly with each founder. We don't run a
-                        "spray-and-pray" game. Each setup company receives dedicated legal, financial, and capital
-                        routing resources from our active partners.
+                        Monitor global market data, quants performance indices, and real-time execution flows.
                     </p>
                 </div>
 
-                <div class="slide-body-grid">
-                    <div class="slide-card scroll-reveal delay-1">
-                        <span class="card-num">Milestone 1</span>
-                        <h3 class="card-title">High Conviction</h3>
-                        <p class="card-desc">We make a small number of deliberate co-investments per year. Each deal is
-                            fully backed by our personal capital.</p>
+                <div class="markets-grid scroll-reveal delay-1">
+                    <!-- Main Column (Chart + Stats) -->
+                    <div class="market-main-col">
+                        <!-- Chart Panel -->
+                        <div class="market-card-panel chart-panel">
+                            <div id="tv-advanced-chart" style="height: 100%; width: 100%;"></div>
+                        </div>
+
+                        <!-- Stats Row -->
+                        <div class="market-stats-row">
+                            <div class="market-stat-card">
+                                <span class="market-stat-label">Market Cap</span>
+                                <span class="market-stat-value" id="statMcap">-</span>
+                            </div>
+                            <div class="market-stat-card">
+                                <span class="market-stat-label">24h Volume</span>
+                                <span class="market-stat-value" id="statVol">-</span>
+                            </div>
+                            <div class="market-stat-card">
+                                <span class="market-stat-label">52w High</span>
+                                <span class="market-stat-value" id="statHigh">-</span>
+                            </div>
+                            <div class="market-stat-card">
+                                <span class="market-stat-label">52w Low</span>
+                                <span class="market-stat-value" id="statLow">-</span>
+                            </div>
+                            <div class="market-stat-card">
+                                <span class="market-stat-label">P/E Ratio</span>
+                                <span class="market-stat-value" id="statPe">-</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="slide-card scroll-reveal delay-2">
-                        <span class="card-num">Milestone 2</span>
-                        <h3 class="card-title">Setup Engineering</h3>
-                        <p class="card-desc">We guide you through core entity registration, banking access, and
-                            infrastructure onboarding to speed up deployment.</p>
-                    </div>
-                    <div class="slide-card scroll-reveal delay-3">
-                        <span class="card-num">Milestone 3</span>
-                        <h3 class="card-title">Continuous Runway</h3>
-                        <p class="card-desc">We show up on board meetings, during rebalances, and help secure follow-on
-                            growth rounds through our LP database.</p>
+
+                    <!-- Sidebar Column (Watchlist + Details) -->
+                    <div class="market-sidebar-col">
+                        <!-- Watchlist Panel -->
+                        <div class="market-card-panel watchlist-panel">
+                            <div class="watchlist-header">
+                                <h3>Watchlist</h3>
+                            </div>
+                            <div class="watchlist-table-wrap">
+                                <table class="watchlist-table">
+                                    <tbody id="watchlistBody">
+                                        <!-- Will be populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Details Panel -->
+                        <div class="market-card-panel details-panel" id="marketDetailsPanel">
+                            <!-- Will be populated by JS -->
+                        </div>
                     </div>
                 </div>
-
-
             </section>
 
-            <!-- SLIDE 5: SERVICES -->
-            <section class="slide" id="slide4" aria-label="Our Services">
-                <div class="slide-header scroll-reveal" style="margin-bottom: 25px;">
-                    <span class="slide-label">What we offer</span>
-                    <h2 class="slide-title">Securities &amp; <em>Venture Setup</em></h2>
-                </div>
-
-                <div class="services-tab-select scroll-reveal delay-1">
-                    <button class="services-tab-btn active" data-tab="tabSecurities">Securities &amp; Wealth</button>
-                    <button class="services-tab-btn" data-tab="tabVenture">Venture Setup &amp; Quants Trading</button>
-                </div>
-
-                <!-- Securities Wealth Solutions Pane -->
-                <div class="services-tab-pane active scroll-reveal delay-2" id="tabSecurities">
-                    <div class="services-columns">
-                        <div class="service-details-col">
-                            <h3 class="service-section-title">Personalized Wealth Solutions for HNI Clients</h3>
-                            <p class="service-section-desc">We work exclusively with High Net Worth Individuals,
-                                delivering tailored investment strategies and premium portfolio management. Our
-                                experienced team ensures your assets are managed with the utmost care, transparency, and
-                                insight.</p>
-
-                            <h4 class="service-subsection-title">Why choose our wealth management?</h4>
-                            <ul class="service-bullets-list">
-                                <li>Custom investment portfolios based on your income, risk tolerance, and aspirations
-                                </li>
-                                <li>Active portfolio monitoring and rebalancing by experienced professionals</li>
-                                <li>Strategic diversification — equity, bonds, mutual funds, and alternatives</li>
-                                <li>Disciplined risk management framework to minimize downside exposure</li>
-                            </ul>
-                        </div>
-
-                        <div class="service-details-col">
-                            <h4 class="service-subsection-title">Long-term financial planning</h4>
-                            <ul class="service-bullets-list">
-                                <li>Retirement &amp; children's education planning</li>
-                                <li>Estate, legacy &amp; succession planning</li>
-                                <li>Tax optimization strategies</li>
-                                <li>Wealth preservation frameworks</li>
-                            </ul>
-
-                            <h4 class="service-subsection-title">Our process</h4>
-                            <ol class="service-numbered-list">
-                                <li><strong>Goal discovery</strong> — understand your objectives and commitments</li>
-                                <li><strong>Risk assessment</strong> — determine your investment profile</li>
-                                <li><strong>Portfolio design</strong> — diversify across assets</li>
-                                <li><strong>Execution</strong> — buy/sell assets on your behalf</li>
-                                <li><strong>Continuous monitoring</strong> — adjust/rebalance based on market movements
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Venture & Quants Pane -->
-                <div class="services-tab-pane scroll-reveal delay-2" id="tabVenture">
-                    <div class="services-columns">
-                        <div class="service-details-col">
-                            <h3 class="service-section-title">Fintech &amp; Quants Trading Infrastructure</h3>
-                            <p class="service-section-desc">We build the institutional-grade legal and financial
-                                infrastructure for next-generation algorithmic setups, high-frequency execution desks,
-                                and private venture deployment.</p>
-
-                            <h4 class="service-subsection-title">Core Setup Solutions</h4>
-                            <ul class="service-bullets-list">
-                                <li>Algorithmic and quantitative desk registration &amp; licensing</li>
-                                <li>Custom corporate governance frameworks for venture entities</li>
-                                <li>Direct APIs to global liquidity pools &amp; multi-broker trade routing</li>
-                                <li>Automated financial reconciliations, accounting, and security logs</li>
-                            </ul>
-                        </div>
-
-                        <div class="service-details-col">
-                            <h4 class="service-subsection-title">Venture Milestones</h4>
-                            <ol class="service-numbered-list">
-                                <li><strong>Entity Incorporation</strong> — Form clear, legally sound corporate
-                                    structures</li>
-                                <li><strong>Banking Access</strong> — Connect with prime brokers and custody networks
-                                </li>
-                                <li><strong>Latency Tuning</strong> — Connect high-speed hardware pipelines to liquidity
-                                    pools</li>
-                                <li><strong>Capital Deployment</strong> — Scale trading volume and launch live
-                                    simulation runs</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- SLIDE 6: PORTFOLIO COMPANIES -->
-            <section class="slide" id="slide5" aria-label="Portfolio">
+            <!-- SLIDE 3: PORTFOLIO COMPANIES -->
+            <section class="slide" id="slide2" aria-label="Portfolio">
                 <div class="slide-header scroll-reveal" style="margin-bottom: 30px;">
                     <span class="slide-label">Case Studies</span>
                     <h2 class="slide-title">Active <em>Investments</em></h2>
@@ -2321,8 +2477,8 @@
 
             </section>
 
-            <!-- SLIDE 7: CONTACT -->
-            <section class="slide" id="slide6" aria-label="Contact">
+            <!-- SLIDE 4: CONTACT -->
+            <section class="slide" id="slide3" aria-label="Contact">
                 <div class="slide-header scroll-reveal">
                     <span class="slide-label">Connection</span>
                     <h2 class="slide-title">Let's start a <em>conversation</em></h2>
@@ -2334,20 +2490,37 @@
                         <p>We work with a small number of selective founders, family offices, and wealth partners. If
                             this perspective aligns with your goals, let's connect.</p>
 
-                        <div class="office-locations">
-                            <div class="office-card">
-                                <h4>Brussels Office</h4>
-                                <p>Alfons Gossetlaan 40<br>1702 Groot-Bijgaarden</p>
-                            </div>
-                            <div class="office-card">
-                                <h4>Ghent Office</h4>
-                                <p>Grauwpoort 1<br>9000 Ghent</p>
-                            </div>
+                        <div class="office-locations" style="grid-template-columns: 1fr;">
+                            <a href="https://maps.app.goo.gl/pBvBnSa66SBDGEHK8" target="_blank" rel="noopener noreferrer" class="office-card-link" style="text-decoration: none; color: inherit; display: block;">
+                                <div class="office-card" style="transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.06); background: rgba(0, 0, 0, 0.01); padding: 24px; border-radius: 12px; position: relative;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                                        <h4 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin: 0;">DMR Corporate</h4>
+                                        <span class="map-icon-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(184, 151, 101, 0.1); color: #b89765; border: 1px solid rgba(184, 151, 101, 0.2); transition: all 0.3s ease;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 16px 0;">
+                                        Plot No. 201 &amp; 202, 3rd Floor,<br>
+                                        Kavuri Hills, Phase 2, Madhapur,<br>
+                                        Hyderabad – 500033, Telangana, India
+                                    </p>
+                                    <span style="font-size: 0.85rem; font-weight: 500; color: #b89765; display: inline-flex; align-items: center; gap: 6px;">
+                                        View on Google Maps 
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
                         </div>
                     </div>
 
                     <div class="contact-form-col">
-                        <form id="deckContactForm" onsubmit="event.preventDefault(); alert('Message sent!');">
+                        <form id="deckContactForm">
                             <div class="form-group">
                                 <label for="name">Your Name</label>
                                 <input type="text" id="name" required placeholder="e.g. John Doe">
@@ -2911,6 +3084,460 @@
                 // Start loop
                 requestAnimationFrame(drawFrame);
             }
+
+            // ==========================================
+            // ===== LIVE MARKET TERMINAL CONTROLLER =====
+            // ==========================================
+            const watchlistSymbols = [
+                {
+                    id: "NASDAQ",
+                    name: "NASDAQ 100",
+                    tvSymbol: "FOREXCOM:NAS100",
+                    description: "US Tech 100 Cash • Index Cfd",
+                    last: 29474.20,
+                    chg: -280.00,
+                    chgPct: -0.94,
+                    timezone: "America/New_York",
+                    openHour: 9, openMin: 30,
+                    closeHour: 16, closeMin: 0,
+                    currency: "USD",
+                    mcap: "$18.2T",
+                    vol: "$98.4B",
+                    high: 31434.10,
+                    low: 20690.30,
+                    pe: "28.45",
+                    news: [
+                        { time: "2 hours ago", source: "PCE Inflation", headline: "PCE Inflation Shakes Markets: Nasdaq Rally Collapses under rate pressure." },
+                        { time: "4 hours ago", source: "Tech Crunch", headline: "Big Tech earnings forecast signals margins squeeze as AI spending balloons." }
+                    ]
+                },
+                {
+                    id: "NIFTY",
+                    name: "NIFTY 50",
+                    tvSymbol: "NSE:NIFTY",
+                    description: "Nifty 50 Index • India",
+                    last: 24056.00,
+                    chg: 34.35,
+                    chgPct: 0.14,
+                    timezone: "Asia/Kolkata",
+                    openHour: 9, openMin: 15,
+                    closeHour: 15, closeMin: 30,
+                    currency: "INR",
+                    mcap: "$4.1T",
+                    vol: "$14.6B",
+                    high: 24150.00,
+                    low: 21280.00,
+                    pe: "22.60",
+                    news: [
+                        { time: "1 hour ago", source: "CNBC TV18", headline: "Nifty hovers above 24k as auto and metal stocks see late buying interest." },
+                        { time: "3 hours ago", source: "LiveMint", headline: "FII activity shifts back to green as retail inflows hit record monthly highs." }
+                    ]
+                },
+                {
+                    id: "BANKNIFTY",
+                    name: "NIFTY BANK",
+                    tvSymbol: "NSE:BANKNIFTY",
+                    description: "Nifty Bank Index • India",
+                    last: 58177.05,
+                    chg: 26.70,
+                    chgPct: 0.05,
+                    timezone: "Asia/Kolkata",
+                    openHour: 9, openMin: 15,
+                    closeHour: 15, closeMin: 30,
+                    currency: "INR",
+                    mcap: "$1.4T",
+                    vol: "$8.1B",
+                    high: 58800.00,
+                    low: 47200.00,
+                    pe: "15.80",
+                    news: [
+                        { time: "2 hours ago", source: "Economic Times", headline: "Private banks drag Bank Nifty while public sector banks extend gains." }
+                    ]
+                },
+                {
+                    id: "SENSEX",
+                    name: "SENSEX",
+                    tvSymbol: "BSE:SENSEX",
+                    description: "S&P BSE Sensex Index • India",
+                    last: 77100.47,
+                    chg: 109.25,
+                    chgPct: 0.14,
+                    timezone: "Asia/Kolkata",
+                    openHour: 9, openMin: 15,
+                    closeHour: 15, closeMin: 30,
+                    currency: "INR",
+                    mcap: "$4.7T",
+                    vol: "$18.3B",
+                    high: 77300.00,
+                    low: 69400.00,
+                    pe: "23.40",
+                    news: [
+                        { time: "1 hour ago", source: "Bloomberg Quint", headline: "Sensex registers marginal gains driven by index heavyweight IT stocks." }
+                    ]
+                },
+                {
+                    id: "CNXIT",
+                    name: "NIFTY IT",
+                    tvSymbol: "NSE:CNXIT",
+                    description: "Nifty IT Index • India",
+                    last: 27330.85,
+                    chg: -235.85,
+                    chgPct: -0.86,
+                    timezone: "Asia/Kolkata",
+                    openHour: 9, openMin: 15,
+                    closeHour: 15, closeMin: 30,
+                    currency: "INR",
+                    mcap: "$680B",
+                    vol: "$3.5B",
+                    high: 28400.00,
+                    low: 21500.00,
+                    pe: "25.20",
+                    news: [
+                        { time: "30 mins ago", source: "MoneyControl", headline: "IT index drops 0.8% amid concerns of slower enterprise tech spending." }
+                    ]
+                },
+                {
+                    id: "SPX",
+                    name: "S&P 500",
+                    tvSymbol: "FOREXCOM:SPX500",
+                    description: "S&P 500 Index • US",
+                    last: 7358.72,
+                    chg: 0.51,
+                    chgPct: 0.01,
+                    timezone: "America/New_York",
+                    openHour: 9, openMin: 30,
+                    closeHour: 16, closeMin: 0,
+                    currency: "USD",
+                    mcap: "$44.2T",
+                    vol: "$168.1B",
+                    high: 7420.00,
+                    low: 5180.00,
+                    pe: "26.10",
+                    news: [
+                        { time: "3 hours ago", source: "Reuters", headline: "S&P 500 holds steady near all-time highs as macro data meets expectations." }
+                    ]
+                },
+                {
+                    id: "RELIANCE",
+                    name: "RELIANCE",
+                    tvSymbol: "NSE:RELIANCE",
+                    description: "Reliance Industries Ltd. • Stock",
+                    last: 1318.10,
+                    chg: 4.50,
+                    chgPct: 0.34,
+                    timezone: "Asia/Kolkata",
+                    openHour: 9, openMin: 15,
+                    closeHour: 15, closeMin: 30,
+                    currency: "INR",
+                    mcap: "$215B",
+                    vol: "$1.4B",
+                    high: 1350.00,
+                    low: 950.00,
+                    pe: "28.10",
+                    news: [
+                        { time: "5 hours ago", source: "Business Standard", headline: "Reliance retail expansion gets boost with 50 new digital outlets." }
+                    ]
+                }
+            ];
+
+            let selectedSymbolId = "NASDAQ";
+            let tvWidget = null;
+
+            // Check if market is open based on its local timezone
+            function checkMarketOpen(sym) {
+                const now = new Date();
+                try {
+                    const timeStr = now.toLocaleString("en-US", { timeZone: sym.timezone });
+                    const targetDate = new Date(timeStr);
+                    const day = targetDate.getDay();
+                    if (day === 0 || day === 6) return false; // Closed weekends
+                    
+                    const hour = targetDate.getHours();
+                    const min = targetDate.getMinutes();
+                    const timeVal = hour * 100 + min;
+                    const startVal = sym.openHour * 100 + sym.openMin;
+                    const endVal = sym.closeHour * 100 + sym.closeMin;
+                    
+                    return timeVal >= startVal && timeVal <= endVal;
+                } catch (e) {
+                    console.error("Timezone computation failed:", e);
+                    return false;
+                }
+            }
+
+            // TradingView Widget Loader
+            function loadTVChart(symbol) {
+                if (typeof TradingView === 'undefined') {
+                    const script = document.createElement('script');
+                    script.src = 'https://s3.tradingview.com/tv.js';
+                    script.onload = () => initTVWidget(symbol);
+                    document.head.appendChild(script);
+                } else {
+                    initTVWidget(symbol);
+                }
+            }
+
+            function initTVWidget(symbol) {
+                const container = document.getElementById('tv-advanced-chart');
+                if (!container) return;
+                
+                try {
+                    tvWidget = new TradingView.widget({
+                        "autosize": true,
+                        "symbol": symbol,
+                        "interval": "D",
+                        "timezone": "Etc/UTC",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "en",
+                        "enable_publishing": false,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tv-advanced-chart"
+                    });
+                } catch (e) {
+                    console.error("Failed to initialize TradingView widget:", e);
+                    container.innerHTML = `
+                        <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-code);">
+                            Chart Unavailable (Offline or Blocked)
+                        </div>
+                    `;
+                }
+            }
+
+            // Render watchlist rows
+            function renderWatchlist() {
+                const body = document.getElementById('watchlistBody');
+                if (!body) return;
+                body.innerHTML = '';
+                
+                watchlistSymbols.forEach(sym => {
+                    const row = document.createElement('tr');
+                    row.id = `row-${sym.id}`;
+                    row.className = `watchlist-row ${sym.id === selectedSymbolId ? 'active' : ''}`;
+                    
+                    const isUp = sym.chg >= 0;
+                    const txtClass = isUp ? 'txt-up' : 'txt-down';
+                    
+                    row.innerHTML = `
+                        <td class="symbol-cell">
+                            <span class="symbol-name">${sym.id}</span>
+                            <span class="symbol-desc">${sym.name}</span>
+                        </td>
+                        <td class="price-cell ${txtClass}">
+                            ${sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </td>
+                        <td class="change-cell ${txtClass}">
+                            ${isUp ? '+' : ''}${sym.chg.toFixed(2)} (${isUp ? '+' : ''}${sym.chgPct.toFixed(2)}%)
+                        </td>
+                    `;
+                    
+                    row.addEventListener('click', () => {
+                        selectSymbol(sym.id);
+                    });
+                    body.appendChild(row);
+                });
+            }
+
+            // Select active symbol in Watchlist
+            function selectSymbol(id) {
+                selectedSymbolId = id;
+                document.querySelectorAll('.watchlist-row').forEach(row => {
+                    row.classList.toggle('active', row.id === `row-${id}`);
+                });
+                
+                const sym = watchlistSymbols.find(s => s.id === id);
+                if (sym) {
+                    updateDetailPanel(sym);
+                    updateStatsPanel(sym);
+                    loadTVChart(sym.tvSymbol);
+                }
+            }
+
+            // Update stats grid card values
+            function updateStatsPanel(sym) {
+                const mcap = document.getElementById('statMcap');
+                const vol = document.getElementById('statVol');
+                const high = document.getElementById('statHigh');
+                const low = document.getElementById('statLow');
+                const pe = document.getElementById('statPe');
+
+                if (mcap) mcap.textContent = sym.mcap || '-';
+                if (vol) vol.textContent = sym.vol || '-';
+                if (high) high.textContent = sym.high ? sym.high.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
+                if (low) low.textContent = sym.low ? sym.low.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
+                if (pe) pe.textContent = sym.pe || '-';
+            }
+
+            // Update details card
+            function updateDetailPanel(sym) {
+                const panel = document.getElementById('marketDetailsPanel');
+                if (!panel) return;
+                
+                const isOpen = checkMarketOpen(sym);
+                const isUp = sym.chg >= 0;
+                const txtClass = isUp ? 'txt-up' : 'txt-down';
+                
+                const minVal = sym.low || (sym.last * 0.85);
+                const maxVal = sym.high || (sym.last * 1.15);
+                const pct = Math.max(0, Math.min(100, ((sym.last - minVal) / (maxVal - minVal)) * 100));
+
+                panel.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <div>
+                            <div class="detail-symbol-title" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">${sym.name}</div>
+                            <div class="detail-symbol-desc" style="font-size: 0.82rem; color: var(--text-muted);">${sym.description}</div>
+                        </div>
+                        <div class="market-status-badge ${isOpen ? 'open' : 'closed'}">
+                            <span class="status-dot"></span>
+                            <span>Market ${isOpen ? 'open' : 'closed'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-price-row" style="display: flex; align-items: baseline; gap: 8px; margin-top: 16px; margin-bottom: 24px;">
+                        <span class="detail-price" style="font-family: var(--font-code); font-size: 2.2rem; font-weight: 600; color: var(--text-primary);">${sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-left: 2px;">${sym.currency}</span>
+                        <span class="${txtClass}" style="font-family: var(--font-code); font-size: 1.1rem; font-weight: 500; margin-left: 12px;">
+                            ${isUp ? '+' : ''}${sym.chg.toFixed(2)} (${isUp ? '+' : ''}${sym.chgPct.toFixed(2)}%)
+                        </span>
+                    </div>
+
+                    <div class="range-slider-container" style="margin-top: 16px;">
+                        <div class="range-slider-track" style="height: 4px; background: rgba(15, 23, 42, 0.06); position: relative; border-radius: 2px;">
+                            <div class="range-slider-fill" style="position: absolute; height: 100%; background-color: var(--yc-orange); border-radius: 2px; width: ${pct}%;"></div>
+                            <div class="range-slider-dot" style="position: absolute; width: 8px; height: 8px; background-color: var(--yc-orange); border-radius: 50%; transform: translate(-50%, -2px); box-shadow: 0 0 6px rgba(184, 151, 101, 0.5); left: ${pct}%;"></div>
+                        </div>
+                        <div class="range-slider-labels" style="display: flex; justify-content: space-between; font-size: 0.72rem; font-family: var(--font-code); color: var(--text-muted); margin-top: 6px;">
+                            <span>${minVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            <span>${maxVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                        <div class="range-slider-title" style="text-align: center; font-size: 0.68rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 4px;">52W RANGE</div>
+                    </div>
+                `;
+            }
+
+            // Simulate market ticks in real-time
+            function startPriceSimulation() {
+                setInterval(() => {
+                    watchlistSymbols.forEach((sym) => {
+                        const isOpen = checkMarketOpen(sym);
+                        if (isOpen) {
+                            const percentChange = (Math.random() - 0.5) * 0.05; // -0.025% to +0.025%
+                            const diff = sym.last * (percentChange / 100);
+                            sym.last = parseFloat((sym.last + diff).toFixed(2));
+                            sym.chg = parseFloat((sym.chg + diff).toFixed(2));
+                            sym.chgPct = parseFloat(((sym.chg / (sym.last - sym.chg)) * 100).toFixed(2));
+                            
+                            const row = document.getElementById(`row-${sym.id}`);
+                            if (row) {
+                                const priceCell = row.querySelector('.price-cell');
+                                const changeCell = row.querySelector('.change-cell');
+                                
+                                // Flash color
+                                const flashClass = diff >= 0 ? 'tick-up' : 'tick-down';
+                                priceCell.classList.add(flashClass);
+                                setTimeout(() => priceCell.classList.remove(flashClass), 400);
+                                
+                                if (sym.chg >= 0) {
+                                    priceCell.className = 'price-cell txt-up';
+                                    changeCell.className = 'change-cell txt-up';
+                                } else {
+                                    priceCell.className = 'price-cell txt-down';
+                                    changeCell.className = 'change-cell txt-down';
+                                }
+                                
+                                priceCell.textContent = sym.last.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                changeCell.textContent = `${sym.chg >= 0 ? '+' : ''}${sym.chg.toFixed(2)} (${sym.chgPct >= 0 ? '+' : ''}${sym.chgPct.toFixed(2)}%)`;
+                                
+                                if (sym.id === selectedSymbolId) {
+                                    updateDetailPanel(sym);
+                                }
+                            }
+                        }
+                    });
+                }, 3000);
+            }
+
+            // ---- CONTACT FORM SUBMISSION ----
+            function bindContactHandler() {
+                const contactForm = document.getElementById('deckContactForm');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        
+                        const btn = contactForm.querySelector('.btn-submit');
+                        const originalBtnText = btn.innerHTML;
+                        
+                        const nameInput = document.getElementById('name');
+                        const emailInput = document.getElementById('email');
+                        const messageInput = document.getElementById('msg');
+                        
+                        if (!nameInput || !emailInput || !messageInput) return;
+                        
+                        btn.disabled = true;
+                        btn.innerHTML = `<span>Sending...</span>`;
+                        btn.style.opacity = '0.7';
+                        
+                        try {
+                            const response = await fetch('/api/contact', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    name: nameInput.value,
+                                    email: emailInput.value,
+                                    message: messageInput.value
+                                })
+                            });
+                            
+                            const result = await response.json();
+                            if (response.ok && result.success) {
+                                const parent = contactForm.parentElement;
+                                const originalHTML = parent.innerHTML;
+                                
+                                parent.innerHTML = `
+                                    <div class="contact-success-pane" style="text-align: center; padding: 40px 24px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; backdrop-filter: blur(10px); animation: fadeIn 0.6s ease;">
+                                        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(184, 151, 101, 0.1); border: 1px solid rgba(184, 151, 101, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b89765" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <h3 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px; font-weight: 600;">✦ Inquiry Received</h3>
+                                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">Thank you for reaching out. Your message has been sent to <strong>support@lemniscate.com</strong>. A partner will review your inquiry and get back to you shortly.</p>
+                                        <button id="btnResetContact" class="btn-submit" style="max-width: 200px; margin: 0 auto; display: block;">Send another message</button>
+                                    </div>
+                                `;
+                                
+                                document.getElementById('btnResetContact').addEventListener('click', () => {
+                                    parent.innerHTML = originalHTML;
+                                    setTimeout(bindContactHandler, 50);
+                                });
+                            } else {
+                                alert(result.error || 'Failed to send message. Please try again.');
+                                btn.disabled = false;
+                                btn.innerHTML = originalBtnText;
+                                btn.style.opacity = '1';
+                            }
+                        } catch (error) {
+                            console.error('Submit error:', error);
+                            alert('Network error. Please check your connection and try again.');
+                            btn.disabled = false;
+                            btn.innerHTML = originalBtnText;
+                            btn.style.opacity = '1';
+                        }
+                    });
+                }
+            }
+
+            // Initial startup
+            const wlBody = document.getElementById('watchlistBody');
+            if (wlBody) {
+                renderWatchlist();
+                selectSymbol(selectedSymbolId);
+                startPriceSimulation();
+            }
+            bindContactHandler();
 
             // ---- CUSTOM MOUSE CURSOR LOGIC ----
             const dot = document.getElementById('customCursorDot');

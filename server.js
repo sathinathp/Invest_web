@@ -2,9 +2,10 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 
 // Create uploads directory if it doesn't exist
 const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
@@ -285,7 +286,86 @@ app.delete('/api/pitches/:id', (req, res) => {
     }
 });
 
+// 6. Submit Contact Inquiry (goes to support@lemniscate.com)
+app.post('/api/contact', async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        if (!name || !email || !message) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        // Save locally to database
+        const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
+        let contacts = [];
+        if (fs.existsSync(CONTACTS_FILE)) {
+            try {
+                contacts = JSON.parse(fs.readFileSync(CONTACTS_FILE, 'utf8'));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        contacts.push({
+            id: 'contact_' + Date.now(),
+            name,
+            email,
+            message,
+            createdAt: new Date().toISOString()
+        });
+        fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2), 'utf8');
+
+        // Nodemailer configuration
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
+            port: process.env.SMTP_PORT || 2525,
+            auth: {
+                user: process.env.SMTP_USER || '',
+                pass: process.env.SMTP_PASS || ''
+            }
+        });
+
+        const mailOptions = {
+            from: `"${name}" <${email}>`,
+            to: 'support@lemniscate.com',
+            replyTo: email,
+            subject: `New Contact Submission from ${name}`,
+            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px;">
+                    <h2 style="color: #b89765; border-bottom: 2px solid #b89765; padding-bottom: 8px; margin-top: 0;">New Contact Form Submission</h2>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Message:</strong></p>
+                    <div style="background-color: #f7fafc; border-left: 4px solid #b89765; padding: 12px 16px; margin: 16px 0; font-style: italic;">
+                        ${message.replace(/\n/g, '<br>')}
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 24px 0;">
+                    <p style="font-size: 0.8rem; color: #718096; text-align: center;">Sent automatically from Lemniscate Investments Terminal</p>
+                </div>
+            `
+        };
+
+        // Send mail (wrap in try-catch so it doesn't fail if SMTP is not configured)
+        try {
+            if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+                await transporter.sendMail(mailOptions);
+                console.log(`Email successfully sent to support@lemniscate.com from ${email}`);
+            } else {
+                console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
+                console.log(mailOptions);
+            }
+        } catch (mailError) {
+            console.error('Failed to send email via SMTP:', mailError);
+        }
+
+        res.status(200).json({ success: true, message: 'Message submitted successfully!' });
+    } catch (error) {
+        console.error('Error handling contact form submission:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
