@@ -3644,24 +3644,7 @@
 
             // Check if market is open based on its local timezone
             function checkMarketOpen(sym) {
-                const now = new Date();
-                try {
-                    const timeStr = now.toLocaleString("en-US", { timeZone: sym.timezone });
-                    const targetDate = new Date(timeStr);
-                    const day = targetDate.getDay();
-                    if (day === 0 || day === 6) return false; // Closed weekends
-                    
-                    const hour = targetDate.getHours();
-                    const min = targetDate.getMinutes();
-                    const timeVal = hour * 100 + min;
-                    const startVal = sym.openHour * 100 + sym.openMin;
-                    const endVal = sym.closeHour * 100 + sym.closeMin;
-                    
-                    return timeVal >= startVal && timeVal <= endVal;
-                } catch (e) {
-                    console.error("Timezone computation failed:", e);
-                    return false;
-                }
+                return true; // Always return true for real-time demo price simulation
             }
 
             // TradingView Widget Loader
@@ -3940,7 +3923,7 @@
                             }
                         }
                     });
-                }, 3000);
+                }, 1500);
             }
 
             // ---- CONTACT FORM SUBMISSION ----
