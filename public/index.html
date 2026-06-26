@@ -59,10 +59,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 144px 40px 80px;
+            padding: 170px 40px 30px;
             position: relative;
             z-index: 5;
             overflow: hidden;
+        }
+
+        @media (max-height: 800px) {
+            .hero-slide {
+                align-items: flex-start;
+            }
         }
 
         /* Grid blueprint overlay for technical unique feel */
@@ -207,12 +213,12 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             animation: fade-down-in 0.8s ease-out;
         }
 
         .hero-logo-img {
-            max-width: 160px;
+            max-width: 120px;
             width: 100%;
             height: auto;
             border-radius: 8px;
@@ -250,7 +256,7 @@
             font-weight: 500;
             line-height: 1.15;
             letter-spacing: -0.025em;
-            margin: 0 auto 35px auto;
+            margin: 0 auto 15px auto;
             width: fit-content;
             max-width: 100%;
             color: var(--text-primary);
@@ -398,10 +404,29 @@
             color: var(--yc-orange);
         }
 
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: 1.22rem;
+            color: var(--text-secondary);
+            margin: 10px auto 20px auto;
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 650px;
+            letter-spacing: 0.01em;
+            animation: fade-up-in 1.2s ease-out;
+            text-align: center;
+        }
+
+        .hero-tagline em {
+            color: var(--yc-orange);
+            font-style: normal;
+            font-weight: 500;
+        }
+
         .hero-subtitle {
             font-size: 0.95rem;
             color: var(--text-secondary);
-            margin-bottom: 45px;
+            margin-bottom: 25px;
             font-weight: 400;
             font-family: var(--font-body);
             max-width: 600px;
@@ -1806,7 +1831,7 @@
         }
 
         .market-ticker-bar.ticker-hidden {
-            transform: translateY(-100%);
+            transform: translateY(-150px);
             opacity: 0;
             pointer-events: none;
         }
@@ -2343,104 +2368,10 @@
                 </span>
             </h1>
 
-            <!-- Staggered Interactive Partner Cards -->
-            <div class="hero-team-grid">
-                <!-- Partner 1 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Sarah Mertens">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Sarah Mertens</span>
-                        <span class="partner-specialty">Legal Infra</span>
-                    </div>
-                </div>
-
-                <!-- Partner 2 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="David Kovic">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">David Kovic</span>
-                        <span class="partner-specialty">Liquidity API</span>
-                    </div>
-                </div>
-
-                <!-- Partner 3 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Marcus Thorne">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Marcus Thorne</span>
-                        <span class="partner-specialty">Tax &amp; Escrow</span>
-                    </div>
-                </div>
-
-                <!-- Partner 4 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Elena Rostova">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Elena Rostova</span>
-                        <span class="partner-specialty">Capital LP</span>
-                    </div>
-                </div>
-
-                <!-- Partner 5 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Thomas Verhelst">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Thomas Verhelst</span>
-                        <span class="partner-specialty">Venture Deck</span>
-                    </div>
-                </div>
-
-                <!-- Partner 6 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Amelie Dubois">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Amelie Dubois</span>
-                        <span class="partner-specialty">M&A Advisory</span>
-                    </div>
-                </div>
-
-                <!-- Partner 7 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Jonas Claes">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Jonas Claes</span>
-                        <span class="partner-specialty">Quant Desk</span>
-                    </div>
-                </div>
-
-                <!-- Partner 8 -->
-                <div class="partner-card">
-                    <div class="partner-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=150&h=150"
-                            alt="Nassim Alami">
-                    </div>
-                    <div class="partner-info">
-                        <span class="partner-name">Nassim Alami</span>
-                        <span class="partner-specialty">Treasury</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Tagline replacing team photos -->
+            <p class="hero-tagline">
+                Providing institutional check sizes from <em>$50K to $2M</em> spanning <em>Pre-Seed to Series A</em>. We back technical builders reimagining industry infrastructure.
+            </p>
 
             <p class="hero-subtitle">*If you're building an early stage company, this is for you.</p>
 
@@ -2639,7 +2570,7 @@
             </section>
 
             <!-- SLIDE 2: PORTFOLIO COMPANIES -->
-            <section class="slide" id="slide2" aria-label="Portfolio">
+            <section class="slide" id="slide1" aria-label="Portfolio">
                 <div class="slide-header scroll-reveal" style="margin-bottom: 30px;">
                     <span class="slide-label">Case Studies</span>
                     <h2 class="slide-title">Active <em>Investments</em></h2>
@@ -2711,7 +2642,7 @@
             </section>
 
             <!-- SLIDE 4: CONTACT -->
-            <section class="slide" id="slide3" aria-label="Contact">
+            <section class="slide" id="slide2" aria-label="Contact">
                 <div class="slide-header scroll-reveal">
                     <span class="slide-label">Connection</span>
                     <h2 class="slide-title">Let's start a <em>conversation</em></h2>
@@ -4129,13 +4060,15 @@
                 };
             }
             // Scroll shadow on header + hide ticker on scroll
-            window.addEventListener('scroll', () => {
+            function handleScroll() {
                 const header = document.getElementById('siteHeader');
                 const ticker = document.getElementById('marketTickerBar');
-                const scrolled = window.scrollY > 80;
+                const scrolled = window.scrollY > 15;
                 if (header) header.classList.toggle('scrolled', window.scrollY > 10);
                 if (ticker) ticker.classList.toggle('ticker-hidden', scrolled);
-            });
+            }
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
 
             bindContactHandler();
 
