@@ -829,7 +829,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 144px;
+            margin-top: 142px;
         }
 
         .slide {
@@ -1811,38 +1811,85 @@
             backface-visibility: hidden;
         }
 
-        /* ===== MARKET TICKER BAR STYLES (fixed strip below nav) ===== */
+        /* ===== MARKET TICKER BAR ===== */
         .market-ticker-bar {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 0 40px;
-            height: 44px;
-            background: transparent;
-            border-bottom: none;
-            color: var(--text-primary);
-            font-family: var(--font-body);
-            user-select: none;
             position: fixed;
-            top: 100px;
+            top: 68px;
             left: 0;
-            z-index: 1000;
-            will-change: transform;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-bottom: 1.5px solid rgba(15,23,42,0.1);
+            z-index: 999;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+            box-shadow: 0 3px 14px rgba(15,23,42,0.07);
         }
 
         .market-ticker-bar.ticker-hidden {
-            transform: translateY(-150px);
+            transform: translateY(-140px);
             opacity: 0;
             pointer-events: none;
         }
 
-        .market-ticker-bar-inner {
+        /* ── ROW 1: Category tab strip ── */
+        .ticker-cat-tabs {
+            display: flex;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            height: 30px;
+            background: #f1f5f9;
+            border-bottom: 1px solid rgba(15,23,42,0.08);
+            overflow: hidden;
+        }
+
+        .ticker-cat-tab {
+            flex: 1;
+            height: 100%;
+            background: none;
+            border: none;
+            border-bottom: 2.5px solid transparent;
+            color: #64748b;
+            font-family: var(--font-body);
+            font-size: 0.73rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+            transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+            white-space: nowrap;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 4px;
+        }
+
+        .ticker-cat-tab:hover {
+            color: #1e293b;
+            background: rgba(184,151,101,0.06);
+        }
+
+        .ticker-cat-tab.active {
+            color: #b89765;
+            border-bottom-color: #b89765;
+            background: rgba(184,151,101,0.09);
+            font-weight: 700;
+        }
+
+        .ticker-cat-tab .tab-icon {
+            font-style: normal;
+            font-weight: 700;
+            color: inherit;
+        }
+
+        /* ── ROW 2: Ticker items strip ── */
+        .ticker-bar-row2 {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 38px;
+            padding: 0 12px;
+            background: #ffffff;
+            overflow: hidden;
         }
 
         /* Dropdown style */
@@ -1955,64 +2002,77 @@
         .ticker-track::-webkit-scrollbar { display: none; }
         .ticker-track { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Ticker Item styling */
+        /* Ticker Item styling — single compact row: Name · Price · Change */
         .ticker-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            padding: 5px 14px;
-            border-radius: 7px;
+            padding: 4px 12px;
+            border-radius: 6px;
             transition: background-color 0.18s ease;
             flex-shrink: 0;
             border: 1px solid transparent;
+            border-right: 1px solid rgba(15,23,42,0.06);
+        }
+
+        .ticker-item:last-child {
+            border-right: none;
         }
 
         .ticker-item:hover {
             background-color: rgba(184, 151, 101, 0.06);
-            border-color: rgba(184, 151, 101, 0.15);
+            border-right-color: rgba(184,151,101,0.15);
         }
 
         .ticker-item.active {
-            background-color: rgba(184, 151, 101, 0.08);
-            border-color: rgba(184, 151, 101, 0.2);
+            background-color: rgba(184, 151, 101, 0.07);
         }
 
+        /* Single-line meta: all horizontal */
         .ticker-item-meta {
             display: flex;
-            flex-direction: column;
-            gap: 1px;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px;
         }
 
         .ticker-item-name {
             font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            letter-spacing: 0.02em;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
         }
 
         .ticker-item.active .ticker-item-name {
             color: var(--yc-orange);
-            font-weight: 600;
         }
 
         .ticker-item-price {
             font-family: var(--font-code);
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--text-primary);
             transition: color 0.15s ease;
             letter-spacing: -0.01em;
+            white-space: nowrap;
         }
 
         .ticker-item-change {
             font-family: var(--font-code);
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        /* Hide sparklines in the compact ticker bar */
+        .ticker-bar-row2 .ticker-item-sparkline {
+            display: none;
         }
 
         .ticker-item-sparkline {
@@ -2563,13 +2623,26 @@
 
             /* Position market ticker correctly below mobile header */
             .market-ticker-bar {
-                top: 72px !important;
-                padding: 0 12px;
-                height: 52px;
+                top: 60px !important;
+            }
+
+            .ticker-cat-tab {
+                font-size: 0.58rem;
+                padding: 0 2px;
+                gap: 2px;
+            }
+
+            .ticker-cat-tab .tab-icon {
+                display: none;
+            }
+
+            .ticker-bar-row2 {
+                padding: 0 6px;
+                height: 32px;
             }
 
             .deck-content {
-                margin-top: 124px;
+                margin-top: 132px;
             }
 
             .ticker-dropdown-container {
@@ -2724,32 +2797,31 @@
 
     <!-- ===== MARKET TICKER BAR (fixed, top:68px — directly below nav) ===== -->
     <div class="market-ticker-bar" id="marketTickerBar">
-        <div class="market-ticker-bar-inner">
-            <div class="ticker-dropdown-container">
-                <button class="ticker-dropdown-btn" id="tickerCategoryBtn">
-                    <svg class="globe-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                    </svg>
-                    <span id="tickerCategoryLabel">US Markets</span>
-                    <svg class="arrow-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-                <div class="ticker-dropdown-menu" id="tickerCategoryMenu">
-                    <div class="ticker-dropdown-item active" data-category="us">US Markets</div>
-                    <div class="ticker-dropdown-item" data-category="indian">Indian Markets</div>
-                    <div class="ticker-dropdown-item" data-category="crypto">Crypto Markets</div>
-                </div>
-            </div>
-
+        <!-- Row 1: Category Tabs spanning full width -->
+        <div class="ticker-cat-tabs" id="tickerCatTabs">
+            <button class="ticker-cat-tab active" data-category="us">
+                <span class="tab-icon">$</span> US Market
+            </button>
+            <button class="ticker-cat-tab" data-category="indian">
+                <span class="tab-icon">₹</span> Indian Market
+            </button>
+            <button class="ticker-cat-tab" data-category="commodity">
+                <span class="tab-icon">◈</span> Commodity
+            </button>
+            <button class="ticker-cat-tab" data-category="forex">
+                <span class="tab-icon">€</span> Forex
+            </button>
+            <button class="ticker-cat-tab" data-category="crypto">
+                <span class="tab-icon">₿</span> Crypto
+            </button>
+        </div>
+        <!-- Row 2: Ticker track + nav arrows -->
+        <div class="ticker-bar-row2">
             <div class="ticker-track-container">
                 <div class="ticker-track" id="tickerTrack">
                     <!-- Populated by JS -->
                 </div>
             </div>
-
             <div class="ticker-nav-arrows">
                 <button class="ticker-arrow-btn" id="tickerArrowPrev" title="Previous">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -3952,6 +4024,200 @@
                         ]
                     }
                 ],
+                commodity: [
+                    {
+                        id: "GOLD",
+                        name: "Gold",
+                        tvSymbol: "TVC:GOLD",
+                        description: "Gold Spot / USD • Commodity",
+                        last: 3358.45,
+                        chg: 18.30,
+                        chgPct: 0.55,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$28.9B",
+                        high: 3500.00,
+                        low: 2050.00,
+                        pe: "-",
+                        news: [{ time: "30 mins ago", source: "Kitco", headline: "Gold rallies as geopolitical tensions support safe-haven demand." }]
+                    },
+                    {
+                        id: "SILVER",
+                        name: "Silver",
+                        tvSymbol: "TVC:SILVER",
+                        description: "Silver Spot / USD • Commodity",
+                        last: 32.85,
+                        chg: 0.42,
+                        chgPct: 1.29,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$5.2B",
+                        high: 35.00,
+                        low: 20.00,
+                        pe: "-",
+                        news: [{ time: "1 hour ago", source: "Reuters", headline: "Silver climbs alongside gold as industrial demand remains steady." }]
+                    },
+                    {
+                        id: "USOIL",
+                        name: "Crude Oil",
+                        tvSymbol: "TVC:USOIL",
+                        description: "WTI Crude Oil / USD • Commodity",
+                        last: 72.36,
+                        chg: 2.02,
+                        chgPct: 2.87,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$15.2B",
+                        high: 95.00,
+                        low: 62.00,
+                        pe: "-",
+                        news: [{ time: "2 hours ago", source: "OPEC+", headline: "Crude gains 2.8% on production cut extension and solid demand." }]
+                    },
+                    {
+                        id: "NGAS",
+                        name: "Natural Gas",
+                        tvSymbol: "TVC:NATURALGAS",
+                        description: "Natural Gas / USD • Commodity",
+                        last: 2.65,
+                        chg: -0.08,
+                        chgPct: -2.93,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$3.1B",
+                        high: 3.80,
+                        low: 1.80,
+                        pe: "-",
+                        news: [{ time: "3 hours ago", source: "Bloomberg", headline: "Natural gas drops on mild weather forecasts reducing heating demand." }]
+                    },
+                    {
+                        id: "COPPER",
+                        name: "Copper",
+                        tvSymbol: "TVC:COPPER",
+                        description: "Copper / USD • Commodity",
+                        last: 4.48,
+                        chg: 0.05,
+                        chgPct: 1.13,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$2.8B",
+                        high: 5.20,
+                        low: 3.60,
+                        pe: "-",
+                        news: [{ time: "4 hours ago", source: "Mining Weekly", headline: "Copper edges higher on improved Chinese manufacturing PMI data." }]
+                    }
+                ],
+                forex: [
+                    {
+                        id: "EURUSD",
+                        name: "EUR/USD",
+                        tvSymbol: "FX:EURUSD",
+                        description: "Euro / US Dollar • Forex",
+                        last: 1.0832,
+                        chg: 0.0018,
+                        chgPct: 0.17,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$650B",
+                        high: 1.1200,
+                        low: 1.0400,
+                        pe: "-",
+                        news: [{ time: "1 hour ago", source: "ECB", headline: "EUR/USD firm above 1.08 as ECB holds rates steady amid soft inflation." }]
+                    },
+                    {
+                        id: "GBPUSD",
+                        name: "GBP/USD",
+                        tvSymbol: "FX:GBPUSD",
+                        description: "British Pound / US Dollar • Forex",
+                        last: 1.2718,
+                        chg: -0.0024,
+                        chgPct: -0.19,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "USD",
+                        mcap: "-",
+                        vol: "$420B",
+                        high: 1.3200,
+                        low: 1.2200,
+                        pe: "-",
+                        news: [{ time: "2 hours ago", source: "BoE", headline: "Sterling slips as UK wage growth data raises inflation concerns." }]
+                    },
+                    {
+                        id: "USDJPY",
+                        name: "USD/JPY",
+                        tvSymbol: "FX:USDJPY",
+                        description: "US Dollar / Japanese Yen • Forex",
+                        last: 157.42,
+                        chg: 0.38,
+                        chgPct: 0.24,
+                        timezone: "Etc/UTC",
+                        openHour: 0, openMin: 0,
+                        closeHour: 24, closeMin: 0,
+                        currency: "JPY",
+                        mcap: "-",
+                        vol: "$380B",
+                        high: 160.50,
+                        low: 140.00,
+                        pe: "-",
+                        news: [{ time: "30 mins ago", source: "BoJ", headline: "USD/JPY climbs above 157 as BoJ signals patience on rate hikes." }]
+                    },
+                    {
+                        id: "USDINR",
+                        name: "USD/INR",
+                        tvSymbol: "FX:USDINR",
+                        description: "US Dollar / Indian Rupee • Forex",
+                        last: 83.52,
+                        chg: -0.06,
+                        chgPct: -0.07,
+                        timezone: "Asia/Kolkata",
+                        openHour: 9, openMin: 0,
+                        closeHour: 17, closeMin: 0,
+                        currency: "INR",
+                        mcap: "-",
+                        vol: "$18B",
+                        high: 85.00,
+                        low: 82.50,
+                        pe: "-",
+                        news: [{ time: "1 hour ago", source: "RBI", headline: "Rupee steady as RBI interventions cap downside near 83.50 levels." }]
+                    },
+                    {
+                        id: "USDCNY",
+                        name: "USD/CNH",
+                        tvSymbol: "FX:USDCNH",
+                        description: "US Dollar / Offshore Yuan • Forex",
+                        last: 7.2615,
+                        chg: 0.0112,
+                        chgPct: 0.15,
+                        timezone: "Asia/Shanghai",
+                        openHour: 9, openMin: 30,
+                        closeHour: 16, closeMin: 30,
+                        currency: "CNH",
+                        mcap: "-",
+                        vol: "$90B",
+                        high: 7.38,
+                        low: 7.10,
+                        pe: "-",
+                        news: [{ time: "3 hours ago", source: "PBOC", headline: "Yuan weakens slightly as PBOC sets daily fix above 7.26." }]
+                    }
+                ],
                 crypto: [
                     {
                         id: "BTC",
@@ -4422,35 +4688,15 @@
 
             // Initial startup — ticker is always present in the header
             renderTicker();
-            // startPriceSimulation();
 
-            // Bind ticker category dropdown actions
-            const dropdownBtn = document.getElementById('tickerCategoryBtn');
-            const dropdownMenu = document.getElementById('tickerCategoryMenu');
-            const dropdownContainer = document.querySelector('.ticker-dropdown-container');
-            
-            if (dropdownBtn && dropdownMenu && dropdownContainer) {
-                dropdownBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    dropdownContainer.classList.toggle('open');
-                    dropdownMenu.classList.toggle('show');
+            // Bind ticker category TAB buttons
+            document.querySelectorAll('.ticker-cat-tab').forEach(tab => {
+                tab.onclick = () => {
+                    document.querySelectorAll('.ticker-cat-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    switchCategory(tab.dataset.category);
                 };
-                
-                document.querySelectorAll('.ticker-dropdown-item').forEach(item => {
-                    item.onclick = (e) => {
-                        e.stopPropagation();
-                        const cat = item.dataset.category;
-                        switchCategory(cat);
-                        dropdownContainer.classList.remove('open');
-                        dropdownMenu.classList.remove('show');
-                    };
-                });
-                
-                document.addEventListener('click', () => {
-                    dropdownContainer.classList.remove('open');
-                    dropdownMenu.classList.remove('show');
-                });
-            }
+            });
 
             // Bind ticker scroll arrow buttons
             const track = document.getElementById('tickerTrack');
