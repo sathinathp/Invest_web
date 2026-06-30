@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Team — Lemniscate Investments</title>
+    <meta name="description" content="Meet the partners, operators, and industry specialists at Lemniscate Investments." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN SYSTEM ===== */
+        :root {
+            --yc-orange: #B89765;
+            --yc-orange-hover: #9E7D4E;
+            --yc-orange-light: rgba(184, 151, 101, 0.08);
+            --bg-body: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --font-heading: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', 'Inter', system-ui, sans-serif;
+            --font-code: 'Fira Code', 'Courier New', monospace;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            font-size: 15px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 120px;
+        }
+
+        /* Ambient floating glow circles */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            left: 20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184, 151, 101, 0.07) 0%, rgba(184, 151, 101, 0) 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(71, 85, 105, 0.05) 0%, rgba(71, 85, 105, 0) 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- TOP NAVIGATION HEADER ----- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+            padding: 0 40px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header-logo-img {
+            height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover .header-logo-img {
+            transform: scale(1.05);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .deck-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item-link,
+        .nav-blog-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+            white-space: nowrap;
+        }
+
+        .nav-item-link:hover,
+        .nav-blog-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-item-link.active,
+        .nav-blog-link.active {
+            color: var(--yc-orange);
+        }
+
+        .nav-text {
+            border-bottom: 2px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.25s ease, color 0.25s ease;
+        }
+
+        .nav-item-link.active .nav-text,
+        .nav-blog-link.active .nav-text {
+            border-color: var(--yc-orange);
+            color: var(--yc-orange);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-header-pitch {
+            background-color: var(--yc-orange);
+            color: #0a0b0d;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-header-pitch:hover {
+            background-color: var(--yc-orange-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ----- HERO SECTION ----- */
+        .team-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto 60px;
+        }
+
+        .team-label {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--yc-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .team-title {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .team-title em {
+            font-style: italic;
+            font-family: var(--font-heading);
+            font-weight: 400;
+            color: var(--yc-orange);
+        }
+
+        .team-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ----- TEAM SECTION ----- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1024px) {
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .team-member-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(184, 151, 101, 0.35);
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 0 25px rgba(184, 151, 101, 0.06);
+        }
+
+        .team-member-photo-wrap {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(184, 151, 101, 0.2);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-member-card:hover .team-member-photo-wrap {
+            border-color: var(--yc-orange);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(184, 151, 101, 0.2);
+        }
+
+        .team-member-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1) brightness(0.95);
+            transition: all 0.4s ease;
+        }
+
+        .team-member-card:hover .team-member-photo-wrap img {
+            filter: grayscale(0%) contrast(1.05) brightness(1.05);
+        }
+
+        .team-member-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .team-member-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .team-member-role {
+            font-family: var(--font-code);
+            font-size: 0.72rem;
+            color: var(--yc-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .team-member-bio {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-top: 6px;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .footer-logo span {
+            color: var(--yc-orange);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Header Styles */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 22px;
+            height: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1010;
+        }
+
+        .mobile-menu-toggle .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: left center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 90px;
+            }
+
+            body.menu-open {
+                overflow: hidden !important;
+            }
+
+            .site-header {
+                padding: 0 20px;
+                height: 60px;
+            }
+
+            .header-logo-img {
+                height: 40px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .header-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1005;
+                padding: 40px;
+            }
+
+            .header-nav.open {
+                transform: translateY(0);
+            }
+
+            .deck-nav-list {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-item-link, .nav-blog-link {
+                font-size: 1.3rem;
+                padding: 10px 0;
+                width: auto;
+                justify-content: center;
+            }
+
+            .header-actions {
+                display: none;
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(2px, 0px);
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(2) {
+                width: 0%;
+                opacity: 0;
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(2px, 0px);
+            }
+
+            .main-container {
+                padding: 0 20px 60px;
+            }
+
+            .team-hero {
+                margin-bottom: 40px;
+            }
+
+            .team-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Custom Cursor Styling */
+        .custom-cursor-dot,
+        .custom-cursor-ring {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .custom-cursor-dot {
+                display: block;
+                position: fixed;
+                top: -4px;
+                left: -4px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: var(--yc-orange);
+                z-index: 9999;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .custom-cursor-ring {
+                display: block;
+                position: fixed;
+                top: -16px;
+                left: -16px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 1px solid var(--yc-orange);
+                z-index: 9998;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
+            }
+
+            .custom-cursor-ring.hovered {
+                width: 48px;
+                height: 48px;
+                top: -24px;
+                left: -24px;
+                background-color: rgba(184, 151, 101, 0.08);
+                border-color: var(--yc-orange);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+    <div class="custom-cursor-ring" id="customCursorRing"></div>
+
+    <!-- ===== NAV HEADER ===== -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="/index.html" class="header-logo">
+                <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
+            </a>
+
+            <nav class="header-nav">
+                <ul class="deck-nav-list">
+                    <li><a href="/index.html#slide0" class="nav-item-link"><span class="nav-text">Overview</span></a></li>
+                    <li><a href="/index.html#slide1" class="nav-item-link"><span class="nav-text">Portfolio</span></a></li>
+                    <li><a href="/about.html" class="nav-item-link"><span class="nav-text">About Us</span></a></li>
+                    <li><a href="/team.html" class="nav-item-link active"><span class="nav-text">The Team</span></a></li>
+                    <li><a href="/blogs.html" class="nav-blog-link"><span class="nav-text">Blogs</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="/index.html#slide4" class="btn-header-pitch">✦ Pitch</a>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- ===== HERO SECTION ===== -->
+        <section class="team-hero">
+            <span class="team-label">Our Domain Experts</span>
+            <h1 class="team-title">Meet the <em>Partners</em></h1>
+            <p class="team-subtitle">
+                Experienced operators, technical builders, and industry specialists partnering with founders at the earliest stages.
+            </p>
+        </section>
+
+        <!-- ===== TEAM GRID ===== -->
+        <div class="team-grid">
+            <!-- Member 1 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/sanjay_kumar_portrait.png" alt="Sanjay Kumar">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Sanjay Kumar</h3>
+                    <span class="team-member-role">Founding GP</span>
+                    <p class="team-member-bio">15+ years investing in deep tech and enterprise software. Former founder &amp; builder.</p>
+                </div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/elena_rostova_portrait.png" alt="Elena Rostova">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Elena Rostova</h3>
+                    <span class="team-member-role">Partner, AI / ML</span>
+                    <p class="team-member-bio">Advises on generative AI and ML infrastructure. PhD in Computer Science.</p>
+                </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/alexandra_chen_portrait.png" alt="Alexandra Chen">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Alexandra Chen</h3>
+                    <span class="team-member-role">Partner, Deep Tech</span>
+                    <p class="team-member-bio">Specializes in aerospace, robotics, and advanced materials. Ex-MIT researcher.</p>
+                </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/michael_torres_portrait.png" alt="Michael Torres">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Michael Torres</h3>
+                    <span class="team-member-role">Partner, SaaS</span>
+                    <p class="team-member-bio">Leads enterprise workflow and B2B SaaS investments. Ex-operator at Scale.</p>
+                </div>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/sarah_kim_portrait.png" alt="Sarah Kim">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Sarah Kim</h3>
+                    <span class="team-member-role">Partner, Fintech</span>
+                    <p class="team-member-bio">Focuses on transaction infrastructure and digital assets. Former finance lead.</p>
+                </div>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/david_okafor_portrait.png" alt="David Okafor">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">David Okafor</h3>
+                    <span class="team-member-role">Partner, Climate Tech</span>
+                    <p class="team-member-bio">Invests in circular economy, batteries, and carbon markets. Ex-energy consultant.</p>
+                </div>
+            </div>
+
+            <!-- Member 7 -->
+            <div class="team-member-card">
+                <div class="team-member-photo-wrap">
+                    <img src="/images/marcus_aurelius_portrait.png" alt="Marcus Aurelius">
+                </div>
+                <div class="team-member-info">
+                    <h3 class="team-member-name">Marcus Aurelius</h3>
+                    <span class="team-member-role">Partner, Alt Investments</span>
+                    <p class="team-member-bio">Coordinates crypto, real estate, commodities and private equity portfolios.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-logo">LEMNISCATE <span>INVESTMENTS</span></div>
+                <div class="footer-copy">&copy; 2026 Lemniscate Investments. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script logic for mobile menu and mouse cursor -->
+    <script>
+        // Header transparency scroll class
+        (function() {
+            function handleScroll() {
+                const header = document.getElementById('siteHeader');
+                if (header) {
+                    header.classList.toggle('scrolled', window.scrollY > 10);
+                }
+            }
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
+        })();
+
+        // Mobile Menu Drawer Logic
+        (function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const nav = document.querySelector('.header-nav');
+            const body = document.body;
+
+            if (toggle && nav) {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggle.classList.toggle('open');
+                    nav.classList.toggle('open');
+                    body.classList.toggle('menu-open');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== toggle) {
+                        toggle.classList.remove('open');
+                        nav.classList.remove('open');
+                        body.classList.remove('menu-open');
+                    }
+                });
+
+                // Close menu when clicking links
+                const navLinks = nav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggle.classList.remove('open');
+                        nav.classList.remove('open');
+                        body.classList.remove('menu-open');
+                    });
+                });
+            }
+        })();
+
+        // Custom mouse cursor tracking
+        (function() {
+            const dot = document.getElementById('customCursorDot');
+            const ring = document.getElementById('customCursorRing');
+
+            if (dot && ring) {
+                let mX = 0, mY = 0;
+                let rX = 0, rY = 0;
+                let firstMove = false;
+
+                window.addEventListener('mousemove', (e) => {
+                    mX = e.clientX;
+                    mY = e.clientY;
+
+                    if (!firstMove) {
+                        dot.style.opacity = '1';
+                        ring.style.opacity = '1';
+                        firstMove = true;
+                    }
+
+                    dot.style.transform = `translate(${mX}px, ${mY}px)`;
+                });
+
+                function updateRing() {
+                    rX += (mX - rX) * 0.15;
+                    rY += (mY - rY) * 0.15;
+                    ring.style.transform = `translate(${rX}px, ${rY}px)`;
+                    requestAnimationFrame(updateRing);
+                }
+                updateRing();
+
+                // Hover effects
+                const clickables = document.querySelectorAll('a, button, .team-member-card');
+                clickables.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        ring.classList.add('hovered');
+                        dot.classList.add('hovered');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        ring.classList.remove('hovered');
+                        dot.classList.remove('hovered');
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

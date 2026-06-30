@@ -625,13 +625,13 @@
                     <li><a href="/index.html#slide0" class="nav-item-link"><span class="nav-text">Overview</span></a></li>
                     <li><a href="/index.html#slide1" class="nav-item-link"><span class="nav-text">Portfolio</span></a></li>
                     <li><a href="/about.html" class="nav-about-link"><span class="nav-text">About Us</span></a></li>
-                    <li><a href="/index.html#slide3" class="nav-item-link"><span class="nav-text">Contact &amp; Pitch</span></a></li>
+                    <li><a href="/team.html" class="nav-item-link"><span class="nav-text">The Team</span></a></li>
                     <li><a href="/blogs.html" class="nav-blog-link"><span class="nav-text">Blogs</span></a></li>
                 </ul>
             </nav>
 
             <div class="header-actions">
-                <a href="/index.html#slide3" class="btn-header-pitch">✦ Pitch</a>
+                <a href="/index.html#slide4" class="btn-header-pitch">✦ Pitch</a>
             </div>
 
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation">
@@ -646,8 +646,8 @@
         <!-- Hero Section -->
         <section class="about-hero">
             <span class="about-label">Our DNA</span>
-            <h1 class="about-title">About Us &amp; the <em>Team</em></h1>
-            <p class="about-subtitle">Experienced operators, technical builders, and industry specialists partnering with founders at the earliest stages.</p>
+            <h1 class="about-title">About Our <em>Company</em></h1>
+            <p class="about-subtitle">A high-conviction investment firm backing technical builders, managing capital across public markets, and delivering bespoke wealth solutions.</p>
         </section>
 
         <!-- Vision / Philosophy Section -->
@@ -664,95 +664,128 @@
             </div>
         </section>
 
-        <!-- Team Section -->
-        <section>
-            <div class="team-section-header">
-                <h2 class="team-section-title">The Partners</h2>
-                <p class="team-section-desc">Meet the domain experts who guide our investments across software, AI, deep tech, and alternative asset classes.</p>
+        <!-- Company Milestones & Core Pillars -->
+        <style>
+            .company-pillars {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+            .pillar-card {
+                background: rgba(255, 255, 255, 0.5);
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+                padding: 30px;
+                backdrop-filter: blur(8px);
+                transition: transform 0.3s ease;
+            }
+            .pillar-card:hover {
+                transform: translateY(-4px);
+                border-color: rgba(184, 151, 101, 0.25);
+            }
+            .pillar-card h4 {
+                font-family: var(--font-heading);
+                font-size: 1.3rem;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+            }
+            .pillar-card p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                line-height: 1.5;
+            }
+            .milestones-timeline {
+                margin-top: 60px;
+                margin-bottom: 30px;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.4);
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+            }
+            .timeline-title {
+                font-family: var(--font-heading);
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .timeline-items {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+            .timeline-item {
+                display: grid;
+                grid-template-columns: 80px 1fr;
+                gap: 20px;
+            }
+            .timeline-year {
+                font-family: var(--font-code);
+                font-weight: 700;
+                color: var(--yc-orange);
+                font-size: 1.1rem;
+            }
+            .timeline-content h5 {
+                font-size: 1.05rem;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+            .timeline-content p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+            }
+            @media (max-width: 768px) {
+                .company-pillars {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+
+        <section class="company-pillars">
+            <div class="pillar-card">
+                <h4>Technical Roots</h4>
+                <p>We are operators and builders first. Our advisory is grounded in technical capabilities and code-level understanding, enabling deep alignment with engineering-driven founders.</p>
             </div>
+            <div class="pillar-card">
+                <h4>Capital Efficiency</h4>
+                <p>We believe in high-conviction capital deployed directly where it generates structural value, avoiding bloated overhead or unnecessary market diversification.</p>
+            </div>
+            <div class="pillar-card">
+                <h4>Client-Centric Alignment</h4>
+                <p>Whether allocating AUM in equities or structuring a venture round, we operate with absolute transparency and direct founder-level accessibility.</p>
+            </div>
+        </section>
 
-            <div class="team-grid">
-                <!-- Member 1 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/sanjay_kumar_portrait.png" alt="Sanjay Kumar">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Sanjay Kumar</h3>
-                        <span class="team-member-role">Founding GP</span>
-                        <p class="team-member-bio">15+ years investing in deep tech and enterprise software. Former founder &amp; builder.</p>
+        <section class="milestones-timeline">
+            <h3 class="timeline-title">Key Milestones</h3>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <span class="timeline-year">2021</span>
+                    <div class="timeline-content">
+                        <h5>Founding &amp; Vision</h5>
+                        <p>Lemniscate Investments is founded as an elite investment vehicle to combine public market intelligence with early-stage venture backing.</p>
                     </div>
                 </div>
-
-                <!-- Member 2 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/elena_rostova_portrait.png" alt="Elena Rostova">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Elena Rostova</h3>
-                        <span class="team-member-role">Partner, AI / ML</span>
-                        <p class="team-member-bio">Advises on generative AI and ML infrastructure. PhD in Computer Science.</p>
+                <div class="timeline-item">
+                    <span class="timeline-year">2023</span>
+                    <div class="timeline-content">
+                        <h5>Public Markets Growth</h5>
+                        <p>Assets Under Management (AUM) in active US and Indian equity portfolios crosses the $200k threshold with market-beating returns.</p>
                     </div>
                 </div>
-
-                <!-- Member 3 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/alexandra_chen_portrait.png" alt="Alexandra Chen">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Alexandra Chen</h3>
-                        <span class="team-member-role">Partner, Deep Tech</span>
-                        <p class="team-member-bio">Specializes in aerospace, robotics, and advanced materials. Ex-MIT researcher.</p>
+                <div class="timeline-item">
+                    <span class="timeline-year">2024</span>
+                    <div class="timeline-content">
+                        <h5>Venture Deployments</h5>
+                        <p>Total venture deployment reaches $1.0M, backing transformative companies like PetaBytz Technologies, Bluebix Solutions, and SoftStandard Solutions.</p>
                     </div>
                 </div>
-
-                <!-- Member 4 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/michael_torres_portrait.png" alt="Michael Torres">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Michael Torres</h3>
-                        <span class="team-member-role">Partner, SaaS</span>
-                        <p class="team-member-bio">Leads enterprise workflow and B2B SaaS investments. Ex-operator at Scale.</p>
-                    </div>
-                </div>
-
-                <!-- Member 5 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/sarah_kim_portrait.png" alt="Sarah Kim">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Sarah Kim</h3>
-                        <span class="team-member-role">Partner, Fintech</span>
-                        <p class="team-member-bio">Focuses on transaction infrastructure and digital assets. Former finance lead.</p>
-                    </div>
-                </div>
-
-                <!-- Member 6 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/david_okafor_portrait.png" alt="David Okafor">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">David Okafor</h3>
-                        <span class="team-member-role">Partner, Climate Tech</span>
-                        <p class="team-member-bio">Invests in circular economy, batteries, and carbon markets. Ex-energy consultant.</p>
-                    </div>
-                </div>
-
-                <!-- Member 7 -->
-                <div class="team-member-card">
-                    <div class="team-member-photo-wrap">
-                        <img src="/images/marcus_aurelius_portrait.png" alt="Marcus Aurelius">
-                    </div>
-                    <div class="team-member-info">
-                        <h3 class="team-member-name">Marcus Aurelius</h3>
-                        <span class="team-member-role">Partner, Alt Investments</span>
-                        <p class="team-member-bio">Coordinates crypto, real estate, commodities and private equity portfolios.</p>
+                <div class="timeline-item">
+                    <span class="timeline-year">2025</span>
+                    <div class="timeline-content">
+                        <h5>Multi-Asset Advisory</h5>
+                        <p>Expanded capabilities to cover alternative assets, direct crypto allocations, commodities baskets, and private syndications for high-net-worth clients.</p>
                     </div>
                 </div>
             </div>

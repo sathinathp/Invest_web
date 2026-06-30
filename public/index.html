@@ -2781,6 +2781,11 @@
                     </li>
                     <li>
                         <a class="nav-item-link" data-slide="3">
+                            <span class="nav-text">The Team</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item-link" data-slide="4">
                             <span class="nav-text">Contact &amp; Pitch</span>
                         </a>
                     </li>
@@ -2793,7 +2798,7 @@
             </nav>
 
             <div class="header-actions">
-                <a href="#slide3" onclick="document.getElementById('slide3').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
+                <a href="#slide4" onclick="document.getElementById('slide4').scrollIntoView({ behavior: 'smooth' }); event.preventDefault();" class="btn-header-pitch">✦ Pitch</a>
             </div>
 
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation">
@@ -3027,13 +3032,78 @@
 
             </section>
 
-            <!-- SLIDE 3: ABOUT US & TEAM -->
+            <!-- SLIDE 3: ABOUT OUR COMPANY -->
             <section class="slide" id="slide2" aria-label="About Us">
                 <div class="slide-header scroll-reveal">
                     <span class="slide-label">Our DNA</span>
-                    <h2 class="slide-title">About Us &amp; the <em>Team</em></h2>
+                    <h2 class="slide-title">About Our <em>Company</em></h2>
                     <p class="slide-desc">
-                        We are a team of experienced operators, technical builders, and industry specialists partnering with founders at the earliest stages.
+                        A high-conviction investment firm backing technical builders, managing capital across public markets, and delivering bespoke wealth solutions.
+                    </p>
+                </div>
+
+                <style>
+                    .company-mission-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 30px;
+                        margin-top: 30px;
+                        text-align: left;
+                        width: 100%;
+                    }
+                    .mission-block-card {
+                        background: rgba(255, 255, 255, 0.4);
+                        border: 1px solid var(--border-color);
+                        border-radius: 16px;
+                        padding: 32px;
+                        backdrop-filter: blur(12px);
+                        -webkit-backdrop-filter: blur(12px);
+                        transition: transform 0.3s ease;
+                    }
+                    .mission-block-card:hover {
+                        transform: translateY(-2px);
+                        border-color: rgba(184, 151, 101, 0.25);
+                    }
+                    .mission-block-card h3 {
+                        font-family: var(--font-heading);
+                        font-size: 1.5rem;
+                        font-weight: 500;
+                        margin-bottom: 16px;
+                        color: var(--text-primary);
+                    }
+                    .mission-block-card p {
+                        color: var(--text-secondary);
+                        font-size: 0.95rem;
+                        line-height: 1.6;
+                        margin: 0;
+                    }
+                    @media (max-width: 768px) {
+                        .company-mission-grid {
+                            grid-template-columns: 1fr;
+                            gap: 20px;
+                        }
+                    }
+                </style>
+
+                <div class="company-mission-grid scroll-reveal delay-1">
+                    <div class="mission-block-card">
+                        <h3>Our Mission</h3>
+                        <p>At Lemniscate Investments, we are committed to backing technical builders who are reimagining foundational industry infrastructure. We believe in providing high-conviction checks and active partner-level support to accelerate time-to-market and growth.</p>
+                    </div>
+                    <div class="mission-block-card">
+                        <h3>Investment Philosophy</h3>
+                        <p>We deploy focused, high-conviction capital rather than taking a high-volume, diversified approach. This concentrated strategy ensures that our team's deep operational and technical expertise is fully leveraged for every company we back.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: THE TEAM -->
+            <section class="slide" id="slide3" aria-label="The Team">
+                <div class="slide-header scroll-reveal">
+                    <span class="slide-label">Our Domain Experts</span>
+                    <h2 class="slide-title">Meet the <em>Partners</em></h2>
+                    <p class="slide-desc">
+                        Experienced operators, technical builders, and industry specialists partnering with founders at the earliest stages.
                     </p>
                 </div>
 
@@ -3124,8 +3194,8 @@
                 </div>
             </section>
 
-            <!-- SLIDE 4: CONTACT -->
-            <section class="slide" id="slide3" aria-label="Contact">
+            <!-- SLIDE 5: CONTACT -->
+            <section class="slide" id="slide4" aria-label="Contact">
                 <div class="slide-header scroll-reveal">
                     <span class="slide-label">Connection</span>
                     <h2 class="slide-title">Let's start a <em>conversation</em></h2>
