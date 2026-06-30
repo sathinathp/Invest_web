@@ -1,6 +1,8 @@
 node_modules/
 .DS_Store
 Thumbs.db
-public/uploads/pitch-*
+public/uploads/
 pitches.json
 contacts.json
+blogs.json
+.env

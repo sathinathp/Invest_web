@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -20,18 +22,83 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, 'pitch-' + uniqueSuffix + path.extname(file.originalname));
+        let prefix = 'file-';
+        if (file.fieldname === 'pitchAudio') {
+            prefix = 'pitch-';
+        } else if (file.fieldname === 'coverImage') {
+            prefix = 'blog-img-';
+        } else if (file.fieldname === 'blogVideo') {
+            prefix = 'blog-vid-';
+        }
+        cb(null, prefix + uniqueSuffix + path.extname(file.originalname));
     }
 });
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 25 * 1024 * 1024 } // 25MB limit
+    limits: { fileSize: 50 * 1024 * 1024 } // Increase to 50MB limit to support video uploads
 });
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ===== ADMIN AUTHENTICATION =====
+// In-memory session store: token -> expiry timestamp
+const adminSessions = new Map();
+const ADMIN_SESSION_TTL = 8 * 60 * 60 * 1000; // 8 hours
+
+// Validate admin session token (used by API routes that need protection)
+function requireAdminAuth(req, res, next) {
+    const token = req.headers['x-admin-token'] || req.query.admin_token;
+    if (!token || !adminSessions.has(token)) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+    const expiry = adminSessions.get(token);
+    if (Date.now() > expiry) {
+        adminSessions.delete(token);
+        return res.status(401).json({ error: 'Session expired. Please log in again.' });
+    }
+    next();
+}
+
+// POST /api/admin/login
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+    const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
+    const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'lemniscate2026';
+
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+        const token = crypto.randomBytes(32).toString('hex');
+        adminSessions.set(token, Date.now() + ADMIN_SESSION_TTL);
+        console.log(`[ADMIN] Login successful for user: ${username}`);
+        return res.json({ success: true, token, expiresIn: ADMIN_SESSION_TTL });
+    }
+    console.warn(`[ADMIN] Failed login attempt for user: ${username}`);
+    return res.status(401).json({ error: 'Invalid username or password.' });
+});
+
+// POST /api/admin/logout
+app.post('/api/admin/logout', (req, res) => {
+    const token = req.headers['x-admin-token'];
+    if (token) adminSessions.delete(token);
+    res.json({ success: true });
+});
+
+// GET /api/admin/verify — client calls this on page load to check if token is still valid
+app.get('/api/admin/verify', (req, res) => {
+    const token = req.headers['x-admin-token'] || req.query.admin_token;
+    if (!token || !adminSessions.has(token)) {
+        return res.status(401).json({ valid: false });
+    }
+    const expiry = adminSessions.get(token);
+    if (Date.now() > expiry) {
+        adminSessions.delete(token);
+        return res.status(401).json({ valid: false });
+    }
+    return res.json({ valid: true });
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Path to JSON DB
@@ -361,6 +428,267 @@ app.post('/api/contact', async (req, res) => {
     } catch (error) {
         console.error('Error handling contact form submission:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// ===== BLOG INSIGHTS DATABASE & ENDPOINTS =====
+const BLOGS_FILE = path.join(__dirname, 'blogs.json');
+
+const writeBlogs = (blogs) => {
+    try {
+        fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2), 'utf8');
+        return true;
+    } catch (error) {
+        console.error('Error writing blogs file:', error);
+        return false;
+    }
+};
+
+const readBlogs = () => {
+    if (!fs.existsSync(BLOGS_FILE)) {
+        // Seed default blogs to match blogs.html original content
+        const defaultBlogs = [
+            {
+                id: 1,
+                category: "venture",
+                categoryLabel: "Venture Capital",
+                title: "Reimagining Pre-Seed Check Sizes: Our Combined $1M Venture Strategy",
+                desc: "How Lemniscate manages risk and partners with high-potential founders by putting $1 million to work across our cornerstone portfolio investments: PetaBytz Technologies, Bluebix Solutions, and SoftStandard Solutions.",
+                date: "June 28, 2026",
+                readTime: "6 min read",
+                author: {
+                    name: "Sanjay Kumar",
+                    role: "Founding GP",
+                    img: "/images/sanjay_kumar_portrait.png"
+                },
+                content: `
+                    <p>At Lemniscate Investments, we have always believed that early-stage investing is about high-conviction partnerships. We don't believe in spraying and praying. Rather, we back technical builders reimagining industry infrastructure with meaningful capital and long-term support.</p>
+                    
+                    <p>Recently, we crossed a milestone: a combined <strong>$1 million</strong> deployed across our three leading portfolio companies. In this article, we'll examine how we put this capital to work and the underlying thesis that drives our Venture Capital division.</p>
+                    
+                    <h3>Our Portfolio Cornerstones</h3>
+                    <p>Our combined investment spans three pioneering startups that represent the future of deep technology and digital workflow infrastructure:</p>
+                    <ul>
+                        <li><strong>PetaBytz Technologies:</strong> Innovating in cloud-native scalable data pipelines and computational clustering.</li>
+                        <li><strong>Bluebix Solutions:</strong> Revolutionizing next-generation enterprise workflows and customer operations with custom telemetry.</li>
+                        <li><strong>SoftStandard Solutions:</strong> Scaling technical standards, security systems, and infrastructure integrations.</li>
+                    </ul>
+
+                    <blockquote>
+                        "Our investment strategy focuses on deep technical capabilities. We look for teams that don't just build applications, but build the fundamental systems that other companies rely on."
+                    </blockquote>
+
+                    <h3>Strategic Alignment and Support</h3>
+                    <p>Deploying $1M is only the first step. Our team—comprising former founders, deep-tech researchers, and SaaS operators—works closely with these companies on growth strategies, architectural reviews, and customer development. By maintaining a highly focused portfolio, we ensure that every founder receives the full support of the Lemniscate partner network.</p>
+                    
+                    <p>In the coming quarters, we plan to expand our venture cohort, targeting Pre-Seed and Series A opportunities where we can leverage our technical background to accelerate time-to-market.</p>
+                `
+            },
+            {
+                id: 2,
+                category: "equities",
+                categoryLabel: "Equities & Portfolio",
+                title: "Managing a Modern Equities Portfolio: Active US & Indian Dual-Market Allocation",
+                desc: "An inside look at our active trading strategies in the US and Indian equity markets, navigating macro trends, and managing $200k USD in assets under management (AUM).",
+                date: "June 22, 2026",
+                readTime: "8 min read",
+                author: {
+                    name: "Elena Rostova",
+                    role: "Partner, AI & Quantitative Strategies",
+                    img: "/images/elena_rostova_portrait.png"
+                },
+                content: `
+                    <p>The global macroeconomic landscape in 2026 demands flexibility. Rather than limiting ourselves to domestic equities, Lemniscate actively manages a dual-market portfolio, investing in both US and Indian equities. Currently managing <strong>$200k USD in Assets Under Management (AUM)</strong>, we leverage local insights and algorithmic models to generate alpha across borders.</p>
+
+                    <h3>Why the US & Indian Corridor?</h3>
+                    <p>The synergy between US technology leadership and Indian industrial and digital expansion offers an unparalleled risk-adjusted return profile. While the US market provides exposure to hyper-scale SaaS and generative AI systems, the Indian market (tracked via NSE and BSE indices) offers explosive growth in banking, manufacturing, and consumer tech.</p>
+
+                    <blockquote>
+                        "Dual-market allocation is not just about diversification; it is about capital efficiency. When US markets face valuation pressures, the Indian growth engines provide strong counterbalancing tailwinds."
+                    </blockquote>
+
+                    <h3>Active Risk Management</h3>
+                    <p>Our trading engine monitors key volatility indicators (such as the CBOE VIX) and simulates live market feeds to execute high-conviction trades. Managing a dual-market system requires strict attention to currency fluctuations, geopolitical developments, and regulatory frameworks. By maintaining a focused $200k AUM, we stay highly liquid and capable of executing tactical pivots as market conditions shift.</p>
+
+                    <p>We believe that active, quantitative management is the key to outperforming passive benchmarks in today's high-interest-rate environment.</p>
+                `
+            },
+            {
+                id: 3,
+                category: "advisory",
+                categoryLabel: "Wealth Advisory",
+                title: "Custom Goal-Based Wealth Advisory: A Tailor-Made Asset Allocation Playbook",
+                desc: "How we move beyond standard models to provide bespoke asset allocation strategies that align precisely with our clients' long-term requirements and lifestyle goals.",
+                date: "June 15, 2026",
+                readTime: "5 min read",
+                author: {
+                    name: "Sarah Kim",
+                    role: "Partner, Fintech & Wealth Systems",
+                    img: "/images/sarah_kim_portrait.png"
+                },
+                content: `
+                    <p>Traditional wealth advisory has become commoditized. Standard risk tolerance questionnaires often lead to generic 60/40 portfolios that fail to capture a client's true objectives. At Lemniscate, we have replaced template models with <strong>tailor-made asset allocation based on clients' requirements and goals</strong>.</p>
+
+                    <h3>Aligning Capital with Objectives</h3>
+                    <p>Our wealth advisory framework begins with a blank sheet. We work closely with individuals, family offices, and operators to understand their cash flow needs, tax considerations, and generational milestones. We separate wealth preservation from growth-oriented venture plays, constructing bespoke portfolios that might include liquid equities, venture debt, and direct private investments.</p>
+
+                    <blockquote>
+                        "No two clients are identical. Standard allocations fail to account for private equity lockups, startup options, or direct real estate exposure. True advisory must be bespoke."
+                    </blockquote>
+
+                    <h3>Integrated Advisory Ecosystem</h3>
+                    <p>By combining our Wealth Advisory insights with our direct access to Venture Capital and Alternative Investments, we offer clients a unique look at off-market deals. We advise on tax-efficient structuring, transition planning, and cross-border assets, ensuring that our clients' wealth grows in alignment with their values and expectations.</p>
+                `
+            },
+            {
+                id: 4,
+                category: "alternatives",
+                categoryLabel: "Alternative Markets",
+                title: "Beyond Public Markets: Designing a Resilient Alternative Portfolio",
+                desc: "Exploring our advisory framework for crypto, real estate, private equity, and commodities investments to capture high-alpha opportunities outside the public domain.",
+                date: "June 08, 2026",
+                readTime: "7 min read",
+                author: {
+                    name: "Marcus Aurelius",
+                    role: "Partner, Alternative Investments",
+                    img: "/images/marcus_aurelius_portrait.png"
+                },
+                content: `
+                    <p>As public market correlations converge, true diversification is increasingly difficult to achieve. Standard bond and equity splits no longer guarantee safety. To build resilient portfolios, Lemniscate advises clients on four critical pillars of alternative assets: <strong>crypto, real estate, private equity, and commodities investments</strong>.</p>
+
+                    <h3>The Four Pillars of Alternatives</h3>
+                    <ul>
+                        <li><strong>Crypto &amp; Digital Assets:</strong> We focus on liquid protocols (Bitcoin, Ethereum, Solana) and decentralization infrastructure that provide asymmetric upside.</li>
+                        <li><strong>Real Estate:</strong> Yield-generating commercial assets, logistics centers, and private residential pools offering solid cash flow and inflation hedges.</li>
+                        <li><strong>Private Equity:</strong> Direct stakes in private mid-market firms and special situations that operate independently of public equity market corrections.</li>
+                        <li><strong>Commodities:</strong> Hard assets like gold and raw materials that serve as defensive backstops during periods of currency debasement.</li>
+                    </ul>
+
+                    <blockquote>
+                        "Alternative assets are no longer speculative accessories. They are critical building blocks for modern risk-adjusted portfolios."
+                    </blockquote>
+
+                    <h3>Active Underwriting</h3>
+                    <p>Our Alternative Investment division applies rigorous underwriting and due diligence to every asset class. We advise on entry valuations, liquidity risks, and custodial infrastructure. By integrating alternative markets, we help clients capture non-correlated yields and high-alpha opportunities that standard brokers overlook.</p>
+                `
+            }
+        ];
+        writeBlogs(defaultBlogs);
+        return defaultBlogs;
+    }
+    try {
+        const data = fs.readFileSync(BLOGS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading blogs file:', error);
+        return [];
+    }
+};
+
+// Endpoints
+app.get('/api/blogs', (req, res) => {
+    try {
+        const blogs = readBlogs();
+        // Sort newest first
+        blogs.sort((a, b) => b.id - a.id);
+        res.json(blogs);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve blogs' });
+    }
+});
+
+app.get('/api/blogs/:id', (req, res) => {
+    try {
+        const blogs = readBlogs();
+        const blog = blogs.find(b => b.id === parseInt(req.params.id));
+        if (!blog) {
+            return res.status(404).json({ error: 'Blog not found' });
+        }
+        res.json(blog);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve blog' });
+    }
+});
+
+// Configure upload fields for blog
+const blogUploadConfig = upload.fields([
+    { name: 'coverImage', maxCount: 1 },
+    { name: 'blogVideo', maxCount: 1 }
+]);
+
+app.post('/api/blogs', requireAdminAuth, blogUploadConfig, (req, res) => {
+    try {
+        const { title, category, authorName, authorRole, authorImgSelect, readTime, desc, content } = req.body;
+        
+        if (!title || !category || !authorName || !desc || !content) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        let authorImg = '/images/sanjay_kumar_portrait.png'; // default
+        if (authorImgSelect) {
+            authorImg = authorImgSelect;
+        }
+
+        const coverImageFile = req.files && req.files['coverImage'] ? `/uploads/${req.files['coverImage'][0].filename}` : null;
+        const blogVideoFile = req.files && req.files['blogVideo'] ? `/uploads/${req.files['blogVideo'][0].filename}` : null;
+
+        const blogs = readBlogs();
+        
+        // Generate new ID (numeric max + 1)
+        const nextId = blogs.length > 0 ? Math.max(...blogs.map(b => b.id)) + 1 : 1;
+
+        // Map category ID to Category Label
+        const categoryLabels = {
+            'venture': 'Venture Capital',
+            'equities': 'Equities & Portfolio',
+            'advisory': 'Wealth Advisory',
+            'alternatives': 'Alternative Markets'
+        };
+        const categoryLabel = categoryLabels[category] || 'General';
+
+        // Format Date like: "June 30, 2026"
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = new Date().toLocaleDateString('en-US', options);
+
+        const newBlog = {
+            id: nextId,
+            category,
+            categoryLabel,
+            title,
+            desc,
+            date: formattedDate,
+            readTime: readTime || '5 min read',
+            author: {
+                name: authorName,
+                role: authorRole || 'Partner',
+                img: authorImg
+            },
+            content: content,
+            coverImage: coverImageFile,
+            video: blogVideoFile
+        };
+
+        blogs.push(newBlog);
+        writeBlogs(blogs);
+
+        res.status(201).json({ success: true, blog: newBlog });
+    } catch (error) {
+        console.error('Error creating blog:', error);
+        res.status(500).json({ error: 'Failed to create blog' });
+    }
+});
+
+app.delete('/api/blogs/:id', requireAdminAuth, (req, res) => {
+    try {
+        const blogs = readBlogs();
+        const filtered = blogs.filter(b => b.id !== parseInt(req.params.id));
+        if (blogs.length === filtered.length) {
+            return res.status(404).json({ error: 'Blog not found' });
+        }
+        writeBlogs(filtered);
+        res.json({ success: true, message: 'Blog deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete blog' });
     }
 });
 
