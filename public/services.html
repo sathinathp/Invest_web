@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services — Lemniscate Investments</title>
+    <meta name="description" content="Explore our institutional-grade Venture Capital, Portfolio Management, Wealth Advisory, Alternative Investments, and Strategic Guidance." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN SYSTEM ===== */
+        :root {
+            --yc-orange: #B89765;
+            --yc-orange-hover: #9E7D4E;
+            --yc-orange-light: rgba(184, 151, 101, 0.08);
+            --bg-body: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --font-heading: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', 'Inter', system-ui, sans-serif;
+            --font-code: 'Fira Code', 'Courier New', monospace;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            font-size: 15px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 120px;
+        }
+
+        /* Ambient floating glow circles */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            left: 20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184, 151, 101, 0.07) 0%, rgba(184, 151, 101, 0) 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(71, 85, 105, 0.05) 0%, rgba(71, 85, 105, 0) 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- TOP NAVIGATION HEADER ----- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+            padding: 0 40px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header-logo-img {
+            height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover .header-logo-img {
+            transform: scale(1.05);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .deck-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 28px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-item-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-text {
+            border-bottom: 1.5px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-item-link:hover .nav-text {
+            border-color: var(--text-primary);
+        }
+
+        .nav-services-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--yc-orange);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-services-link .nav-text {
+            border-color: var(--yc-orange);
+            border-bottom: 1.5px solid var(--yc-orange);
+            color: var(--yc-orange);
+        }
+
+        .nav-blog-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-blog-link:hover {
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-header-pitch {
+            background-color: var(--yc-orange);
+            color: #0a0b0d;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-header-pitch:hover {
+            background-color: var(--yc-orange-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ----- HERO SECTION ----- */
+        .services-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto 80px;
+        }
+
+        .services-label {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--yc-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .services-title {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .services-title em {
+            font-style: italic;
+            font-family: var(--font-heading);
+            font-weight: 400;
+            color: var(--yc-orange);
+        }
+
+        .services-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ----- SERVICES LIST LAYOUT ----- */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            margin-bottom: 100px;
+        }
+
+        .service-section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 48px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 48px;
+            align-items: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .service-section-card:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .service-section-card.alt {
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        .service-info-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            background: var(--yc-orange-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--yc-orange);
+            margin-bottom: 8px;
+        }
+
+        .service-icon-wrapper svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .service-name {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .service-long-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .service-metric-badge {
+            align-self: flex-start;
+            background: var(--yc-orange-light);
+            border: 1px dashed rgba(184, 151, 101, 0.3);
+            color: var(--yc-orange);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .service-visual-column {
+            background: rgba(15, 23, 42, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .visual-list-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .visual-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .visual-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .visual-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visual-item-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .visual-item-tag {
+            font-size: 0.72rem;
+            font-family: var(--font-code);
+            background: rgba(15, 23, 42, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .visual-item-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ----- CTA FOOTER ----- */
+        .services-cta {
+            text-align: center;
+            background: rgba(184, 151, 101, 0.04);
+            border: 1px solid rgba(184, 151, 101, 0.15);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin-bottom: 80px;
+        }
+
+        .cta-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .cta-desc {
+            max-width: 600px;
+            margin: 0 auto 32px;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .btn-cta-contact {
+            display: inline-block;
+            background-color: var(--text-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-cta-contact:hover {
+            background-color: var(--yc-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(184, 151, 101, 0.15);
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .footer-logo span {
+            color: var(--yc-orange);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsive Header Styles */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 22px;
+            height: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1010;
+        }
+
+        .mobile-menu-toggle .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: left center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 90px;
+            }
+
+            body.menu-open {
+                overflow: hidden !important;
+            }
+
+            .site-header {
+                padding: 0 20px;
+                height: 60px;
+            }
+
+            .header-logo-img {
+                height: 40px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .header-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1005;
+                padding: 40px;
+            }
+
+            .header-nav.open {
+                transform: translateY(0);
+            }
+
+            .deck-nav-list {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-item-link, .nav-services-link, .nav-blog-link {
+                font-size: 1.3rem;
+                padding: 10px 0;
+                width: auto;
+                justify-content: center;
+            }
+
+            .header-actions {
+                display: none;
+            }
+
+            /* Active toggle styling */
+            .mobile-menu-toggle.open .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(2px, 0px);
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(2) {
+                width: 0%;
+                opacity: 0;
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(2px, 0px);
+            }
+
+            /* Main Layout Mobile Overrides */
+            .main-container {
+                padding: 0 20px 60px;
+            }
+
+            .services-hero {
+                margin-bottom: 40px;
+            }
+
+            .services-title {
+                font-size: 2.2rem;
+            }
+
+            .services-list {
+                gap: 40px;
+            }
+
+            .service-section-card,
+            .service-section-card.alt {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 28px 20px;
+            }
+
+            .service-name {
+                font-size: 1.6rem;
+            }
+
+            .service-visual-column {
+                padding: 20px 16px;
+            }
+
+            .services-cta {
+                padding: 40px 20px;
+            }
+
+            .cta-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Custom Cursor Styling */
+        .custom-cursor-dot,
+        .custom-cursor-ring {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .custom-cursor-dot {
+                display: block;
+                position: fixed;
+                top: -4px;
+                left: -4px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: var(--yc-orange);
+                z-index: 9999;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .custom-cursor-ring {
+                display: block;
+                position: fixed;
+                top: -16px;
+                left: -16px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 1px solid var(--yc-orange);
+                z-index: 9998;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
+            }
+
+            .custom-cursor-ring.hover {
+                width: 48px;
+                height: 48px;
+                top: -24px;
+                left: -24px;
+                background-color: rgba(184, 151, 101, 0.08);
+                border-color: var(--yc-orange);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+    <div class="custom-cursor-ring" id="customCursorRing"></div>
+
+    <!-- ===== NAV HEADER ===== -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="/index.html" class="header-logo">
+                <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
+            </a>
+
+            <nav class="header-nav">
+                <ul class="deck-nav-list">
+                    <li>
+                        <a href="/index.html#slide0" class="nav-blog-link">
+                            <span class="nav-text">Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/services.html" class="nav-services-link">
+                            <span class="nav-text">Services</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/index.html#slide1" class="nav-blog-link">
+                            <span class="nav-text">Portfolio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about.html" class="nav-blog-link">
+                            <span class="nav-text">About Us</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/index.html#slide3" class="nav-blog-link">
+                            <span class="nav-text">Contact &amp; Pitch</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/blogs.html" class="nav-blog-link">
+                            <span class="nav-text">Blogs</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="/index.html#slide3" class="btn-header-pitch">✦ Pitch</a>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- ===== HERO SECTION ===== -->
+        <section class="services-hero">
+            <span class="services-label">Our Capabilities</span>
+            <h1 class="services-title">Our Investment &amp; Advisory <em>Services</em></h1>
+            <p class="services-subtitle">
+                We provide institutional-grade capital, sophisticated wealth solutions, and strategic growth guidance to founders and high-net-worth investors.
+            </p>
+        </section>
+
+        <!-- ===== SERVICES DETAIL LIST ===== -->
+        <div class="services-list">
+            <!-- 1. VENTURE CAPITAL -->
+            <section class="service-section-card" id="venture-capital">
+                <div class="service-info-column">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h2 class="service-name">Venture Capital</h2>
+                    <p class="service-long-desc">
+                        We invest in early-stage startups and partner with founders building scalable businesses. We operate as active partners, offering operational guidance, fundraising support, and recruitment help.
+                    </p>
+                    <span class="service-metric-badge">$1.0 Million Combined Early-Stage Investment</span>
+                </div>
+                <div class="service-visual-column">
+                    <span class="visual-list-title">Portfolio Deployments</span>
+                    <div class="visual-items">
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">PetaBytz Technologies</span>
+                                <span class="visual-item-tag">Cloud &amp; AI</span>
+                            </div>
+                            <p class="visual-item-desc">Led the initial seed round to build robust enterprise cloud pipelines, helping companies transition databases to automated serverless environments.</p>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">Bluebix Solutions</span>
+                                <span class="visual-item-tag">HRMS &amp; Compliance</span>
+                            </div>
+                            <p class="visual-item-desc">Helped automate complex payroll compliance workflows, drafted bank reconciliation models, and structured follow-on Series A options.</p>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">SoftStandard Solutions</span>
+                                <span class="visual-item-tag">Workflow Automation</span>
+                            </div>
+                            <p class="visual-item-desc">Guided pricing structures for early enterprise contract audits and connected founders with family office clients.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. PORTFOLIO MANAGEMENT -->
+            <section class="service-section-card alt" id="portfolio-management">
+                <div class="service-visual-column">
+                    <span class="visual-list-title">Investment Strategy</span>
+                    <div class="visual-items">
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">US Equities</span>
+                                <span class="visual-item-tag">Global Leaders</span>
+                            </div>
+                            <p class="visual-item-desc">Exposure to global technology, healthcare, and growth leaders to compound capital over long horizons.</p>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">Indian Equities</span>
+                                <span class="visual-item-tag">Emerging Growth</span>
+                            </div>
+                            <p class="visual-item-desc">Capturing massive structural growth, digitalization trends, and consumer tailwinds in the Indian subcontinent.</p>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-item-header">
+                                <span class="visual-item-title">Active Risk Management</span>
+                                <span class="visual-item-tag">Hedging</span>
+                            </div>
+                            <p class="visual-item-desc">Quantitative rebalancing models designed to preserve capital and capture alpha during market downturns.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-info-column">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="15" y1="3" x2="15" y2="21"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="3" y1="15" x2="21" y2="15"/>
+                        </svg>
+                    </div>
+                    <h2 class="service-name">Portfolio Management</h2>
+                    <p class="service-long-desc">
+                        We trade and invest in US and Indian equities. Our strategy is built on rigorous fundamental analysis, algorithmic risk management, and active diversification to generate consistent risk-adjusted returns.
+                    </p>
+                    <span class="service-metric-badge">$200k USD Assets Under Management (AUM)</span>
+                </div>
+            </section>
+
+            <!-- 3. WEALTH ADVISORY -->
+            <section class="service-section-card" id="wealth-advisory">
+                <div class="service-info-column">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+                            <line x1="16" y1="8" x2="2" y2="22"/>
+                            <line x1="17.5" y1="15" x2="9" y2="15"/>
+                        </svg>
+                    </div>
+                    <h2 class="service-name">Wealth Advisory</h2>
+                    <p class="service-long-desc">
+                        We provide tailored made asset allocation based on clients' specific requirements, liquidity needs, and long-term financial goals. We construct resilient portfolios optimized for multi-generational wealth preservation.
+                    </p>
+                    <span class="service-metric-badge">Bespoke Client Solutions</span>
+                </div>
+                <div class="service-visual-column">
+                    <span class="visual-list-title">Advisory Focus</span>
+                    <div class="visual-items">
+                        <div class="visual-item">
+                            <span class="visual-item-title">Custom Asset Allocation</span>
+                            <p class="visual-item-desc">Aligning and optimizing dynamic portfolios combining public equities, debt instruments, and alternative assets.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Goal-Based Financial Planning</span>
+                            <p class="visual-item-desc">Matching cash flows and target investment horizons with liquidity and expansion targets.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Tax &amp; Jurisdictional Optimization</span>
+                            <p class="visual-item-desc">Structuring assets efficiently across international boundaries to minimize liabilities.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ALTERNATIVE INVESTMENTS -->
+            <section class="service-section-card alt" id="alternative-investments">
+                <div class="service-visual-column">
+                    <span class="visual-list-title">Asset Classes</span>
+                    <div class="visual-items">
+                        <div class="visual-item">
+                            <span class="visual-item-title">Crypto &amp; Digital Assets</span>
+                            <p class="visual-item-desc">Navigating Web3 protocols, decentralized networks, and liquid venture tokens to extract high-alpha yield.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Real Estate &amp; Syndications</span>
+                            <p class="visual-item-desc">Direct physical real estate opportunities, structured debt products, and high-yield syndications.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Private Equity &amp; Commodities</span>
+                            <p class="visual-item-desc">Secondary private market equity allocations and commodity baskets to hedge inflation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-info-column">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 22 22 22"/>
+                        </svg>
+                    </div>
+                    <h2 class="service-name">Alternative Investments</h2>
+                    <p class="service-long-desc">
+                        We advise on non-traditional assets to capture uncorrelated yield and high-growth opportunities. Our expertise spans across crypto, real estate, private equity, and commodities investments.
+                    </p>
+                    <span class="service-metric-badge">Uncorrelated Yield &amp; Growth</span>
+                </div>
+            </section>
+
+            <!-- 5. STRATEGIC GUIDANCE -->
+            <section class="service-section-card" id="strategic-guidance">
+                <div class="service-info-column">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h2 class="service-name">Strategic Guidance</h2>
+                    <p class="service-long-desc">
+                        We advise and guide founders on early-stage strategy, capital structuring, global expansion, and operational scaling to optimize investment outcomes.
+                    </p>
+                    <span class="service-metric-badge">Founder &amp; Investor Support</span>
+                </div>
+                <div class="service-visual-column">
+                    <span class="visual-list-title">Advisory Scope</span>
+                    <div class="visual-items">
+                        <div class="visual-item">
+                            <span class="visual-item-title">Capital Structuring</span>
+                            <p class="visual-item-desc">Optimizing cap table dynamics, corporate token economics, and early secondary rounds.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Global Expansion &amp; Hiring</span>
+                            <p class="visual-item-desc">Navigating cross-border setup, operational scaling, and recruiting executive technical talent.</p>
+                        </div>
+                        <div class="visual-item">
+                            <span class="visual-item-title">Product-Market Fit &amp; Sales</span>
+                            <p class="visual-item-desc">Establishing repeatable B2B sales pipelines and pricing structures for enterprise agreements.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== CTA SECTION ===== -->
+        <section class="services-cta">
+            <h2 class="cta-title">Partner With Lemniscate</h2>
+            <p class="cta-desc">
+                Whether you are a founder raising capital or an investor seeking sophisticated asset management, we are ready to collaborate.
+            </p>
+            <a href="/index.html#slide3" class="btn-cta-contact">Discuss Collaboration</a>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-logo">LEMNISCATE <span>INVESTMENTS</span></div>
+                <div class="footer-copy">&copy; 2026 Lemniscate Investments. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script logic for mobile menu, custom cursor, and header transparency -->
+    <script>
+        // Header transparency scroll class
+        (function() {
+            function handleScroll() {
+                const header = document.getElementById('siteHeader');
+                if (header) {
+                    header.classList.toggle('scrolled', window.scrollY > 10);
+                }
+            }
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
+        })();
+
+        // Mobile Menu Drawer Logic
+        (function() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const nav = document.querySelector('.header-nav');
+            const body = document.body;
+
+            if (toggle && nav) {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggle.classList.toggle('open');
+                    nav.classList.toggle('open');
+                    body.classList.toggle('menu-open');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== toggle) {
+                        toggle.classList.remove('open');
+                        nav.classList.remove('open');
+                        body.classList.remove('menu-open');
+                    }
+                });
+
+                // Close menu when clicking links
+                const navLinks = nav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggle.classList.remove('open');
+                        nav.classList.remove('open');
+                        body.classList.remove('menu-open');
+                    });
+                });
+            }
+        })();
+
+        // Custom mouse cursor tracking (PC/Desktop only)
+        (function() {
+            const dot = document.getElementById('customCursorDot');
+            const ring = document.getElementById('customCursorRing');
+
+            if (dot && ring) {
+                let mX = 0, mY = 0;
+                let rX = 0, rY = 0;
+                let firstMove = false;
+
+                window.addEventListener('mousemove', (e) => {
+                    mX = e.clientX;
+                    mY = e.clientY;
+
+                    if (!firstMove) {
+                        dot.style.opacity = '1';
+                        ring.style.opacity = '1';
+                        firstMove = true;
+                    }
+
+                    dot.style.transform = `translate(${mX}px, ${mY}px)`;
+                });
+
+                // Smooth ring interpolation
+                function updateRing() {
+                    rX += (mX - rX) * 0.15;
+                    rY += (mY - rY) * 0.15;
+                    ring.style.transform = `translate(${rX}px, ${rY}px)`;
+                    requestAnimationFrame(updateRing);
+                }
+                updateRing();
+
+                // Hover effects
+                const clickables = document.querySelectorAll('a, button, input, textarea, .service-section-card');
+                clickables.forEach(el => {
+                    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

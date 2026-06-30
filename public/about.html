@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us &amp; the Team — Lemniscate Investments</title>
+    <meta name="description" content="Meet the experienced operators, technical builders, and industry specialists partnering with founders at Lemniscate Investments." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN SYSTEM ===== */
+        :root {
+            --yc-orange: #B89765;
+            --yc-orange-hover: #9E7D4E;
+            --yc-orange-light: rgba(184, 151, 101, 0.08);
+            --bg-body: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --font-heading: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', 'Inter', system-ui, sans-serif;
+            --font-code: 'Fira Code', 'Courier New', monospace;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            font-size: 15px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 120px;
+        }
+
+        /* Ambient floating glow circles */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            left: 20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184, 151, 101, 0.07) 0%, rgba(184, 151, 101, 0) 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(71, 85, 105, 0.05) 0%, rgba(71, 85, 105, 0) 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- TOP NAVIGATION HEADER ----- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+            padding: 0 40px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header-logo-img {
+            height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover .header-logo-img {
+            transform: scale(1.05);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .deck-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 28px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-item-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-text {
+            border-bottom: 1.5px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-item-link:hover .nav-text {
+            border-color: var(--text-primary);
+        }
+
+        .nav-about-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--yc-orange);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-about-link .nav-text {
+            border-color: var(--yc-orange);
+            border-bottom: 1.5px solid var(--yc-orange);
+            color: var(--yc-orange);
+        }
+
+        .nav-blog-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-blog-link:hover {
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-header-pitch {
+            background-color: var(--yc-orange);
+            color: #0a0b0d;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-header-pitch:hover {
+            background-color: var(--yc-orange-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ----- HERO SECTION ----- */
+        .about-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto 60px;
+        }
+
+        .about-label {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--yc-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .about-title {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .about-title em {
+            font-style: italic;
+            font-family: var(--font-heading);
+            font-weight: 400;
+            color: var(--yc-orange);
+        }
+
+        .about-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ----- VISION / DNA SECTION ----- */
+        .vision-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        @media (max-width: 768px) {
+            .vision-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 24px;
+            }
+        }
+
+        .vision-block h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .vision-block p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        /* ----- TEAM SECTION ----- */
+        .team-section-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .team-section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .team-section-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .team-member-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(184, 151, 101, 0.35);
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 0 25px rgba(184, 151, 101, 0.06);
+        }
+
+        .team-member-photo-wrap {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(184, 151, 101, 0.2);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-member-card:hover .team-member-photo-wrap {
+            border-color: var(--yc-orange);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(184, 151, 101, 0.2);
+        }
+
+        .team-member-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1) brightness(0.95);
+            transition: all 0.4s ease;
+        }
+
+        .team-member-card:hover .team-member-photo-wrap img {
+            filter: grayscale(0%) contrast(1.05) brightness(1.05);
+        }
+
+        .team-member-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .team-member-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .team-member-role {
+            font-family: var(--font-code);
+            font-size: 0.72rem;
+            color: var(--yc-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .team-member-bio {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-top: 6px;
+        }
+
+        /* ----- CUSTOM MOUSE CURSOR ----- */
+        .custom-cursor-dot,
+        .custom-cursor-ring {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+            .custom-cursor-dot,
+            .custom-cursor-ring {
+                display: block;
+                width: 8px;
+                height: 8px;
+                background-color: var(--yc-orange);
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            }
+
+            .custom-cursor-ring {
+                width: 28px;
+                height: 28px;
+                background-color: transparent;
+                border: 1px solid var(--yc-orange);
+                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, transform 0.16s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            .custom-cursor-ring.hovered {
+                width: 44px;
+                height: 44px;
+                border-color: var(--yc-orange-hover);
+                background-color: rgba(184, 151, 101, 0.05);
+            }
+
+            .custom-cursor-dot.hovered {
+                width: 0px;
+                height: 0px;
+            }
+
+            .custom-cursor-ring.active {
+                transform: translate(-50%, -50%) scale(0.85);
+                background-color: rgba(184, 151, 101, 0.15);
+            }
+        }
+
+        /* ===== MOBILE RESPONSIVE NAVIGATION ===== */
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 22px;
+            height: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1010;
+        }
+
+        .mobile-menu-toggle .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: left center;
+        }
+
+        /* Responsive adjustments for header and about container */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 90px;
+            }
+
+            body.menu-open {
+                overflow: hidden !important;
+            }
+
+            .site-header {
+                padding: 0 20px;
+                height: 60px;
+            }
+
+            .header-logo-img {
+                height: 40px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .header-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1005;
+                padding: 40px;
+            }
+
+            .header-nav.open {
+                transform: translateY(0);
+            }
+
+            .deck-nav-list {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-item-link, .nav-about-link, .nav-blog-link {
+                font-size: 1.3rem;
+                padding: 10px 0;
+                width: auto;
+                justify-content: center;
+            }
+
+            .header-actions {
+                display: none; /* Hide header pitch button on mobile header */
+            }
+
+            /* Active toggle styling */
+            .mobile-menu-toggle.open .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(2px, 0px);
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(2) {
+                width: 0%;
+                opacity: 0;
+            }
+
+            .mobile-menu-toggle.open .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(2px, 0px);
+            }
+
+            .main-container {
+                padding: 0 20px 60px;
+            }
+
+            .about-hero {
+                margin: 20px auto 40px;
+            }
+
+            .about-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+    <div class="custom-cursor-ring" id="customCursorRing"></div>
+
+    <!-- ===== NAV HEADER (fixed, top:0) ===== -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="/index.html" class="header-logo">
+                <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
+            </a>
+
+            <nav class="header-nav">
+                <ul class="deck-nav-list">
+                    <li><a href="/index.html#slide0" class="nav-item-link"><span class="nav-text">Overview</span></a></li>
+                    <li><a href="/services.html" class="nav-item-link"><span class="nav-text">Services</span></a></li>
+                    <li><a href="/index.html#slide1" class="nav-item-link"><span class="nav-text">Portfolio</span></a></li>
+                    <li><a href="/about.html" class="nav-about-link"><span class="nav-text">About Us</span></a></li>
+                    <li><a href="/index.html#slide3" class="nav-item-link"><span class="nav-text">Contact &amp; Pitch</span></a></li>
+                    <li><a href="/blogs.html" class="nav-blog-link"><span class="nav-text">Blogs</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="/index.html#slide3" class="btn-header-pitch">✦ Pitch</a>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <span class="about-label">Our DNA</span>
+            <h1 class="about-title">About Us &amp; the <em>Team</em></h1>
+            <p class="about-subtitle">Experienced operators, technical builders, and industry specialists partnering with founders at the earliest stages.</p>
+        </section>
+
+        <!-- Vision / Philosophy Section -->
+        <section class="vision-section">
+            <div class="vision-block">
+                <h3>Our Mission</h3>
+                <p>At Lemniscate Investments, we are committed to backing technical builders who are reimagining foundational industry infrastructure. We believe in providing high-conviction checks and active partner-level support to accelerate time-to-market and growth.</p>
+                <p>We operate beyond standard passive investment models. We work directly in the trenches with our portfolio teams on software architecture, pricing strategy, developer scaling, and customer development.</p>
+            </div>
+            <div class="vision-block">
+                <h3>Investment Philosophy</h3>
+                <p>We deploy focused, high-conviction capital rather than taking a high-volume, diversified approach. This concentrated strategy ensures that our team's deep operational and technical expertise is fully leveraged for every company we back.</p>
+                <p>Whether in Venture Capital, Equities, Wealth Advisory, or Alternative Investments, we aim to provide exceptional, tailor-made solutions aligned precisely with our clients' and founders' requirements.</p>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section>
+            <div class="team-section-header">
+                <h2 class="team-section-title">The Partners</h2>
+                <p class="team-section-desc">Meet the domain experts who guide our investments across software, AI, deep tech, and alternative asset classes.</p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Member 1 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/sanjay_kumar_portrait.png" alt="Sanjay Kumar">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Sanjay Kumar</h3>
+                        <span class="team-member-role">Founding GP</span>
+                        <p class="team-member-bio">15+ years investing in deep tech and enterprise software. Former founder &amp; builder.</p>
+                    </div>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/elena_rostova_portrait.png" alt="Elena Rostova">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Elena Rostova</h3>
+                        <span class="team-member-role">Partner, AI / ML</span>
+                        <p class="team-member-bio">Advises on generative AI and ML infrastructure. PhD in Computer Science.</p>
+                    </div>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/alexandra_chen_portrait.png" alt="Alexandra Chen">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Alexandra Chen</h3>
+                        <span class="team-member-role">Partner, Deep Tech</span>
+                        <p class="team-member-bio">Specializes in aerospace, robotics, and advanced materials. Ex-MIT researcher.</p>
+                    </div>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/michael_torres_portrait.png" alt="Michael Torres">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Michael Torres</h3>
+                        <span class="team-member-role">Partner, SaaS</span>
+                        <p class="team-member-bio">Leads enterprise workflow and B2B SaaS investments. Ex-operator at Scale.</p>
+                    </div>
+                </div>
+
+                <!-- Member 5 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/sarah_kim_portrait.png" alt="Sarah Kim">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Sarah Kim</h3>
+                        <span class="team-member-role">Partner, Fintech</span>
+                        <p class="team-member-bio">Focuses on transaction infrastructure and digital assets. Former finance lead.</p>
+                    </div>
+                </div>
+
+                <!-- Member 6 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/david_okafor_portrait.png" alt="David Okafor">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">David Okafor</h3>
+                        <span class="team-member-role">Partner, Climate Tech</span>
+                        <p class="team-member-bio">Invests in circular economy, batteries, and carbon markets. Ex-energy consultant.</p>
+                    </div>
+                </div>
+
+                <!-- Member 7 -->
+                <div class="team-member-card">
+                    <div class="team-member-photo-wrap">
+                        <img src="/images/marcus_aurelius_portrait.png" alt="Marcus Aurelius">
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">Marcus Aurelius</h3>
+                        <span class="team-member-role">Partner, Alt Investments</span>
+                        <p class="team-member-bio">Coordinates crypto, real estate, commodities and private equity portfolios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Header scroll class
+        window.onscroll = () => {
+            const header = document.getElementById('siteHeader');
+            if (window.scrollY > 15) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+
+        // ---- MOBILE NAV TOGGLE ----
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const headerNav = document.querySelector('.header-nav');
+        if (mobileMenuToggle && headerNav) {
+            mobileMenuToggle.addEventListener('click', function () {
+                mobileMenuToggle.classList.toggle('open');
+                headerNav.classList.toggle('open');
+                document.body.classList.toggle('menu-open');
+            });
+
+            // Close menu when clicking on nav link
+            const allNavLinks = headerNav.querySelectorAll('a');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenuToggle.classList.remove('open');
+                    headerNav.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                });
+            });
+        }
+
+        // ---- CUSTOM MOUSE CURSOR LOGIC ----
+        const dot = document.getElementById('customCursorDot');
+        const ring = document.getElementById('customCursorRing');
+
+        if (dot && ring) {
+            let mX = 0, mY = 0;
+            let rX = 0, rY = 0;
+            let firstMove = false;
+
+            window.addEventListener('mousemove', (e) => {
+                mX = e.clientX;
+                mY = e.clientY;
+
+                if (!firstMove) {
+                    firstMove = true;
+                    dot.style.opacity = 1;
+                    ring.style.opacity = 1;
+                    rX = mX;
+                    rY = mY;
+                }
+            });
+
+            window.addEventListener('mouseout', () => {
+                dot.style.opacity = 0;
+                ring.style.opacity = 0;
+                firstMove = false;
+            });
+
+            function updateCursorPos() {
+                if (firstMove) {
+                    rX += (mX - rX) * 0.16;
+                    rY += (mY - rY) * 0.16;
+
+                    dot.style.left = `${mX}px`;
+                    dot.style.top = `${mY}px`;
+
+                    ring.style.left = `${rX}px`;
+                    ring.style.top = `${rY}px`;
+                }
+                requestAnimationFrame(updateCursorPos);
+            }
+            updateCursorPos();
+
+            // Hover effects
+            document.addEventListener('mouseover', (e) => {
+                const target = e.target;
+                if (target && (
+                    target.tagName === 'A' || 
+                    target.tagName === 'BUTTON' || 
+                    target.tagName === 'INPUT' || 
+                    target.closest('a') || 
+                    target.closest('button') || 
+                    target.closest('.team-member-card') ||
+                    target.getAttribute('role') === 'button'
+                )) {
+                    ring.classList.add('hovered');
+                    dot.classList.add('hovered');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                const target = e.target;
+                if (target && (
+                    target.tagName === 'A' || 
+                    target.tagName === 'BUTTON' || 
+                    target.tagName === 'INPUT' || 
+                    target.closest('a') || 
+                    target.closest('button') || 
+                    target.closest('.team-member-card') ||
+                    target.getAttribute('role') === 'button'
+                )) {
+                    ring.classList.remove('hovered');
+                    dot.classList.remove('hovered');
+                }
+            });
+
+            window.addEventListener('mousedown', () => {
+                ring.classList.add('active');
+            });
+
+            window.addEventListener('mouseup', () => {
+                ring.classList.remove('active');
+            });
+        }
+    </script>
+</body>
+
+</html>
