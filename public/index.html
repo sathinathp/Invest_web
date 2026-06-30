@@ -565,46 +565,60 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 28px;
+            gap: 24px;
             margin: 0;
             padding: 0;
+            flex-wrap: nowrap;
         }
 
-        .nav-item-link {
+        /* Unified nav link style for ALL nav items */
+        .nav-item-link,
+        .nav-blog-link {
             display: flex;
             align-items: center;
             gap: 6px;
             text-decoration: none;
             color: var(--text-secondary);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: color 0.25s ease;
             cursor: pointer;
             position: relative;
             padding: 8px 0;
+            white-space: nowrap;
         }
 
-        .nav-item-link:hover {
+        .nav-item-link:hover,
+        .nav-blog-link:hover {
             color: var(--text-primary);
         }
 
-        .nav-item-link.active {
+        .nav-item-link.active,
+        .nav-blog-link.active {
             color: var(--yc-orange);
         }
 
-        .nav-num {
-            display: none;
-        }
+        .nav-num { display: none; }
 
+        /* Underline indicator on .nav-text */
         .nav-text {
-            border-bottom: 1.5px solid transparent;
+            border-bottom: 2px solid transparent;
             padding-bottom: 2px;
-            transition: border-color 0.3s ease, color 0.3s ease;
+            transition: border-color 0.25s ease, color 0.25s ease;
         }
 
-        .nav-item-link.active .nav-text {
+        .nav-item-link.active .nav-text,
+        .nav-blog-link.active .nav-text {
             border-color: var(--yc-orange);
             color: var(--yc-orange);
+        }
+
+        /* Tablet responsive nav (1024px) */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .deck-nav-list { gap: 16px; }
+            .nav-item-link,
+            .nav-blog-link { font-size: 0.80rem; }
+            .site-header { padding: 0 24px; }
         }
 
         .header-actions {
@@ -2748,7 +2762,7 @@
                 <img src="/images/logo.png?v=6" alt="Lemniscate Investments Logo" class="header-logo-img">
             </a>
 
-            <nav class="header-nav">
+            <nav class="header-nav" id="headerNav">
                 <ul class="deck-nav-list">
                     <li>
                         <a class="nav-item-link active" data-slide="0">
@@ -2766,7 +2780,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/about.html" class="nav-blog-link">
+                        <a class="nav-item-link" data-slide="2">
                             <span class="nav-text">About Us</span>
                         </a>
                     </li>
@@ -3190,7 +3204,7 @@
             'use strict';
 
             const slides = document.querySelectorAll('.slide');
-            const navLinks = document.querySelectorAll('.nav-item-link');
+
 
             // ---- MOBILE NAV TOGGLE ----
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -3214,6 +3228,7 @@
             }
 
             // ---- SIDEBAR CLICKS (Scroll smoothly to slide) ----
+            const navLinks = document.querySelectorAll('.nav-item-link[data-slide]');
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -3225,12 +3240,12 @@
                 });
             });
 
+            // ---- SCROLLSPY: highlight nav link when its slide enters view ----
+            const allNavLinks = document.querySelectorAll('.nav-item-link, .nav-blog-link');
 
-
-            // ---- SCROLLSPY (Highlight active link in sidebar) ----
             const observerOptions = {
                 root: null,
-                rootMargin: '-30% 0px -30% 0px', // Trigger when section is in the middle of viewport
+                rootMargin: '-15% 0px -15% 0px',
                 threshold: 0
             };
 
@@ -3240,7 +3255,7 @@
                         const id = entry.target.getAttribute('id');
                         const index = id.replace('slide', '');
 
-                        // Toggle active class on nav links
+                        // Update active state on scroll-linked nav items
                         navLinks.forEach(link => {
                             if (link.getAttribute('data-slide') === index) {
                                 link.classList.add('active');
@@ -3249,7 +3264,7 @@
                             }
                         });
 
-                        // Toggle active class on slide elements for triggering motion animations
+                        // Toggle active on slides for animation
                         slides.forEach(s => {
                             if (s.getAttribute('id') === id) {
                                 s.classList.add('active');
@@ -3258,7 +3273,6 @@
                             }
                         });
 
-                        // Stop reading when changing slides to avoid overlap
                         stopSpeaking();
                     }
                 });
