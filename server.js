@@ -11,9 +11,16 @@ const app = express();
 const PORT = process.env.PORT || 3005;
 
 // Create uploads directory if it doesn't exist
-const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
+const UPLOADS_DIR = process.env.VERCEL
+    ? '/tmp'
+    : path.join(__dirname, 'public', 'uploads');
+
 if (!fs.existsSync(UPLOADS_DIR)) {
-    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    try {
+        fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    } catch (err) {
+        console.warn('Warning: Could not create uploads directory:', err.message);
+    }
 }
 
 // Storage config for Multer
@@ -508,7 +515,11 @@ app.post('/api/contact', async (req, res) => {
             message,
             createdAt: new Date().toISOString()
         });
-        fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2), 'utf8');
+        try {
+            fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2), 'utf8');
+        } catch (writeErr) {
+            console.warn('[CONTACT] Failed to save contact locally (expected on Vercel):', writeErr.message);
+        }
 
         // Nodemailer configuration
         const smtpHostEnv = process.env.SMTP_HOST || 'smtp.mailtrap.io';
