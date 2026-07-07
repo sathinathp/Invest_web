@@ -397,15 +397,14 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
             `
         };
 
-        // Send mail asynchronously so it doesn't block the client response
+        // Send mail and await it to prevent Vercel from freezing the function
         if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-            transporter.sendMail(mailOptions)
-                .then(() => {
-                    console.log(`Pitch email successfully sent to ${toEmail} for ${startupName}`);
-                })
-                .catch((mailError) => {
-                    console.error('Failed to send pitch email via SMTP:', mailError);
-                });
+            try {
+                await transporter.sendMail(mailOptions);
+                console.log(`Pitch email successfully sent to ${toEmail} for ${startupName}`);
+            } catch (mailError) {
+                console.error('Failed to send pitch email via SMTP:', mailError);
+            }
         } else {
             console.log('SMTP credentials not configured. Pitch submission saved to pitches.json and logged below:');
             console.log(mailOptions);
@@ -578,15 +577,14 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
-        // Send mail asynchronously so it doesn't block the client response
+        // Send mail and await it to prevent Vercel from freezing the function
         if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-            transporter.sendMail(mailOptions)
-                .then(() => {
-                    console.log(`Email successfully sent to ${toEmail} from ${email}`);
-                })
-                .catch((mailError) => {
-                    console.error('Failed to send email via SMTP:', mailError);
-                });
+            try {
+                await transporter.sendMail(mailOptions);
+                console.log(`Email successfully sent to ${toEmail} from ${email}`);
+            } catch (mailError) {
+                console.error('Failed to send email via SMTP:', mailError);
+            }
         } else {
             console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
             console.log(mailOptions);
