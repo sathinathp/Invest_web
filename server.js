@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const dns = require('dns');
 const crypto = require('crypto');
 
 const app = express();
@@ -285,16 +286,32 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
         writePitches(pitches);
 
         // Nodemailer configuration for pitch
+        const smtpHostEnv = process.env.SMTP_HOST || 'smtp.mailtrap.io';
+        let smtpHost = smtpHostEnv;
+        if (smtpHostEnv && !/^[0-9.]+$/.test(smtpHostEnv)) {
+            try {
+                const lookupRes = await dns.promises.lookup(smtpHostEnv, { family: 4 });
+                if (lookupRes && lookupRes.address) {
+                    smtpHost = lookupRes.address;
+                    console.log(`[SMTP] Resolved ${smtpHostEnv} to IPv4: ${smtpHost}`);
+                }
+            } catch (dnsErr) {
+                console.warn(`[SMTP] DNS lookup for ${smtpHostEnv} failed, using hostname:`, dnsErr);
+            }
+        }
+
         const smtpPort = parseInt(process.env.SMTP_PORT || '2525', 10);
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
+            host: smtpHost,
             port: smtpPort,
             secure: smtpPort === 465,
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             },
-            family: 4,
+            tls: {
+                servername: smtpHostEnv
+            },
             connectionTimeout: 10000, // 10 seconds timeout
             greetingTimeout: 10000,
             socketTimeout: 10000
@@ -494,16 +511,32 @@ app.post('/api/contact', async (req, res) => {
         fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2), 'utf8');
 
         // Nodemailer configuration
+        const smtpHostEnv = process.env.SMTP_HOST || 'smtp.mailtrap.io';
+        let smtpHost = smtpHostEnv;
+        if (smtpHostEnv && !/^[0-9.]+$/.test(smtpHostEnv)) {
+            try {
+                const lookupRes = await dns.promises.lookup(smtpHostEnv, { family: 4 });
+                if (lookupRes && lookupRes.address) {
+                    smtpHost = lookupRes.address;
+                    console.log(`[SMTP] Resolved ${smtpHostEnv} to IPv4: ${smtpHost}`);
+                }
+            } catch (dnsErr) {
+                console.warn(`[SMTP] DNS lookup for ${smtpHostEnv} failed, using hostname:`, dnsErr);
+            }
+        }
+
         const smtpPort = parseInt(process.env.SMTP_PORT || '2525', 10);
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
+            host: smtpHost,
             port: smtpPort,
             secure: smtpPort === 465,
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             },
-            family: 4,
+            tls: {
+                servername: smtpHostEnv
+            },
             connectionTimeout: 10000, // 10 seconds timeout
             greetingTimeout: 10000,
             socketTimeout: 10000
