@@ -293,7 +293,10 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
-            }
+            },
+            connectionTimeout: 10000, // 10 seconds timeout
+            greetingTimeout: 10000,
+            socketTimeout: 10000
         });
 
         const fromEmail = process.env.SMTP_USER || 'info@lemniscate.com';
@@ -497,7 +500,10 @@ app.post('/api/contact', async (req, res) => {
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
-            }
+            },
+            connectionTimeout: 10000, // 10 seconds timeout
+            greetingTimeout: 10000,
+            socketTimeout: 10000
         });
 
         const fromEmail = process.env.SMTP_USER || 'info@lemniscate.com';
