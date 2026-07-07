@@ -40,6 +40,14 @@ const upload = multer({
 });
 
 // Middleware
+app.use((req, res, next) => {
+    const host = req.get('host');
+    if (host && host.includes('onrender.com')) {
+        return res.redirect(301, `https://lamniscate.com${req.originalUrl}`);
+    }
+    next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
