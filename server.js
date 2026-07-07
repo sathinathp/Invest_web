@@ -218,7 +218,7 @@ function analyzePitch(pitch) {
 // API Routes
 
 // 1. Submit Pitch
-app.post('/api/pitch', upload.single('pitchAudio'), (req, res) => {
+app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
     try {
         const {
             founderName,
@@ -275,6 +275,99 @@ app.post('/api/pitch', upload.single('pitchAudio'), (req, res) => {
         const pitches = readPitches();
         pitches.push(pitchData);
         writePitches(pitches);
+
+        // Nodemailer configuration for pitch
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
+            port: process.env.SMTP_PORT || 2525,
+            auth: {
+                user: process.env.SMTP_USER || '',
+                pass: process.env.SMTP_PASS || ''
+            }
+        });
+
+        const mailOptions = {
+            from: `"${founderName}" <${founderEmail}>`,
+            to: 'info@lamniscate.com',
+            replyTo: founderEmail,
+            subject: `New Pitch Submission: ${startupName} (${founderName})`,
+            text: `Founder Name: ${founderName}\n` +
+                  `Founder Email: ${founderEmail}\n` +
+                  `Startup Name: ${startupName}\n` +
+                  `Website: ${website || 'N/A'}\n` +
+                  `LinkedIn: ${linkedin || 'N/A'}\n` +
+                  `Sector: ${sector}\n` +
+                  `Stage: ${stage}\n` +
+                  `Raised: ${raised || '$0'}\n` +
+                  `Audio File Path: ${audioFile || 'None'}\n\n` +
+                  `Problem:\n${problem}\n\n` +
+                  `Why Now:\n${whyNow}\n\n` +
+                  `Speech Text/Transcription:\n${finalSpeechText}\n\n` +
+                  `AI Analysis:\n` +
+                  `- Overall Score: ${analysis.scores.overall}\n` +
+                  `- Obsession: ${analysis.scores.obsession}\n` +
+                  `- Speed: ${analysis.scores.speed}\n` +
+                  `- Resilience: ${analysis.scores.resilience}\n` +
+                  `- Technical Depth: ${analysis.scores.techDepth}\n` +
+                  `- Market Intuition: ${analysis.scores.marketIntuition}\n\n` +
+                  `Partner Feedback:\n${analysis.sanjayFeedback}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px;">
+                    <h2 style="color: #b89765; border-bottom: 2px solid #b89765; padding-bottom: 8px; margin-top: 0;">New Startup Pitch Submission</h2>
+                    
+                    <h3 style="color: #4a5568; margin-top: 20px; border-bottom: 1px solid #edf2f7; padding-bottom: 4px;">Founder & Company Details</h3>
+                    <p><strong>Founder Name:</strong> ${founderName}</p>
+                    <p><strong>Email Address:</strong> ${founderEmail}</p>
+                    <p><strong>Startup Name:</strong> ${startupName}</p>
+                    <p><strong>Website:</strong> ${website ? `<a href="${website}" target="_blank">${website}</a>` : 'N/A'}</p>
+                    <p><strong>LinkedIn:</strong> ${linkedin ? `<a href="${linkedin}" target="_blank">${linkedin}</a>` : 'N/A'}</p>
+                    <p><strong>Sector:</strong> ${sector}</p>
+                    <p><strong>Stage:</strong> ${stage}</p>
+                    <p><strong>Capital Raised:</strong> ${raised || '$0'}</p>
+                    <p><strong>Audio File Path:</strong> ${audioFile ? `<a href="${audioFile}" target="_blank">${audioFile}</a>` : 'None'}</p>
+                    
+                    <h3 style="color: #4a5568; margin-top: 20px; border-bottom: 1px solid #edf2f7; padding-bottom: 4px;">The Pitch</h3>
+                    <p><strong>The Problem:</strong></p>
+                    <div style="background-color: #f7fafc; padding: 12px 16px; margin: 8px 0; border-radius: 4px;">${problem.replace(/\n/g, '<br>')}</div>
+                    
+                    <p><strong>Why Now:</strong></p>
+                    <div style="background-color: #f7fafc; padding: 12px 16px; margin: 8px 0; border-radius: 4px;">${whyNow.replace(/\n/g, '<br>')}</div>
+                    
+                    <p><strong>Speech Text / Audio Transcription:</strong></p>
+                    <div style="background-color: #f7fafc; padding: 12px 16px; margin: 8px 0; border-radius: 4px; font-style: italic;">${finalSpeechText.replace(/\n/g, '<br>')}</div>
+
+                    <h3 style="color: #4a5568; margin-top: 20px; border-bottom: 1px solid #edf2f7; padding-bottom: 4px;">AI Assessment & Feedback</h3>
+                    <p><strong>Overall Score:</strong> <span style="font-size: 1.15rem; font-weight: 700; color: #b89765;">${analysis.scores.overall}/100</span></p>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li>Obsession: ${analysis.scores.obsession}/100</li>
+                        <li>Speed: ${analysis.scores.speed}/100</li>
+                        <li>Resilience: ${analysis.scores.resilience}/100</li>
+                        <li>Technical Depth: ${analysis.scores.techDepth}/100</li>
+                        <li>Market Intuition: ${analysis.scores.marketIntuition}/100</li>
+                    </ul>
+                    <p><strong>Partner Evaluation (Sanjay Kumar):</strong></p>
+                    <div style="background-color: #f7fafc; border-left: 4px solid #b89765; padding: 12px 16px; margin: 8px 0; font-style: italic;">
+                        ${analysis.sanjayFeedback}
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 24px 0;">
+                    <p style="font-size: 0.8rem; color: #718096; text-align: center;">Sent automatically from Lemniscate Investments Terminal</p>
+                </div>
+            `
+        };
+
+        // Send mail
+        try {
+            if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+                await transporter.sendMail(mailOptions);
+                console.log(`Pitch email successfully sent to info@lamniscate.com for ${startupName}`);
+            } else {
+                console.log('SMTP credentials not configured. Pitch submission saved to pitches.json and logged below:');
+                console.log(mailOptions);
+            }
+        } catch (mailError) {
+            console.error('Failed to send pitch email via SMTP:', mailError);
+        }
 
         res.status(201).json({
             success: true,
@@ -353,11 +446,11 @@ app.delete('/api/pitches/:id', (req, res) => {
     }
 });
 
-// 6. Submit Contact Inquiry (goes to support@lemniscate.com)
+// 6. Submit Contact Inquiry (goes to info@lamniscate.com)
 app.post('/api/contact', async (req, res) => {
     try {
-        const { name, email, message } = req.body;
-        if (!name || !email || !message) {
+        const { name, email, phone, message } = req.body;
+        if (!name || !email || !phone || !message) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
@@ -375,6 +468,7 @@ app.post('/api/contact', async (req, res) => {
             id: 'contact_' + Date.now(),
             name,
             email,
+            phone,
             message,
             createdAt: new Date().toISOString()
         });
@@ -392,15 +486,16 @@ app.post('/api/contact', async (req, res) => {
 
         const mailOptions = {
             from: `"${name}" <${email}>`,
-            to: 'support@lemniscate.com',
+            to: 'info@lamniscate.com',
             replyTo: email,
             subject: `New Contact Submission from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+            text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
             html: `
                 <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px;">
                     <h2 style="color: #b89765; border-bottom: 2px solid #b89765; padding-bottom: 8px; margin-top: 0;">New Contact Form Submission</h2>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
                     <p><strong>Message:</strong></p>
                     <div style="background-color: #f7fafc; border-left: 4px solid #b89765; padding: 12px 16px; margin: 16px 0; font-style: italic;">
                         ${message.replace(/\n/g, '<br>')}
@@ -415,7 +510,7 @@ app.post('/api/contact', async (req, res) => {
         try {
             if (process.env.SMTP_USER && process.env.SMTP_PASS) {
                 await transporter.sendMail(mailOptions);
-                console.log(`Email successfully sent to support@lemniscate.com from ${email}`);
+                console.log(`Email successfully sent to info@lamniscate.com from ${email}`);
             } else {
                 console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
                 console.log(mailOptions);

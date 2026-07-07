@@ -22,7 +22,7 @@
             --yc-orange-hover: #9E7D4E;
             --yc-orange-light: rgba(184, 151, 101, 0.08);
             --bg-body: #f8fafc;
-            --bg-card: rgba(255, 255, 255, 0.75);
+            --bg-card: rgba(255, 255, 255, 0.95);
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #64748b;
@@ -127,58 +127,9 @@
         }
 
         /* Custom Mouse Cursor styling */
-        @media (hover: hover) and (pointer: fine) {
-            * {
-                cursor: none !important;
-            }
-            .custom-cursor-dot {
-                width: 8px;
-                height: 8px;
-                background-color: var(--yc-orange);
-                border-radius: 50%;
-                position: fixed;
-                transform: translate(-50%, -50%);
-                pointer-events: none;
-                z-index: 9999;
-                opacity: 0;
-                transition: opacity 0.3s ease, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 0 8px rgba(184, 151, 101, 0.6);
-            }
-            .custom-cursor-ring {
-                width: 38px;
-                height: 38px;
-                border: 1.5px solid var(--yc-orange);
-                border-radius: 50%;
-                position: fixed;
-                transform: translate(-50%, -50%);
-                pointer-events: none;
-                z-index: 9998;
-                opacity: 0;
-                transition: opacity 0.3s ease, width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, border-color 0.3s ease;
-                box-shadow: 
-                    0 0 15px rgba(184, 151, 101, 0.25),
-                    inset 0 0 10px rgba(184, 151, 101, 0.1);
-            }
-            .custom-cursor-ring.hovered {
-                width: 56px;
-                height: 56px;
-                border-color: var(--yc-orange);
-                background-color: rgba(184, 151, 101, 0.1);
-                box-shadow: 
-                    0 0 25px rgba(184, 151, 101, 0.4),
-                    inset 0 0 15px rgba(184, 151, 101, 0.15);
-            }
-            .custom-cursor-dot.hovered {
-                transform: translate(-50%, -50%) scale(1.6);
-                background-color: var(--yc-orange);
-                box-shadow: 0 0 12px rgba(184, 151, 101, 0.8);
-            }
-            .custom-cursor-ring.active {
-                width: 26px;
-                height: 26px;
-                background-color: rgba(184, 151, 101, 0.25);
-                border-color: var(--yc-orange);
-            }
+        .custom-cursor-dot,
+        .custom-cursor-ring {
+            display: none !important;
         }
 
         /* Technical stats overlay in corners */
@@ -310,7 +261,7 @@
         }
 
         .partner-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(184, 151, 101, 0.25);
@@ -385,7 +336,7 @@
 
         /* Hover interactions */
         .partner-card:hover {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.98);
             border-color: rgba(184, 151, 101, 0.65);
             transform: translateY(-4px) scale(1.02) !important;
             box-shadow:
@@ -505,6 +456,7 @@
             min-height: 100vh;
             width: 100%;
             position: relative;
+            z-index: 1;
         }
 
         /* ===== TOP NAVIGATION HEADER ===== */
@@ -663,178 +615,6 @@
             box-shadow: 0 6px 20px rgba(184, 151, 101, 0.35);
         }
 
-        /* Floating Voice Reader Widget Styling */
-        .voice-reader-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001;
-        }
-
-        .voice-widget-trigger {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(184, 151, 101, 0.2);
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), 0 0 15px rgba(184, 151, 101, 0.08);
-            color: var(--yc-orange);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            padding: 0;
-        }
-
-        .voice-widget-trigger svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.4s ease;
-        }
-
-        .voice-widget-trigger:hover {
-            border-color: var(--yc-orange);
-            transform: scale(1.08);
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12), 0 0 20px rgba(184, 151, 101, 0.15);
-        }
-
-        .voice-widget-trigger.active svg {
-            transform: rotate(90deg);
-        }
-
-        .voice-indicator-dot {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--text-muted);
-            border: 1.5px solid rgba(255, 255, 255, 0.95);
-            transition: background-color 0.3s ease;
-        }
-
-        .voice-indicator-dot.speaking {
-            background-color: var(--yc-orange);
-            animation: pulse-orange 1.5s infinite;
-        }
-
-        .voice-widget-panel {
-            position: absolute;
-            bottom: 60px;
-            right: 0;
-            width: 220px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 0 0 25px rgba(184, 151, 101, 0.08);
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px) scale(0.95);
-            transform-origin: bottom right;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-        }
-
-        .voice-reader-widget.expanded .voice-widget-panel {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0) scale(1);
-            border-color: rgba(184, 151, 101, 0.2);
-        }
-
-        .voice-widget-panel .widget-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .voice-widget-panel .widget-title {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-family: var(--font-code);
-        }
-
-        .voice-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--text-muted);
-            transition: background-color 0.3s ease;
-        }
-
-        .voice-indicator.speaking {
-            background-color: var(--yc-orange);
-            animation: pulse-orange 1.5s infinite;
-        }
-
-        @keyframes pulse-orange {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.3);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .btn-voice-control {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            color: var(--text-primary);
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: var(--transition);
-        }
-
-        .btn-voice-control:hover {
-            border-color: var(--yc-orange);
-            color: var(--yc-orange);
-            background-color: rgba(184, 151, 101, 0.08);
-        }
-
-        .btn-voice-stop {
-            background-color: rgba(184, 151, 101, 0.12);
-            border-color: rgba(184, 151, 101, 0.25);
-            color: var(--yc-orange);
-        }
-
-        .btn-voice-stop:hover {
-            background-color: var(--yc-orange);
-            color: #ffffff;
-            border-color: var(--yc-orange);
-        }
-
-        .voice-status {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            font-family: var(--font-code);
-            margin-top: 6px;
-            text-align: center;
-        }
 
         /* ===== MAIN SLIDES SECTION ===== */
         .deck-content {
@@ -926,7 +706,7 @@
 
         .service-glow-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(15, 23, 42, 0.06);
@@ -978,7 +758,7 @@
         .service-glow-card:hover {
             transform: translateY(-6px);
             border-color: rgba(184, 151, 101, 0.35);
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08), 0 0 20px rgba(184, 151, 101, 0.06);
         }
 
@@ -1073,7 +853,7 @@
         }
 
         .slide-card {
-            background-color: rgba(255, 255, 255, 0.65);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(15, 23, 42, 0.06);
@@ -1084,7 +864,7 @@
 
         .slide-card:hover {
             border-color: rgba(184, 151, 101, 0.35);
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.98);
             transform: translateY(-5px);
             box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 0 25px rgba(184, 151, 101, 0.06);
         }
@@ -1144,7 +924,7 @@
         }
 
         .investor-profile-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(15, 23, 42, 0.06);
             border-radius: 16px;
@@ -1236,7 +1016,7 @@
         }
 
         .sector-pill {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(15, 23, 42, 0.08);
             padding: 6px 12px;
             border-radius: 20px;
@@ -1525,7 +1305,7 @@
         }
 
         .contact-form-col {
-            background-color: rgba(255, 255, 255, 0.65);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(15, 23, 42, 0.06);
@@ -2434,7 +2214,7 @@
         }
         
         .team-member-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
@@ -2451,7 +2231,7 @@
         .team-member-card:hover {
             transform: translateY(-6px);
             border-color: rgba(184, 151, 101, 0.35);
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 0 25px rgba(184, 151, 101, 0.06);
         }
         .team-member-photo-wrap {
@@ -2739,9 +2519,8 @@
                 </span>
             </h1>
 
-            <!-- Tagline replacing team photos -->
             <p class="hero-tagline">
-                Providing institutional check sizes from <em>$50K to $2M</em> spanning <em>Pre-Seed to Series A</em>. We back technical builders reimagining industry infrastructure.
+                Investing in <em>Ambition</em>. Building Lasting <em>Value</em>.
             </p>
 
             <p class="hero-subtitle">*If you're building an early stage company, this is for you.</p>
@@ -2855,32 +2634,6 @@
     <!-- ===== DECK DECK CONTAINER ===== -->
     <div class="deck-container">
 
-        <!-- Floating Voice Reader Widget -->
-        <div class="voice-reader-widget" id="voiceWidget">
-            <button class="voice-widget-trigger" id="voiceWidgetTrigger" title="Toggle Voice Reader">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-                <div class="voice-indicator-dot" id="voiceWidgetDot"></div>
-            </button>
-            <div class="voice-widget-panel">
-                <div class="widget-header">
-                    <span class="widget-title">✦ Voice Reader</span>
-                    <div class="voice-indicator"></div>
-                </div>
-                <div class="voice-controls">
-                    <button id="btnVoicePlay" class="btn-voice-control" title="Listen to current section">
-                        <span class="btn-icon">▶</span> Read Section
-                    </button>
-                    <button id="btnVoiceStop" class="btn-voice-control btn-voice-stop" title="Stop listening"
-                        style="display: none;">
-                        <span class="btn-icon">■</span> Stop
-                    </button>
-                </div>
-                <div class="voice-status">Ready to speak</div>
-            </div>
-        </div>
 
         <!-- ===== MAIN SLIDES SECTION ===== -->
         <main class="deck-content" role="main">
@@ -3247,6 +3000,10 @@
                                 <input type="email" id="email" required placeholder="e.g. john@company.com">
                             </div>
                             <div class="form-group">
+                                <label for="phone">Contact Number</label>
+                                <input type="tel" id="phone" required placeholder="e.g. +91 98765 43210">
+                            </div>
+                            <div class="form-group">
                                 <label for="msg">Message / Venture Details</label>
                                 <textarea id="msg" rows="4" required
                                     placeholder="Tell us about your setup..."></textarea>
@@ -3329,16 +3086,8 @@
                             }
                         });
 
-                        // Toggle active on slides for animation
-                        slides.forEach(s => {
-                            if (s.getAttribute('id') === id) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-
-                        stopSpeaking();
+                        // Keep slide active once it enters the viewport to avoid blank content while scrolling
+                        entry.target.classList.add('active');
                     }
                 });
             }, observerOptions);
@@ -3381,168 +3130,9 @@
 
                     this.classList.add('active');
                     document.getElementById(targetId).classList.add('active');
-
-                    // Stop speaking if tabs are toggled
-                    stopSpeaking();
                 });
             });
 
-            // ---- TEXT-TO-SPEECH (SPEECH SYNTHESIS) ----
-            const btnPlay = document.getElementById('btnVoicePlay');
-            const btnStop = document.getElementById('btnVoiceStop');
-            const voiceStatus = document.querySelector('.voice-status');
-            const voiceIndicator = document.querySelector('.voice-indicator');
-
-            let voicesLoaded = false;
-
-            function loadVoices() {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.getVoices();
-                    voicesLoaded = true;
-                }
-            }
-
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.onvoiceschanged = loadVoices;
-                loadVoices();
-            }
-
-            function getActiveSlideText() {
-                const activeLink = document.querySelector('.nav-item-link.active');
-                if (!activeLink) return '';
-
-                const index = activeLink.getAttribute('data-slide');
-                const slideEl = document.getElementById('slide' + index);
-                if (!slideEl) return '';
-
-                const label = slideEl.querySelector('.slide-label') ? slideEl.querySelector('.slide-label').innerText : '';
-                const title = slideEl.querySelector('.slide-title') ? slideEl.querySelector('.slide-title').innerText : '';
-                const desc = slideEl.querySelector('.slide-desc') ? slideEl.querySelector('.slide-desc').innerText : '';
-
-                let extraText = '';
-                // Check if active tab content exists
-                const activeTabPane = slideEl.querySelector('.services-tab-pane.active');
-                if (activeTabPane) {
-                    extraText += '. ' + activeTabPane.innerText;
-                } else {
-                    const cards = slideEl.querySelectorAll('.slide-card, .company-row, .service-glow-card');
-                    cards.forEach(card => {
-                        extraText += '. ' + card.innerText;
-                    });
-                }
-
-                return `${label}. ${title}. ${desc}. ${extraText}`;
-            }
-
-            function speakText(text) {
-                if (!('speechSynthesis' in window)) {
-                    voiceStatus.innerText = 'Speech not supported';
-                    return;
-                }
-
-                // Force cancel and resume to clean any stuck state
-                window.speechSynthesis.cancel();
-                window.speechSynthesis.resume();
-
-                // Clean the text slightly for nicer pronunciation
-                const cleanedText = text.replace(/✦/g, '').replace(/●/g, '').replace(/→/g, 'to');
-                if (!cleanedText.trim()) {
-                    voiceStatus.innerText = 'No text to read';
-                    return;
-                }
-
-                const utterance = new SpeechSynthesisUtterance(cleanedText);
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-
-                const voices = window.speechSynthesis.getVoices();
-                // Select a premium English voice if possible
-                const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) ||
-                    voices.find(v => v.lang.startsWith('en') && v.name.includes('Natural')) ||
-                    voices.find(v => v.lang.startsWith('en'));
-                if (englishVoice) {
-                    utterance.voice = englishVoice;
-                }
-
-                utterance.onstart = () => {
-                    btnPlay.style.display = 'none';
-                    btnStop.style.display = 'inline-flex';
-                    voiceStatus.innerText = 'Speaking...';
-                    voiceIndicator.classList.add('speaking');
-                    const widgetDot = document.getElementById('voiceWidgetDot');
-                    if (widgetDot) widgetDot.classList.add('speaking');
-                };
-
-                utterance.onend = () => {
-                    btnPlay.style.display = 'inline-flex';
-                    btnStop.style.display = 'none';
-                    voiceStatus.innerText = 'Completed';
-                    voiceIndicator.classList.remove('speaking');
-                    const widgetDot = document.getElementById('voiceWidgetDot');
-                    if (widgetDot) widgetDot.classList.remove('speaking');
-                };
-
-                utterance.onerror = (e) => {
-                    console.error('SpeechSynthesis error:', e);
-                    btnPlay.style.display = 'inline-flex';
-                    btnStop.style.display = 'none';
-                    voiceStatus.innerText = 'Voice error';
-                    voiceIndicator.classList.remove('speaking');
-                    const widgetDot = document.getElementById('voiceWidgetDot');
-                    if (widgetDot) widgetDot.classList.remove('speaking');
-                };
-
-                window.speechSynthesis.speak(utterance);
-            }
-
-            function stopSpeaking() {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    btnPlay.style.display = 'inline-flex';
-                    btnStop.style.display = 'none';
-                    voiceStatus.innerText = 'Ready to speak';
-                    voiceIndicator.classList.remove('speaking');
-                    const widgetDot = document.getElementById('voiceWidgetDot');
-                    if (widgetDot) widgetDot.classList.remove('speaking');
-                }
-            }
-
-            btnPlay.addEventListener('click', () => {
-                const text = getActiveSlideText();
-                if (text) {
-                    speakText(text);
-                } else {
-                    voiceStatus.innerText = 'No content found';
-                }
-            });
-
-            btnStop.addEventListener('click', () => {
-                stopSpeaking();
-            });
-
-            // Toggle Voice Reader Widget Panel
-            const voiceWidget = document.getElementById('voiceWidget');
-            const voiceWidgetTrigger = document.getElementById('voiceWidgetTrigger');
-
-            if (voiceWidget && voiceWidgetTrigger) {
-                voiceWidgetTrigger.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    voiceWidget.classList.toggle('expanded');
-                    voiceWidgetTrigger.classList.toggle('active');
-                });
-
-                const widgetPanel = voiceWidget.querySelector('.voice-widget-panel');
-                if (widgetPanel) {
-                    widgetPanel.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                    });
-                }
-
-                document.addEventListener('click', () => {
-                    voiceWidget.classList.remove('expanded');
-                    voiceWidgetTrigger.classList.remove('active');
-                });
-            }
 
             // Word Rotator Effect for Hero
             const rotatorInner = document.getElementById('rotatorInner');
@@ -3721,40 +3311,23 @@
                         }
                     }
 
-                    // 3. Add rolling glowing core sphere
-                    const sphereIndex = currentScroll * 15 + Math.sin(Date.now() * 0.0008) * 9;
-                    const sphereAngle = sphereIndex * 0.14 - currentScroll * 2.2 + 0.065;
-                    const sphereY = (sphereIndex * 11) - (currentScroll * 170) - 14;
-                    const sphereRadius = radius - stepWidth / 2;
-
-                    const spherePos = {
-                        x: sphereRadius * Math.cos(sphereAngle),
-                        y: sphereY,
-                        z: sphereRadius * Math.sin(sphereAngle)
-                    };
-
-                    const rotatedSphere = rotatePoint(spherePos.x, spherePos.y, spherePos.z, yaw, pitch);
-                    renderList.push({
-                        type: 'sphere',
-                        zAvg: rotatedSphere.z,
-                        point: rotatedSphere,
-                        size: 13
-                    });
-
-                    // 4. Sort render list by depth (Painter's Algorithm)
+                    // 3. Sort render list by depth (Painter's Algorithm)
                     renderList.sort((a, b) => b.zAvg - a.zAvg);
 
-                    // 5. Draw all sorted 3D elements
+                    // 4. Draw all sorted 3D elements
                     renderList.forEach(item => {
                         const scale = fov / (fov + item.zAvg);
                         if (scale <= 0) return;
 
                         if (item.type === 'star') {
+                            // Prevent stars from inflating into "big balls" when they get too close to the camera
+                            if (item.zAvg < -280) return;
                             const sx = centerX + item.point.x * scale;
                             const sy = centerY + item.point.y * scale;
                             ctx.beginPath();
-                            ctx.arc(sx, sy, item.size * scale, 0, Math.PI * 2);
-                            ctx.fillStyle = `rgba(15, 23, 42, ${0.65 * scale})`;
+                            const starRadius = Math.min(3, item.size * scale);
+                            ctx.arc(sx, sy, starRadius, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(15, 23, 42, ${Math.min(0.65, 0.65 * scale)})`;
                             ctx.fill();
                         } 
                         else if (item.type === 'step') {
@@ -3775,12 +3348,9 @@
 
                             const grad = ctx.createLinearGradient(sPoints[0].x, sPoints[0].y, sPoints[2].x, sPoints[2].y);
                             const depthFade = Math.max(0.1, Math.min(1, (item.zAvg + 400) / 800));
-                            
-                            const distToSphere = Math.abs(item.index - sphereIndex);
-                            const sphereProximityGlow = Math.max(0, 1 - distToSphere / 6);
 
-                            const alpha1 = (0.42 + sphereProximityGlow * 0.38) * item.opacity * depthFade;
-                            const alpha2 = (0.24 + sphereProximityGlow * 0.26) * item.opacity * depthFade;
+                            const alpha1 = 0.42 * item.opacity * depthFade;
+                            const alpha2 = 0.24 * item.opacity * depthFade;
 
                             grad.addColorStop(0, `rgba(71, 85, 105, ${alpha1})`);
                             grad.addColorStop(1, `rgba(148, 163, 184, ${alpha2})`);
@@ -3788,30 +3358,9 @@
                             ctx.fillStyle = grad;
                             ctx.fill();
 
-                            ctx.strokeStyle = `rgba(184, 151, 101, ${(0.8 + sphereProximityGlow * 0.2) * item.opacity * depthFade})`;
+                            ctx.strokeStyle = `rgba(184, 151, 101, ${0.8 * item.opacity * depthFade})`;
                             ctx.lineWidth = 1.6 * scale;
                             ctx.stroke();
-                        } 
-                        else if (item.type === 'sphere') {
-                            const sx = centerX + item.point.x * scale;
-                            const sy = centerY + item.point.y * scale;
-                            const sRadius = item.size * scale;
-
-                            const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, sRadius * 2.5);
-                            grad.addColorStop(0, '#ffffff');
-                            grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.95)');
-                            grad.addColorStop(0.5, 'rgba(184, 151, 101, 0.85)');
-                            grad.addColorStop(1, 'rgba(184, 151, 101, 0)');
-
-                            ctx.beginPath();
-                            ctx.arc(sx, sy, sRadius * 2.5, 0, Math.PI * 2);
-                            ctx.fillStyle = grad;
-                            ctx.fill();
-
-                            ctx.beginPath();
-                            ctx.arc(sx, sy, sRadius * 0.4, 0, Math.PI * 2);
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fill();
                         }
                     });
 
@@ -3930,69 +3479,6 @@
                         pe: "-",
                         news: [
                             { time: "1 hour ago", source: "MarketWatch", headline: "VIX rises above 18 as market uncertainty climbs ahead of Fed meeting." }
-                        ]
-                    },
-                    {
-                        id: "GOLD",
-                        name: "Gold",
-                        tvSymbol: "TVC:GOLD",
-                        description: "Gold / U.S. Dollar • Commodity",
-                        last: 4058.90,
-                        chg: 50.10,
-                        chgPct: 1.25,
-                        timezone: "Etc/UTC",
-                        openHour: 0, openMin: 0,
-                        closeHour: 24, closeMin: 0,
-                        currency: "USD",
-                        mcap: "-",
-                        vol: "$28.9B",
-                        high: 4120.00,
-                        low: 2280.00,
-                        pe: "-",
-                        news: [
-                            { time: "30 mins ago", source: "Kitco News", headline: "Gold rallies past 4k as global geopolitical tensions support safe haven buying." }
-                        ]
-                    },
-                    {
-                        id: "BTCUSD",
-                        name: "Bitcoin USD",
-                        tvSymbol: "BINANCE:BTCUSDT",
-                        description: "Bitcoin / U.S. Dollar • Crypto",
-                        last: 59217.03,
-                        chg: -643.55,
-                        chgPct: -1.08,
-                        timezone: "Etc/UTC",
-                        openHour: 0, openMin: 0,
-                        closeHour: 24, closeMin: 0,
-                        currency: "USD",
-                        mcap: "$1.16T",
-                        vol: "$32.4B",
-                        high: 73800.00,
-                        low: 38500.00,
-                        pe: "-",
-                        news: [
-                            { time: "2 hours ago", source: "Coindesk", headline: "Bitcoin consolidates below 60k as short-term holder capitulation peaks." }
-                        ]
-                    },
-                    {
-                        id: "CRUDE_OIL",
-                        name: "Crude Oil",
-                        tvSymbol: "TVC:USOIL",
-                        description: "Light Sweet Crude Oil • Commodity",
-                        last: 72.36,
-                        chg: 2.02,
-                        chgPct: 2.87,
-                        timezone: "Etc/UTC",
-                        openHour: 0, openMin: 0,
-                        closeHour: 24, closeMin: 0,
-                        currency: "USD",
-                        mcap: "-",
-                        vol: "$15.2B",
-                        high: 95.00,
-                        low: 65.00,
-                        pe: "-",
-                        news: [
-                            { time: "4 hours ago", source: "OPEC+", headline: "Crude oil gains 2% on production cuts extension and solid demand outlook." }
                         ]
                     }
                 ],
@@ -4705,9 +4191,10 @@
                         
                         const nameInput = document.getElementById('name');
                         const emailInput = document.getElementById('email');
+                        const phoneInput = document.getElementById('phone');
                         const messageInput = document.getElementById('msg');
                         
-                        if (!nameInput || !emailInput || !messageInput) return;
+                        if (!nameInput || !emailInput || !phoneInput || !messageInput) return;
                         
                         btn.disabled = true;
                         btn.innerHTML = `<span>Sending...</span>`;
@@ -4722,6 +4209,7 @@
                                 body: JSON.stringify({
                                     name: nameInput.value,
                                     email: emailInput.value,
+                                    phone: phoneInput.value,
                                     message: messageInput.value
                                 })
                             });
@@ -4739,7 +4227,7 @@
                                             </svg>
                                         </div>
                                         <h3 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px; font-weight: 600;">✦ Inquiry Received</h3>
-                                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">Thank you for reaching out. Your message has been sent to <strong>support@lemniscate.com</strong>. A partner will review your inquiry and get back to you shortly.</p>
+                                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">Thank you for reaching out. Your message has been sent to <strong>info@lamniscate.com</strong>. A partner will review your inquiry and get back to you shortly.</p>
                                         <button id="btnResetContact" class="btn-submit" style="max-width: 200px; margin: 0 auto; display: block;">Send another message</button>
                                     </div>
                                 `;

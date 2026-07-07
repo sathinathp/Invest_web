@@ -739,51 +739,7 @@
 
         /* ----- CUSTOM MOUSE CURSOR ----- */
         .custom-cursor-dot, .custom-cursor-ring {
-            display: none;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            * {
-                cursor: none !important;
-            }
-            .custom-cursor-dot, .custom-cursor-ring {
-                display: block;
-                width: 8px;
-                height: 8px;
-                background-color: var(--yc-orange);
-                border-radius: 50%;
-                position: fixed;
-                pointer-events: none;
-                z-index: 10000;
-                transform: translate(-50%, -50%);
-                opacity: 0;
-                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-            }
-
-            .custom-cursor-ring {
-                width: 28px;
-                height: 28px;
-                background-color: transparent;
-                border: 1px solid var(--yc-orange);
-                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, transform 0.16s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            }
-
-            .custom-cursor-ring.hovered {
-                width: 44px;
-                height: 44px;
-                border-color: var(--yc-orange-hover);
-                background-color: rgba(184, 151, 101, 0.05);
-            }
-
-            .custom-cursor-dot.hovered {
-                width: 0px;
-                height: 0px;
-            }
-
-            .custom-cursor-ring.active {
-                transform: translate(-50%, -50%) scale(0.85);
-                background-color: rgba(184, 151, 101, 0.15);
-            }
+            display: none !important;
         }
 
         /* ===== MOBILE RESPONSIVE NAVIGATION ===== */

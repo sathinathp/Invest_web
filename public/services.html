@@ -638,48 +638,7 @@
         /* Custom Cursor Styling */
         .custom-cursor-dot,
         .custom-cursor-ring {
-            display: none;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .custom-cursor-dot {
-                display: block;
-                position: fixed;
-                top: -4px;
-                left: -4px;
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background-color: var(--yc-orange);
-                z-index: 9999;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-
-            .custom-cursor-ring {
-                display: block;
-                position: fixed;
-                top: -16px;
-                left: -16px;
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                border: 1px solid var(--yc-orange);
-                z-index: 9998;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
-            }
-
-            .custom-cursor-ring.hover {
-                width: 48px;
-                height: 48px;
-                top: -24px;
-                left: -24px;
-                background-color: rgba(184, 151, 101, 0.08);
-                border-color: var(--yc-orange);
-            }
+            display: none !important;
         }
     </style>
 </head>
