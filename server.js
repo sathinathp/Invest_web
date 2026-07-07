@@ -294,6 +294,7 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             },
+            family: 4,
             connectionTimeout: 10000, // 10 seconds timeout
             greetingTimeout: 10000,
             socketTimeout: 10000
@@ -502,6 +503,7 @@ app.post('/api/contact', async (req, res) => {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             },
+            family: 4,
             connectionTimeout: 10000, // 10 seconds timeout
             greetingTimeout: 10000,
             socketTimeout: 10000
