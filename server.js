@@ -372,17 +372,18 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
             `
         };
 
-        // Send mail
-        try {
-            if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-                await transporter.sendMail(mailOptions);
-                console.log(`Pitch email successfully sent to ${toEmail} for ${startupName}`);
-            } else {
-                console.log('SMTP credentials not configured. Pitch submission saved to pitches.json and logged below:');
-                console.log(mailOptions);
-            }
-        } catch (mailError) {
-            console.error('Failed to send pitch email via SMTP:', mailError);
+        // Send mail asynchronously so it doesn't block the client response
+        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+            transporter.sendMail(mailOptions)
+                .then(() => {
+                    console.log(`Pitch email successfully sent to ${toEmail} for ${startupName}`);
+                })
+                .catch((mailError) => {
+                    console.error('Failed to send pitch email via SMTP:', mailError);
+                });
+        } else {
+            console.log('SMTP credentials not configured. Pitch submission saved to pitches.json and logged below:');
+            console.log(mailOptions);
         }
 
         res.status(201).json({
@@ -531,17 +532,18 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
-        // Send mail (wrap in try-catch so it doesn't fail if SMTP is not configured)
-        try {
-            if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-                await transporter.sendMail(mailOptions);
-                console.log(`Email successfully sent to ${toEmail} from ${email}`);
-            } else {
-                console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
-                console.log(mailOptions);
-            }
-        } catch (mailError) {
-            console.error('Failed to send email via SMTP:', mailError);
+        // Send mail asynchronously so it doesn't block the client response
+        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+            transporter.sendMail(mailOptions)
+                .then(() => {
+                    console.log(`Email successfully sent to ${toEmail} from ${email}`);
+                })
+                .catch((mailError) => {
+                    console.error('Failed to send email via SMTP:', mailError);
+                });
+        } else {
+            console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
+            console.log(mailOptions);
         }
 
         res.status(200).json({ success: true, message: 'Message submitted successfully!', recipient: toEmail });
