@@ -285,18 +285,23 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
         writePitches(pitches);
 
         // Nodemailer configuration for pitch
+        const smtpPort = parseInt(process.env.SMTP_PORT || '2525', 10);
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
-            port: process.env.SMTP_PORT || 2525,
+            port: smtpPort,
+            secure: smtpPort === 465,
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             }
         });
 
+        const fromEmail = process.env.SMTP_USER || 'info@lemniscate.com';
+        const toEmail = process.env.NOTIFICATION_EMAIL || 'info@lemniscate.com';
+
         const mailOptions = {
-            from: `"${founderName}" <${founderEmail}>`,
-            to: 'info@lamniscate.com',
+            from: `"${founderName} (via website)" <${fromEmail}>`,
+            to: toEmail,
             replyTo: founderEmail,
             subject: `New Pitch Submission: ${startupName} (${founderName})`,
             text: `Founder Name: ${founderName}\n` +
@@ -368,7 +373,7 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
         try {
             if (process.env.SMTP_USER && process.env.SMTP_PASS) {
                 await transporter.sendMail(mailOptions);
-                console.log(`Pitch email successfully sent to info@lamniscate.com for ${startupName}`);
+                console.log(`Pitch email successfully sent to ${toEmail} for ${startupName}`);
             } else {
                 console.log('SMTP credentials not configured. Pitch submission saved to pitches.json and logged below:');
                 console.log(mailOptions);
@@ -382,7 +387,8 @@ app.post('/api/pitch', upload.single('pitchAudio'), async (req, res) => {
             message: 'Pitch submitted successfully!',
             pitchId: pitchData.id,
             analysis: pitchData.analysis,
-            sanjayFeedback: pitchData.sanjayFeedback
+            sanjayFeedback: pitchData.sanjayFeedback,
+            recipient: toEmail
         });
     } catch (error) {
         console.error('Error handling pitch submission:', error);
@@ -483,18 +489,23 @@ app.post('/api/contact', async (req, res) => {
         fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2), 'utf8');
 
         // Nodemailer configuration
+        const smtpPort = parseInt(process.env.SMTP_PORT || '2525', 10);
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
-            port: process.env.SMTP_PORT || 2525,
+            port: smtpPort,
+            secure: smtpPort === 465,
             auth: {
                 user: process.env.SMTP_USER || '',
                 pass: process.env.SMTP_PASS || ''
             }
         });
 
+        const fromEmail = process.env.SMTP_USER || 'info@lemniscate.com';
+        const toEmail = process.env.NOTIFICATION_EMAIL || 'info@lemniscate.com';
+
         const mailOptions = {
-            from: `"${name}" <${email}>`,
-            to: 'info@lamniscate.com',
+            from: `"${name} (via website)" <${fromEmail}>`,
+            to: toEmail,
             replyTo: email,
             subject: `New Contact Submission from ${name}`,
             text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
@@ -518,7 +529,7 @@ app.post('/api/contact', async (req, res) => {
         try {
             if (process.env.SMTP_USER && process.env.SMTP_PASS) {
                 await transporter.sendMail(mailOptions);
-                console.log(`Email successfully sent to info@lamniscate.com from ${email}`);
+                console.log(`Email successfully sent to ${toEmail} from ${email}`);
             } else {
                 console.log('SMTP credentials not configured. Contact submission saved to contacts.json and logged below:');
                 console.log(mailOptions);
@@ -527,7 +538,7 @@ app.post('/api/contact', async (req, res) => {
             console.error('Failed to send email via SMTP:', mailError);
         }
 
-        res.status(200).json({ success: true, message: 'Message submitted successfully!' });
+        res.status(200).json({ success: true, message: 'Message submitted successfully!', recipient: toEmail });
     } catch (error) {
         console.error('Error handling contact form submission:', error);
         res.status(500).json({ error: 'Internal server error' });
