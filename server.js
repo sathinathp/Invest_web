@@ -859,8 +859,12 @@ app.delete('/api/blogs/:id', requireAdminAuth, (req, res) => {
     }
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+// Start server (only if run directly, not imported as a serverless function)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
 
