@@ -60,10 +60,10 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:18px 36px;d
 .form-group{margin-bottom:18px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 label{display:block;font-size:.8rem;font-weight:600;margin-bottom:5px;color:var(--muted)}
-input[type=text],select,textarea{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:var(--r);background:#f8fafc;color:var(--text);font-size:.88rem;font-family:var(--font);outline:none;transition:border-color .2s}
-input[type=text]:focus,select:focus,textarea:focus{border-color:var(--gold);background:#fff}
-.partner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.pc{border:1px solid var(--border);border-radius:var(--r);padding:8px 6px;text-align:center;cursor:pointer;transition:all .2s;background:#f8fafc}
+input[type=text],input[type=date],select,textarea{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:var(--r);background:#f8fafc;color:var(--text);font-size:.88rem;font-family:var(--font);outline:none;transition:border-color .2s}
+input[type=text]:focus,input[type=date]:focus,select:focus,textarea:focus{border-color:var(--gold);background:#fff}
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:10px}
+.pc{border:1px solid var(--border);border-radius:var(--r);padding:8px 6px;text-align:center;cursor:pointer;transition:all .2s;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:76px}
 .pc:hover,.pc.sel{border-color:var(--gold);background:var(--gold-light)}
 .pc.sel{box-shadow:0 0 0 2px rgba(184,151,101,.2)}
 .pc img{width:38px;height:38px;border-radius:50%;object-fit:cover;margin-bottom:3px}
@@ -133,20 +133,24 @@ input[type=text]:focus,select:focus,textarea:focus{border-color:var(--gold);back
           <label>Article Title</label>
           <input type="text" name="title" placeholder="e.g. Our $1M Venture Strategy" required>
         </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category" required>
+            <option value="" disabled selected>Select...</option>
+            <option value="venture">Venture Capital</option>
+            <option value="equities">Equities & Portfolio</option>
+            <option value="advisory">Wealth Advisory</option>
+            <option value="alternatives">Alternative Markets</option>
+          </select>
+        </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Category</label>
-            <select name="category" required>
-              <option value="" disabled selected>Select...</option>
-              <option value="venture">Venture Capital</option>
-              <option value="equities">Equities & Portfolio</option>
-              <option value="advisory">Wealth Advisory</option>
-              <option value="alternatives">Alternative Markets</option>
-            </select>
-          </div>
           <div class="form-group">
             <label>Read Duration</label>
             <input type="text" name="readTime" value="5 min read">
+          </div>
+          <div class="form-group">
+            <label>Publish Date (Optional - defaults to today)</label>
+            <input type="date" id="publishDate" name="publishDate">
           </div>
         </div>
         <div class="form-group">
@@ -156,22 +160,25 @@ input[type=text]:focus,select:focus,textarea:focus{border-color:var(--gold);back
               <img src="/images/sanjay_kumar_portrait.png" onerror="this.src='https://ui-avatars.com/api/?name=SK&background=B89765&color=fff'">
               <span>Sanjay Kumar</span><em>Founding GP</em>
             </div>
-            <div class="pc" data-n="Elena Rostova" data-r="Partner, Quant" data-i="/images/elena_rostova_portrait.png">
-              <img src="/images/elena_rostova_portrait.png" onerror="this.src='https://ui-avatars.com/api/?name=ER&background=B89765&color=fff'">
-              <span>Elena Rostova</span><em>Quant Partner</em>
-            </div>
-            <div class="pc" data-n="Sarah Kim" data-r="Partner, Wealth" data-i="/images/sarah_kim_portrait.png">
-              <img src="/images/sarah_kim_portrait.png" onerror="this.src='https://ui-avatars.com/api/?name=SK&background=B89765&color=fff'">
-              <span>Sarah Kim</span><em>Wealth Partner</em>
-            </div>
-            <div class="pc" data-n="Marcus Aurelius" data-r="Partner, Alts" data-i="/images/marcus_aurelius_portrait.png">
-              <img src="/images/marcus_aurelius_portrait.png" onerror="this.src='https://ui-avatars.com/api/?name=MA&background=B89765&color=fff'">
-              <span>Marcus Aurelius</span><em>Alt Partner</em>
+            <div class="pc" id="customAuthorCard" data-n="" data-r="" data-i="">
+              <span style="font-size: 1.4rem; margin-bottom: 2px;">✍️</span>
+              <span>Other / Guest</span><em>Custom Author</em>
             </div>
           </div>
           <input type="hidden" id="aName" name="authorName" value="Sanjay Kumar">
           <input type="hidden" id="aRole" name="authorRole" value="Founding GP">
           <input type="hidden" id="aImg" name="authorImgSelect" value="/images/sanjay_kumar_portrait.png">
+        </div>
+        <!-- Custom Author Inputs (hidden by default) -->
+        <div class="form-row" id="customAuthorFields" style="display: none; margin-top: -10px; margin-bottom: 18px;">
+          <div class="form-group">
+            <label>Author Name</label>
+            <input type="text" id="customAuthorName" placeholder="e.g. John Doe">
+          </div>
+          <div class="form-group">
+            <label>Author Role</label>
+            <input type="text" id="customAuthorRole" placeholder="e.g. Guest Writer">
+          </div>
         </div>
         <div class="form-group">
           <label>Short Summary (shown on card)</label>
@@ -303,11 +310,30 @@ document.querySelectorAll('.pc').forEach(c => {
   c.onclick = () => {
     document.querySelectorAll('.pc').forEach(x => x.classList.remove('sel'));
     c.classList.add('sel');
-    document.getElementById('aName').value = c.dataset.n;
-    document.getElementById('aRole').value = c.dataset.r;
-    document.getElementById('aImg').value = c.dataset.i;
+    
+    const customFields = document.getElementById('customAuthorFields');
+    if (c.id === 'customAuthorCard') {
+      customFields.style.display = 'grid';
+      updateCustomAuthorValues();
+    } else {
+      customFields.style.display = 'none';
+      document.getElementById('aName').value = c.dataset.n;
+      document.getElementById('aRole').value = c.dataset.r;
+      document.getElementById('aImg').value = c.dataset.i;
+    }
   };
 });
+
+function updateCustomAuthorValues() {
+  const nameInput = document.getElementById('customAuthorName').value.trim();
+  const roleInput = document.getElementById('customAuthorRole').value.trim();
+  document.getElementById('aName').value = nameInput || 'Guest Author';
+  document.getElementById('aRole').value = roleInput || 'Contributor';
+  document.getElementById('aImg').value = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(nameInput || 'Author') + '&background=B89765&color=fff';
+}
+
+document.getElementById('customAuthorName').oninput = updateCustomAuthorValues;
+document.getElementById('customAuthorRole').oninput = updateCustomAuthorValues;
 
 // ── TOAST ──
 function toast(msg, err = false) {
@@ -370,6 +396,7 @@ document.getElementById('blogForm').onsubmit = async function(e) {
       this.reset(); quill.setContents([]);
       document.getElementById('imgName').style.display = 'none';
       document.getElementById('vidName').style.display = 'none';
+      document.getElementById('customAuthorFields').style.display = 'none';
       document.querySelectorAll('.pc').forEach((c,i) => { c.classList.toggle('sel', i===0); });
       loadBlogs();
     } else if (r.status === 401) { toast('Session expired.', true); doLogout(); }

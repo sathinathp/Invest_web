@@ -721,7 +721,7 @@ const blogUploadConfig = upload.fields([
 
 app.post('/api/blogs', requireAdminAuth, blogUploadConfig, (req, res) => {
     try {
-        const { title, category, authorName, authorRole, authorImgSelect, readTime, desc, content } = req.body;
+        const { title, category, authorName, authorRole, authorImgSelect, readTime, desc, content, publishDate } = req.body;
         
         if (!title || !category || !authorName || !desc || !content) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -750,8 +750,18 @@ app.post('/api/blogs', requireAdminAuth, blogUploadConfig, (req, res) => {
         const categoryLabel = categoryLabels[category] || 'General';
 
         // Format Date like: "June 30, 2026"
+        let formattedDate = '';
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = new Date().toLocaleDateString('en-US', options);
+        if (publishDate) {
+            const dateParts = publishDate.split('-');
+            if (dateParts.length === 3) {
+                const dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+                formattedDate = dateObj.toLocaleDateString('en-US', options);
+            }
+        }
+        if (!formattedDate) {
+            formattedDate = new Date().toLocaleDateString('en-US', options);
+        }
 
         const newBlog = {
             id: nextId,
